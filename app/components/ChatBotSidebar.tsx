@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { 
   MainContainer, 
   ChatContainer, 
@@ -9,7 +9,7 @@ import {
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
 interface ChatBotSidebarProps {
-  graphData: any; // You might want to type this properly based on your knowledge graph structure
+  graphData: any;
 }
 
 const WELCOME_MESSAGE = {
@@ -33,9 +33,12 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
     sender: "user" | "assistant";
     direction: "incoming" | "outgoing";
   }[]>([WELCOME_MESSAGE]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSendMessage = async (message: string) => {
-    // Add user message
+    if (!message.trim() || isLoading) return;
+
+    setIsLoading(true);
     setMessages(prev => [...prev, {
       message,
       sender: "user",
@@ -56,6 +59,8 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
         sender: "assistant",
         direction: "incoming"
       }]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -103,11 +108,22 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
                 }}
               />
             ))}
+            {isLoading && (
+              <Message
+                model={{
+                  message: "Thinking...",
+                  sender: "assistant",
+                  direction: "incoming",
+                  position: "single"
+                }}
+              />
+            )}
           </MessageList>
           <MessageInput 
             placeholder="Ask me anything about Pedro's professional background..." 
             onSend={handleSendMessage}
             attachButton={false}
+            disabled={isLoading}
           />
         </ChatContainer>
       </MainContainer>
