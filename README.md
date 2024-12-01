@@ -1,3 +1,30 @@
+# Talk to My Resume - Interactive Resume Graph
+
+An interactive knowledge graph visualization of my professional experience with a chatbot interface that can answer questions about my background.
+
+## Core Technologies
+
+- **Framework**: Remix.run (React-based)
+- **Styling**: TailwindCSS
+- **Graph Visualization**: Cytoscape.js
+- **Chat Interface**: @chatscope/chat-ui-kit-react
+- **AI Integration**: Portkey AI (OpenAI)
+- **Build Tool**: Vite
+
+## Features
+
+- Interactive knowledge graph visualization of professional experience
+- Real-time chat interface to query about professional background
+- Graph-based navigation of experience, education, and skills
+- Tooltips with detailed information
+- AI-powered responses based on the knowledge graph data
+
+## Getting Started
+
+### Prerequisites
+- Node.js >= 20.0.0
+- npm or yarn
+
 # Welcome to Remix!
 
 - 📖 [Remix docs](https://remix.run/docs)
