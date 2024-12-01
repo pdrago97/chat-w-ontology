@@ -1,0 +1,153 @@
+{
+    "nodes": [
+      {
+        "id": "Pedro Reichow",
+        "type": "Person",
+        "location": "Florianópolis, Santa Catarina, Brazil",
+        "title": "Fullstack Developer/Data Engineer",
+        "contact": {
+          "email": "pedro_reichow@hotmail.com",
+          "linkedin": "https://www.linkedin.com/in/pedroreichow",
+          "github": "https://github.com/reichow"
+        }
+      },
+      {
+        "id": "Estácio",
+        "type": "Education",
+        "degree": "Systems Analysis and Development",
+        "years": "2021 - 2023"
+      },
+      {
+        "id": "UFSC",
+        "type": "Education",
+        "degree": "Electrical Engineering",
+        "years": "2017 - 2023"
+      },
+      {
+        "id": "IFSC",
+        "type": "Education",
+        "degree": "Technical High School in Electrotechnics",
+        "years": "2012 - 2016"
+      },
+      {
+        "id": "Trinnix AI Lab",
+        "type": "Experience",
+        "title": "AI and Computer Vision Engineer",
+        "years": "February 2024 - November 2024",
+        "responsibilities": [
+          "Developed scalable platforms in TypeScript, tRPC, and Node.js, integrating computer vision models for agricultural map analysis. The models, trained with YoloX and Roboflow, achieved an accuracy of +95% in identifying plant diseases and pests, as well as counting and identifying cattle behavior.",
+          "Built ontological knowledge graphs using Neo4j, enabling complex analysis and business insights.",
+          "Integrated LLMs (Gemini 1.5 pro, Claude 3.5 sonnet, Ollama 3, gpt-4o) through APIs, utilizing advanced prompt engineering techniques to ingest data from documents based on the ontology, generate automated reports from the insights, and issue alerts.",
+          "Managed the project's relational database with Prisma ORM."
+        ],
+        "technologies": ["TypeScript", "tRPC", "Node.js", "YoloX", "Roboflow", "Neo4j", "Gemini", "Claude", "Ollama", "gpt-40"]
+      },
+      {
+        "id": "Simulated Reality",
+        "type": "Experience",
+        "title": "Full Stack Engineer",
+        "years": "February 2023 - February 2024",
+        "responsibilities": [
+          "Developed VR solutions in Node.js and React for training and wellness, implementing features such as interaction with 3D objects, physics simulations.",
+          "Built scalable APIs with Node.js and Express, using queues for asynchronous task processing and pub/sub for real-time communication between system components. The use of queues enabled the processing of large 3D video files and updates of games compiled in Unity and Unreal.",
+          "Implemented unit and integration tests with Jest, ensuring software quality and reliability.",
+          "Created data visualization dashboards with Chart.js, integrated with a CRM system to track user progress in training, headset usage insights, and more.",
+          "Implemented a robust and scalable infrastructure in Azure App Service and Blob Storage, using CI/CD (GitOps) practices to automate the deployment process and ensure environment stability.",
+          "Ensured compliance with US healthcare industry security and privacy standards (FedRAMP and HIPAA), implementing a deployment protocol with Red Hat OpenShift containers."
+        ],
+        "technologies": ["Node.js", "React", "Express", "Jest", "Azure", "Chart.js", "FedRAMP", "HIPAA"]
+      },
+      {
+        "id": "QI Tech",
+        "type": "Experience",
+        "title": "Full Stack Engineer",
+        "years": "March 2022 - February 2023",
+        "responsibilities": [
+          "Developed scalable microservice APIs in Python with Flask and FastAPI, using the gRPC framework for inter-service communication. These APIs processed an average of 100,000 requests per day with an average latency of 150 ms.",
+          "Implemented data pipelines in Python, using Apache Beam and the Google Cloud Dataflow service for distributed and large-scale processing. The pipelines processed countless GB of data daily, from tax documents, credit agreements, and images for security identification services.",
+          "Orchestrated data pipelines with Apache Airflow, deployed on Google Cloud Composer, scheduling and monitoring workflow execution.",
+          "Used Google Cloud Pub/Sub to implement asynchronous and decoupled communication between microservices, ensuring system scalability and resilience.",
+          "Stored processed data in a Data Lake on Google Cloud Storage (GCS), optimized for analytical queries with Google Cloud BigQuery.",
+          "Implemented unit and integration tests (TDD) with pytest, ensuring code quality and API reliability.",
+          "Monitored system performance and health with Google Cloud Monitoring and Logging, configuring alerts to guarantee service availability.",
+          "Managed infrastructure as code (IaC) with Terraform, automating resource provisioning and management in GCP.",
+          "Built responsive web interfaces with React and NextJS, consuming microservice APIs."
+        ],
+        "technologies": ["Python", "Flask", "FastAPI", "gRPC", "Apache Beam", "Google Cloud Dataflow", "Apache Airflow", "Google Cloud Composer", "Google Cloud Pub/Sub", "BigQuery", "pytest", "Terraform", "React", "Next.js"]
+      },
+      {
+        "id": "PecSmart",
+        "type": "Experience",
+        "title": "Backend Developer Intern",
+        "years": "December 2021 - February 2022",
+        "responsibilities": [
+          "Developed RESTful APIs in Python with Django and Django REST Framework (DRF) to collect and manage sensor data. The APIs processed data from sensors, transmitting information every minutes/seconds.",
+          "Implemented the sensor data collection logic on Raspberry Pi devices using BalenaCLI, integrating with DRF. The collected data included silo volume, microphone audio, and camera images.",
+          "Built a data processing pipeline in Python to receive, process, and feed the RDS database where the ML models would consume it.",
+          "Created Bash automation scripts to back up data and update software on Raspberry Pi devices.",
+          "Developed front-end interfaces with Vue.js for real-time visualization of sensor data, allowing livestock farmers to monitor their swine herds. The interfaces displayed information such as health indicators in pig pens, volume with loading and unloading in silos, and translation of volume to kg/ton.",
+          "Used BalenaCLI to manage and deploy software on Raspberry Pi devices, facilitating system updates and maintenance in the field."
+        ],
+        "technologies": ["Python", "Raspberry Pi", "Django", "DRF", "BalenaCLI", "Vue.js"]
+      },
+      {
+        "id": "Fontes Promotora",
+        "type": "Experience",
+        "title": "Backend Developer",
+        "years": "May 2021 - October 2021",
+        "responsibilities": [
+          "Developed web scraping solutions using Scrapy and Requests",
+          "Built and maintained APIs using FastAPI, Flask, and Django Rest Framework",
+          "Managed databases using MongoDB and PostgreSQL",
+          "Implemented data processing pipelines with Pandas",
+          "Created frontend interfaces using ReactJS",
+          "Deployed and maintained applications using Docker and AWS",
+          "Automated project management workflows with Smartsheets"
+        ],
+        "technologies": ["Python", "JavaScript", "Web scraping", "FastAPI", "Flask", "MongoDB", "PostgreSQL", "React", "Docker", "AWS", "Smartsheets"]
+      },
+      {
+        "id": "Intelbras",
+        "type": "Experience",
+        "title": "Product Developer",
+        "years": "November 2020 - May 2021",
+        "responsibilities": [
+          "Created technical documentation for analog camera systems",
+          "Executed product testing and validation procedures",
+          "Conducted negotiations with international suppliers",
+          "Designed and built electronic product prototypes",
+          "Conducted feasibility studies and failure mode analysis",
+          "Managed product certification processes",
+          "Collaborated with cross-functional teams for product development"
+        ],
+        "technologies": ["Analog Camera Systems", "Electronic Prototyping"]
+      },
+      {
+        "id": "Hostgator.com",
+        "type": "Experience",
+        "title": "IT Technical Support",
+        "years": "September 2018 - August 2019",
+        "responsibilities": [
+          "Assisted clients with technical issues and inquiries",
+          "Acquired foundational knowledge in HTML, CSS, PHP, and WordPress",
+          "Became proficient in Cpanel and WHMCS",
+          "Supported small businesses in establishing their online presence",
+          "Maintained online performance and reliability for large enterprises"
+        ],
+        "technologies": ["HTML", "CSS", "PHP", "WordPress", "Cpanel", "WHMCS"]
+      }
+    ],
+    "edges": [
+      { "source": "Pedro Reichow", "target": "Estácio", "relation": "EDUCATED_AT" },
+      { "source": "Pedro Reichow", "target": "UFSC", "relation": "EDUCATED_AT" },
+      { "source": "Pedro Reichow", "target": "IFSC", "relation": "EDUCATED_AT" },
+      { "source": "Pedro Reichow", "target": "Trinnix AI Lab", "relation": "WORKED_AT" },
+      { "source": "Pedro Reichow", "target": "Simulated Reality", "relation": "WORKED_AT" },
+      { "source": "Pedro Reichow", "target": "QI Tech", "relation": "WORKED_AT" },
+      { "source": "Pedro Reichow", "target": "PecSmart", "relation": "WORKED_AT" },
+      { "source": "Pedro Reichow", "target": "Fontes Promotora", "relation": "WORKED_AT" },
+      { "source": "Pedro Reichow", "target": "Intelbras", "relation": "WORKED_AT" },
+      { "source": "Pedro Reichow", "target": "Hostgator.com", "relation": "WORKED_AT" }
+    ]
+  }
+  
