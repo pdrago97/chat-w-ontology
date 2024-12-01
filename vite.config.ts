@@ -21,4 +21,8 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  // Add this to ensure environment variables are available
+  define: {
+    'process.env.PORTKEY_API_KEY': JSON.stringify(process.env.PORTKEY_API_KEY),
+  },
 });

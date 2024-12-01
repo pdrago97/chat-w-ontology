@@ -13,19 +13,19 @@ interface ChatBotSidebarProps {
 }
 
 const WELCOME_MESSAGE = {
-  message: "Hi! I'm Pedro's AI assistant. I'm here to answer any questions regarding Pedro's professional capabilities, experiences and skills.",
+  message: "Hi! I'm Pedro's AI assistant. I can help you learn about his professional experience, skills, and achievements. What would you like to know?",
   sender: "assistant" as const,
   direction: "incoming" as const
 };
 
-const SYSTEM_PROMPT = `You are an AI assistant for Pedro Reichow. Your purpose is to help answer questions about Pedro's professional experience, skills, and capabilities.
-You should use the provided knowledge graph data to ensure accurate responses about:
+const SYSTEM_PROMPT = `You are an AI assistant for Pedro Reichow, focused exclusively on his professional background.
+You must only provide information about:
 - Work experiences and responsibilities
 - Educational background
 - Technical skills and technologies used
 - Professional achievements
 
-Only make statements that can be supported by the information in the knowledge graph. If asked about something outside of this scope, politely explain that you can only provide information about Pedro's professional background.`;
+Use only the information provided in the knowledge graph. If asked about anything outside this scope, politely redirect to professional topics.`;
 
 const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
   const [messages, setMessages] = useState<{
@@ -39,32 +39,14 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
     if (!message.trim() || isLoading) return;
 
     setIsLoading(true);
-    setMessages(prev => [...prev, {
+    const userMessage = {
       message,
-      sender: "user",
-      direction: "outgoing"
-    }]);
+      sender: "user" as const,
+      direction: "outgoing" as const
+    };
 
-    try {
-      const response = await generateAIResponse(message, graphData);
-      
-      setMessages(prev => [...prev, {
-        message: response,
-        sender: "assistant",
-        direction: "incoming"
-      }]);
-    } catch (error) {
-      setMessages(prev => [...prev, {
-        message: "I apologize, but I encountered an error processing your request. Please try again.",
-        sender: "assistant",
-        direction: "incoming"
-      }]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    setMessages(prev => [...prev, userMessage]);
 
-  const generateAIResponse = async (userMessage: string, graphData: any): Promise<string> => {
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -72,9 +54,9 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: userMessage,
+          message,
           systemPrompt: SYSTEM_PROMPT,
-          graphData: graphData,
+          graphData,
           conversationHistory: messages
         }),
       });
@@ -84,10 +66,21 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
       }
 
       const data = await response.json();
-      return data.response;
+      
+      setMessages(prev => [...prev, {
+        message: data.response,
+        sender: "assistant",
+        direction: "incoming"
+      }]);
     } catch (error) {
       console.error('Error generating AI response:', error);
-      throw error;
+      setMessages(prev => [...prev, {
+        message: "I apologize, but I encountered an error. Please try asking about Pedro's professional background again.",
+        sender: "assistant",
+        direction: "incoming"
+      }]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -111,7 +104,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
             {isLoading && (
               <Message
                 model={{
-                  message: "Thinking...",
+                  message: "Analyzing your question about Pedro's professional background...",
                   sender: "assistant",
                   direction: "incoming",
                   position: "single"
@@ -120,7 +113,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
             )}
           </MessageList>
           <MessageInput 
-            placeholder="Ask me anything about Pedro's professional background..." 
+            placeholder="Ask about Pedro's professional experience, skills, or education..." 
             onSend={handleSendMessage}
             attachButton={false}
             disabled={isLoading}

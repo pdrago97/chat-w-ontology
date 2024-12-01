@@ -1,6 +1,67 @@
 import { json } from "@remix-run/node";
 import type { ActionFunction } from "@remix-run/node";
 
+import { Portkey } from "portkey-ai";
+
+
+function formatGraphDataForLLM(graphData: any): string {
+  let formattedText = '';
+  
+  // Format nodes
+  if (graphData.nodes) {
+    formattedText += 'Entities:\n\n';
+    graphData.nodes.forEach((node: any) => {
+      formattedText += `${node.id} (${node.type}):\n`;
+      
+      // Handle different node types
+      switch (node.type) {
+        case 'Person':
+          formattedText += `- Title: ${node.title}\n`;
+          formattedText += `- Location: ${node.location}\n`;
+          break;
+        case 'Experience':
+          formattedText += `- Title: ${node.title}\n`;
+          formattedText += `- Years: ${node.years}\n`;
+          if (node.responsibilities) {
+            formattedText += '- Responsibilities:\n';
+            node.responsibilities.forEach((resp: string) => {
+              formattedText += `  * ${resp}\n`;
+            });
+          }
+          if (node.technologies) {
+            formattedText += `- Technologies: ${node.technologies.join(', ')}\n`;
+          }
+          break;
+        case 'Education':
+          formattedText += `- Degree: ${node.degree}\n`;
+          formattedText += `- Years: ${node.years}\n`;
+          break;
+      }
+      formattedText += '\n';
+    });
+  }
+
+  // Format relationships
+  if (graphData.edges) {
+    formattedText += 'Relationships:\n\n';
+    graphData.edges.forEach((edge: any) => {
+      formattedText += `${edge.source} ${edge.relation} ${edge.target}\n`;
+    });
+  }
+
+  return formattedText;
+}
+
+console.log(process.env.PORTKEY_API_KEY)
+console.log(process.env.OPENAI_API_KEY)
+
+
+const portkey = new Portkey({
+  apiKey: "XqPR2+XZjPsrPqfAf/DICRdaADX5",
+  virtualKey: "open-ai-virtual-e16edd"
+})
+
+
 interface Message {
   message: string;
   sender: "user" | "assistant";
@@ -14,6 +75,26 @@ interface ChatRequest {
   conversationHistory: Message[];
 }
 
+const GUARDRAILS = `
+You are an AI assistant focused solely on providing information about Pedro's professional background.
+You must:
+1. Only answer questions related to Pedro's:
+   - Work experience and responsibilities
+   - Education
+   - Technical skills
+   - Professional achievements
+2. Use ONLY the information provided in the knowledge graph
+3. If asked about anything outside of Pedro's professional background, politely decline and redirect to professional topics
+4. Keep responses concise and factual
+5. Never make assumptions or add information not present in the knowledge graph
+
+You must not:
+1. Discuss personal matters
+2. Make recommendations
+3. Share opinions
+4. Provide information not explicitly stated in the knowledge graph
+`;
+
 export const action: ActionFunction = async ({ request }) => {
   if (request.method !== "POST") {
     return json({ error: "Method not allowed" }, { status: 405 });
@@ -21,14 +102,12 @@ export const action: ActionFunction = async ({ request }) => {
 
   try {
     const { message, systemPrompt, graphData, conversationHistory }: ChatRequest = await request.json();
-
-    // Format the knowledge graph data for better context
     const formattedGraph = formatGraphDataForLLM(graphData);
 
     const messages = [
       {
         role: "system",
-        content: `${systemPrompt}\n\nKnowledge Graph Data:\n${formattedGraph}`
+        content: `${systemPrompt}\n\n${GUARDRAILS}\n\nKnowledge Graph Data:\n${formattedGraph}`
       },
       ...conversationHistory.map(msg => ({
         role: msg.sender === "user" ? "user" : "assistant",
@@ -37,20 +116,46 @@ export const action: ActionFunction = async ({ request }) => {
       { role: "user", content: message }
     ];
 
-    // Make API call to your preferred LLM service
-    // Example with OpenAI (you'll need to add the openai package and configure API key)
-    // const completion = await openai.chat.completions.create({
-    //   model: "gpt-4",
-    //   messages: messages,
-    //   temperature: 0.7,
-    //   max_tokens: 500
-    // });
-    // return json({ response: completion.choices[0].message.content });
-
-    // For now, return a mock response
-    return json({ 
-      response: `Based on the knowledge graph, I can tell you about Pedro's experience. What specific aspect would you like to know about?` 
+    // Use Portkey to manage the LLM call
+    const completion = await portkey.chat.completions.create({
+      messages,
+      model: "gpt-4", // or your preferred model
+      temperature: 0.3, // Lower temperature for more focused responses
+      max_tokens: 500,
+      stop: ["I don't know", "I'm not sure"], // Prevent uncertain responses
+      tools: [{
+        type: "function",
+        function: {
+          name: "validateResponse",
+          description: "Validates if the response contains only information from the knowledge graph",
+          parameters: {
+            type: "object",
+            properties: {
+              isValid: {
+                type: "boolean",
+                description: "Whether the response contains only valid information"
+              },
+              response: {
+                type: "string",
+                description: "The validated response"
+              }
+            },
+            required: ["isValid", "response"]
+          }
+        }
+      }]
     });
+
+    const response = completion.choices[0].message.content;
+    
+    // Additional validation to ensure response is about professional background
+    if (!isValidResponse(response)) {
+      return json({ 
+        response: "I can only provide information about Pedro's professional background. Could you please ask something about his work experience, education, or skills?" 
+      });
+    }
+
+    return json({ response });
 
   } catch (error) {
     console.error('Error in chat endpoint:', error);
@@ -58,41 +163,15 @@ export const action: ActionFunction = async ({ request }) => {
   }
 };
 
-function formatGraphDataForLLM(graphData: any): string {
-  let formatted = "";
-
-  // Format Person data
-  const person = graphData.nodes.find((n: any) => n.type === "Person");
-  formatted += `Person Information:\n`;
-  formatted += `Name: ${person.id}\n`;
-  formatted += `Title: ${person.title}\n`;
-  formatted += `Location: ${person.location}\n\n`;
-
-  // Format Education
-  formatted += "Education:\n";
-  graphData.nodes
-    .filter((n: any) => n.type === "Education")
-    .forEach((edu: any) => {
-      formatted += `- ${edu.degree} at ${edu.id} (${edu.years})\n`;
-    });
-  formatted += "\n";
-
-  // Format Experience
-  formatted += "Professional Experience:\n";
-  graphData.nodes
-    .filter((n: any) => n.type === "Experience")
-    .forEach((exp: any) => {
-      formatted += `\n${exp.id} - ${exp.title} (${exp.years})\n`;
-      if (exp.responsibilities) {
-        formatted += "Responsibilities:\n";
-        exp.responsibilities.forEach((resp: string) => {
-          formatted += `- ${resp}\n`;
-        });
-      }
-      if (exp.technologies) {
-        formatted += `Technologies: ${exp.technologies.join(", ")}\n`;
-      }
-    });
-
-  return formatted;
+function isValidResponse(response: string): boolean {
+  const professionalKeywords = [
+    'experience', 'education', 'skills', 'work', 'project', 'technology',
+    'responsibility', 'achievement', 'degree', 'professional', 'technical'
+  ];
+  
+  return professionalKeywords.some(keyword => 
+    response.toLowerCase().includes(keyword)
+  );
 }
+
+// Rest of the formatGraphDataForLLM function remains the same
