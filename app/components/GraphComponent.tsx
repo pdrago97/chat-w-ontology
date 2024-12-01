@@ -17,21 +17,21 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
     }
 
     cyRef.current = cytoscape({
-      container: containerRef.current,
-      elements: {
-        nodes: graphData.nodes.map((node: any) => ({
-          data: { ...node, label: getNodeLabel(node) },
-          classes: node.type.toLowerCase()
-        })),
-        edges: graphData.edges.map((edge: any) => ({
-          data: {
-            source: edge.source,
-            target: edge.target,
-            label: edge.relation
-          }
-        }))
-      },
-      style: [
+        container: containerRef.current,
+        elements: {
+          nodes: graphData.nodes.map((node: any) => ({
+            data: { ...node, label: getNodeLabel(node) },
+            classes: node.type.toLowerCase()
+          })),
+          edges: graphData.edges.map((edge: any) => ({
+            data: {
+              source: edge.source,
+              target: edge.target,
+              label: edge.relation
+            }
+          }))
+        },
+            style: [
         {
           selector: 'node',
           style: {
@@ -39,10 +39,10 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
             'text-valign': 'center',
             'text-halign': 'center',
             'text-wrap': 'wrap',
-            'text-max-width': '200px',
-            'font-size': '13px',
-            'border-width': '2px',
-            'padding': '10px',
+            'text-max-width': '2000px',
+            'font-size': '12px',
+            'border-width': '1px',
+            'padding': '15px',
             'shape': 'roundrectangle',
             'width': 'label',
             'height': 'label',
@@ -73,30 +73,41 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
         {
           selector: 'edge',
           style: {
-            'width': 2,
+            'width': 1,
             'line-color': '#999',
             'target-arrow-color': '#999',
             'target-arrow-shape': 'triangle',
             'curve-style': 'bezier',
             'label': 'data(label)',
-            'font-size': '11px',
+            'font-size': '6px',
             'text-rotation': 'autorotate',
-            'text-margin-y': '-10px'
+            'text-margin-y': '-10px',
+            'text-opacity': 0.8  // Added slight transparency
+
           }
         }
       ],
       layout: {
         name: 'cose',
-        padding: 50,
-        nodeRepulsion: 8000,
-        idealEdgeLength: 200,
-        gravity: 0.05,
-        edgeElasticity: 0.1,
-        spacingFactor: 2
+        padding: 100,
+        nodeRepulsion: 100000000,     // Increased from 8000
+        idealEdgeLength: 200,     // Increased for more spacing
+        nodeOverlap: 90000000,          // Prevent node overlap
+        gravity: 2,             // Slightly increased
+        edgeElasticity: 4,
+        spacingFactor: 9.5,       // Increased from 2
+        randomize: false,          // Enable randomization
+        componentSpacing: 0.000000000000000001,    // Added component spacing
+        refresh: 20,              // Refresh rate during layout
+        fit: true,
+        stop: function() {
+          cyRef.current.center();
+          cyRef.current.fit();
+        }
       },
-      wheelSensitivity: 0.2,
-      minZoom: 0.3,
-      maxZoom: 2
+      minZoom: 0.2,              // Allow more zoom out
+      maxZoom: 3,
+      wheelSensitivity: 0.2
     });
 
     // Add click event for nodes
@@ -121,11 +132,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
       containerRef.current?.appendChild(tooltip);
       
       // Highlight selected node
-      node.style({
-        'border-width': '4px',
-        'font-size': '14px',
-        'z-index': 999
-      });
+
     });
 
     // Close tooltip when clicking on background
@@ -135,18 +142,13 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
         if (tooltip) {
           tooltip.remove();
         }
-        // Reset all node styles
-        cyRef.current.nodes().style({
-          'border-width': '2px',
-          'font-size': '13px'
-        });
       }
     });
 
     // Initial positioning
-    cyRef.current.fit(undefined, 100);
+    cyRef.current.fit(undefined, 1000);
     cyRef.current.zoom({
-      level: 0.6,
+      level: 0.012,
       position: cyRef.current.getElementById('Pedro Reichow').position()
     });
 
@@ -178,7 +180,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
   max-width: 400px;
   z-index: 1000;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  font-size: 13px;
+  font-size: 11px;
   transform: translate(-50%, -100%);
   line-height: 1.4;
   pointer-events: auto;
@@ -190,7 +192,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
 }
           .node-tooltip h3 {
             margin: 0 0 8px 0;
-            font-size: 16px;
+            font-size: 11px;
             font-weight: 600;
             color: #333;
           }
