@@ -79,7 +79,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
             'target-arrow-shape': 'triangle',
             'curve-style': 'bezier',
             'label': 'data(label)',
-            'font-size': '6px',
+            'font-size': '16px',
             'text-rotation': 'autorotate',
             'text-margin-y': '-10px',
             'text-opacity': 0.8  // Added slight transparency
