@@ -32,7 +32,7 @@ export default function Index() {
 
   return (
     <div className="flex h-screen w-full bg-white">
-      {/* Main graph area - Added explicit dimensions and background */}
+      {/* Main graph area */}
       <div className="flex-1 h-full relative">
         <div className="absolute inset-0">
           <GraphComponent graphData={graphData} />
@@ -40,7 +40,7 @@ export default function Index() {
       </div>
       
       {/* Sidebar */}
-      <div className="w-96 border-l border-gray-200 bg-white shadow-lg overflow-auto">
+      <div className="relative h-full border-l border-gray-200 bg-white shadow-lg">
         <ChatBotSidebar graphData={graphData} />
       </div>
     </div>
