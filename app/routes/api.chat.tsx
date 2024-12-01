@@ -18,6 +18,12 @@ function formatGraphDataForLLM(graphData: any): string {
         case 'Person':
           formattedText += `- Title: ${node.title}\n`;
           formattedText += `- Location: ${node.location}\n`;
+          if (node.contact) {
+            formattedText += `- Contact:\n`;
+            formattedText += `  * Email: ${node.contact.email}\n`;
+            formattedText += `  * LinkedIn: ${node.contact.linkedin}\n`;
+            formattedText += `  * GitHub: ${node.contact.github}\n`;
+          }
           break;
         case 'Experience':
           formattedText += `- Title: ${node.title}\n`;
@@ -36,12 +42,23 @@ function formatGraphDataForLLM(graphData: any): string {
           formattedText += `- Degree: ${node.degree}\n`;
           formattedText += `- Years: ${node.years}\n`;
           break;
+        case 'Profile':
+          formattedText += `- Description: ${node.description}\n`;
+          break;
+        case 'Skills':
+        case 'Achievements':
+        case 'Interests':
+          formattedText += '- Items:\n';
+          node.items?.forEach((item: string) => {
+            formattedText += `  * ${item}\n`;
+          });
+          break;
       }
       formattedText += '\n';
     });
   }
 
-  // Format relationships
+  // Rest of the function remains the same
   if (graphData.edges) {
     formattedText += 'Relationships:\n\n';
     graphData.edges.forEach((edge: any) => {
@@ -82,6 +99,8 @@ You must:
    - Work experience and responsibilities
    - Education
    - Technical skills
+   - Soft Skills
+   - Future Interests
    - Professional achievements
 2. Use ONLY the information provided in the knowledge graph
 3. If asked about anything outside of Pedro's professional background, politely decline and redirect to professional topics
@@ -119,7 +138,7 @@ export const action: ActionFunction = async ({ request }) => {
     // Use Portkey to manage the LLM call
     const completion = await portkey.chat.completions.create({
       messages,
-      model: "gpt-4", // or your preferred model
+      model: "gpt-4o-mini", // or your preferred model
       temperature: 0.3, // Lower temperature for more focused responses
       max_tokens: 500,
       stop: ["I don't know", "I'm not sure"], // Prevent uncertain responses
@@ -165,7 +184,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 function isValidResponse(response: string): boolean {
   const professionalKeywords = [
-    'experience', 'education', 'skills', 'work', 'project', 'technology',
+    'experience', 'education', 'skills', 'soft skills', 'future interests', 'personal', 'work', 'project', 'technology',
     'responsibility', 'achievement', 'degree', 'professional', 'technical'
   ];
   

@@ -13,6 +13,8 @@
   "dependencies": {
     "@chatscope/chat-ui-kit-react": "^2.0.3",
     "@chatscope/chat-ui-kit-styles": "^1.4.0",
+    "@fortawesome/fontawesome-svg-core": "^6.7.1",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@remix-run/node": "^2.15.0",
     "@remix-run/react": "^2.15.0",
     "@remix-run/serve": "^2.15.0",

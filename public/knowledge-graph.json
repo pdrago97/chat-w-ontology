@@ -135,6 +135,54 @@
           "Maintained online performance and reliability for large enterprises"
         ],
         "technologies": ["HTML", "CSS", "PHP", "WordPress", "Cpanel", "WHMCS"]
+      },
+      {
+        "id": "Personal",
+        "type": "Profile",
+        "description": "Pedro is a highly motivated and skilled full-stack developer and data engineer with a proven track record of delivering successful projects in various domains. His experience ranges from building scalable APIs and data pipelines to implementing complex VR solutions and integrating AI/ML models. He's a quick learner, adaptable to new technologies, and possesses strong problem-solving and communication skills. Pedro's passion for innovation and his commitment to quality make him a valuable asset to any team."
+      },
+      {
+        "id": "Soft Skills",
+        "type": "Skills",
+        "items": [
+          "Problem-solving",
+          "Communication", 
+          "Teamwork",
+          "Adaptability",
+          "Time management",
+          "Creativity",
+          "Leadership",
+          "Critical Thinking",
+          "He's a simple guy, looking a long term partnership with a cool project that he can help excel"
+        ]
+      },
+      {
+        "id": "Main Achievements",
+        "type": "Achievements",
+        "items": [
+          "Developed scalable platforms integrating Computer Vision models with +95% accuracy at Trinnix AI Lab.",
+          "Implemented robust and scalable VR training solutions compliant with FedRAMP and HIPAA at Simulated Reality.",
+          "Built data pipelines processing countless GB of data daily at QI Tech, achieving 150ms average latency for 100,000 daily requests.",
+          "Developed a full-stack IoT solution for livestock monitoring at PecSmart, from sensor integration to data visualization."
+        ]
+      },
+      {
+        "id": "Future Interests",
+        "type": "Interests",
+        "items": [
+          "Computer Vision",
+          "Quantun computing",
+          "Fintechs",
+          "Future of work",
+          "Remote consulting",
+          "Business development",
+          "Healthcare industry",
+          "AI automation",
+          "AI/ML Engineering",
+          "Distributed Systems", 
+          "Cloud Computing",
+          "Blockchain Technology"
+        ]
       }
     ],
     "edges": [
@@ -147,7 +195,11 @@
       { "source": "Pedro Reichow", "target": "PecSmart", "relation": "WORKED_AT" },
       { "source": "Pedro Reichow", "target": "Fontes Promotora", "relation": "WORKED_AT" },
       { "source": "Pedro Reichow", "target": "Intelbras", "relation": "WORKED_AT" },
-      { "source": "Pedro Reichow", "target": "Hostgator.com", "relation": "WORKED_AT" }
+      { "source": "Pedro Reichow", "target": "Hostgator.com", "relation": "WORKED_AT" },
+      { "source": "Pedro Reichow", "target": "Personal", "relation": "HAS_PROFILE" },
+      { "source": "Personal", "target": "Soft Skills", "relation": "HAS_SKILLS" },
+      { "source": "Personal", "target": "Main Achievements", "relation": "HAS_ACHIEVEMENTS" },
+      { "source": "Personal", "target": "Future Interests", "relation": "HAS_INTERESTS" }
     ]
   }
   

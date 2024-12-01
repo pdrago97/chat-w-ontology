@@ -17,21 +17,22 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
     }
 
     cyRef.current = cytoscape({
-        container: containerRef.current,
-        elements: {
-          nodes: graphData.nodes.map((node: any) => ({
-            data: { ...node, label: getNodeLabel(node) },
-            classes: node.type.toLowerCase()
-          })),
-          edges: graphData.edges.map((edge: any) => ({
-            data: {
-              source: edge.source,
-              target: edge.target,
-              label: edge.relation
-            }
-          }))
-        },
-            style: [
+      container: containerRef.current,
+      elements: {
+        nodes: graphData.nodes.map((node: any) => ({
+          data: { ...node, label: getNodeLabel(node) },
+          // Add null check for node.type
+          classes: node?.type?.toLowerCase() || 'default'
+        })),
+        edges: graphData.edges.map((edge: any) => ({
+          data: {
+            source: edge.source,
+            target: edge.target,
+            label: edge.relation
+          }
+        }))
+      },
+      style: [
         {
           selector: 'node',
           style: {
@@ -82,30 +83,29 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
             'font-size': '16px',
             'text-rotation': 'autorotate',
             'text-margin-y': '-10px',
-            'text-opacity': 0.8  // Added slight transparency
-
+            'text-opacity': 0.8
           }
         }
       ],
       layout: {
         name: 'cose',
         padding: 100,
-        nodeRepulsion: 100000000,     // Increased from 8000
-        idealEdgeLength: 200,     // Increased for more spacing
-        nodeOverlap: 90000000,          // Prevent node overlap
-        gravity: 2,             // Slightly increased
+        nodeRepulsion: 100000000,
+        idealEdgeLength: 200,
+        nodeOverlap: 90000000,
+        gravity: 2,
         edgeElasticity: 4,
-        spacingFactor: 9.5,       // Increased from 2
-        randomize: false,          // Enable randomization
-        componentSpacing: 0.000000000000000001,    // Added component spacing
-        refresh: 20,              // Refresh rate during layout
+        spacingFactor: 9.5,
+        randomize: false,
+        componentSpacing: 0.000000000000000001,
+        refresh: 20,
         fit: true,
         stop: function() {
           cyRef.current.center();
           cyRef.current.fit();
         }
       },
-      minZoom: 0.2,              // Allow more zoom out
+      minZoom: 0.2,
       maxZoom: 3,
       wheelSensitivity: 0.2
     });
@@ -130,9 +130,6 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
       tooltip.style.left = `${pos.x}px`;
       tooltip.style.top = `${pos.y - 10}px`;
       containerRef.current?.appendChild(tooltip);
-      
-      // Highlight selected node
-
     });
 
     // Close tooltip when clicking on background
@@ -171,25 +168,25 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
       />
       <style>
         {`
-.node-tooltip {
-  position: absolute;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 12px 16px;
-  max-width: 400px;
-  z-index: 1000;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  font-size: 11px;
-  transform: translate(-50%, -100%);
-  line-height: 1.4;
-  pointer-events: auto;
-  cursor: text;
-  user-select: text;
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-}
+          .node-tooltip {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 12px 16px;
+            max-width: 400px;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 11px;
+            transform: translate(-50%, -100%);
+            line-height: 1.4;
+            pointer-events: auto;
+            cursor: text;
+            user-select: text;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+          }
           .node-tooltip h3 {
             margin: 0 0 8px 0;
             font-size: 11px;
@@ -219,7 +216,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
 };
 
 function getNodeLabel(node: any): string {
-  switch (node.type) {
+  switch (node?.type) {
     case 'Person':
       return `${node.id}\n${node.title}`;
     case 'Education':
@@ -227,50 +224,63 @@ function getNodeLabel(node: any): string {
     case 'Experience':
       return `${node.id}\n${node.title}\n${node.years}`;
     default:
-      return node.id;
+      return node?.id || '';
   }
 }
 
 function createTooltipContent(data: any): string {
-  switch (data.type) {
-    case 'Person':
-      return `
-        <h3>${data.id}</h3>
-        <p><strong>${data.title}</strong></p>
-        <p>${data.location}</p>
-        <p><strong>Contact:</strong></p>
-        <ul>
-          <li>Email: ${data.contact.email}</li>
-          <li>LinkedIn: ${data.contact.linkedin}</li>
-          <li>GitHub: ${data.contact.github}</li>
-        </ul>
-      `;
-    case 'Education':
-      return `
-        <h3>${data.id}</h3>
-        <p><strong>${data.degree}</strong></p>
-        <p>${data.years}</p>
-      `;
-    case 'Experience':
-      return `
-        <h3>${data.id}</h3>
-        <p><strong>${data.title}</strong></p>
-        <p>${data.years}</p>
-        ${data.responsibilities ? `
-          <p><strong>Responsibilities:</strong></p>
+    switch (data?.type) {
+      case 'Person':
+        return `
+          <h3>${data.id}</h3>
+          <p><strong>${data.title}</strong></p>
+          <p>${data.location}</p>
+          <p><strong>Contact:</strong></p>
           <ul>
-            ${data.responsibilities.map((resp: string) => `<li>${resp}</li>`).join('')}
+            <li>Email: ${data.contact?.email || ''}</li>
+            <li>LinkedIn: ${data.contact?.linkedin || ''}</li>
+            <li>GitHub: ${data.contact?.github || ''}</li>
           </ul>
-        ` : ''}
-        ${data.technologies ? `
-          <div class="technologies">
-            Technologies: ${data.technologies.join(', ')}
-          </div>
-        ` : ''}
-      `;
-    default:
-      return `<h3>${data.id}</h3>`;
+        `;
+      case 'Education':
+        return `
+          <h3>${data.id}</h3>
+          <p><strong>${data.degree}</strong></p>
+          <p>${data.years}</p>
+        `;
+      case 'Experience':
+        return `
+          <h3>${data.id}</h3>
+          <p><strong>${data.title}</strong></p>
+          <p>${data.years}</p>
+          ${data.responsibilities ? `
+            <p><strong>Responsibilities:</strong></p>
+            <ul>
+              ${data.responsibilities.map((resp: string) => `<li>${resp}</li>`).join('')}
+            </ul>
+          ` : ''}
+          ${data.technologies ? `
+            <div class="technologies">
+              Technologies: ${data.technologies.join(', ')}
+            </div>
+          ` : ''}
+        `;
+      case 'Skills':
+      case 'Achievements':
+      case 'Interests':
+        return `
+          <h3>${data.id}</h3>
+          <ul>
+            ${data.items?.map((item: string) => `<li>${item}</li>`).join('') || ''}
+          </ul>
+        `;
+      case 'Profile':
+        return `
+          <h3>${data.id}</h3>
+          <p>${data.description}</p>
+        `;
+      default:
+        return `<h3>${data?.id || ''}</h3>`;
+    }
   }
-}
-
 export default GraphComponent;
