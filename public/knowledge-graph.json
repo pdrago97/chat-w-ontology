@@ -7,7 +7,7 @@
         "title": "Fullstack Developer/Data Engineer",
         "contact": {
           "email": "pedro_reichow@hotmail.com",
-          "linkedin": "https://www.linkedin.com/in/pedroreichow",
+          "linkedin": "https://www.linkedin.com/in/pedroreichow", 
           "github": "https://github.com/pdrago97",
           "phone": "+5548999052697"
         }
@@ -16,19 +16,49 @@
         "id": "Estácio",
         "type": "Education",
         "degree": "Systems Analysis and Development",
-        "years": "2021 - 2023"
+        "years": "2021 - 2023",
+        "responsibilities": [
+          "Developed strong programming fundamentals in languages like Java, Python, and JavaScript",
+          "Learned software engineering principles including OOP, design patterns, and clean code practices",
+          "Gained experience with databases, both SQL and NoSQL",
+          "Studied web development technologies and frameworks",
+          "Learned systems analysis, requirements gathering, and software architecture",
+          "Practiced agile methodologies and project management",
+          "Built full-stack applications as course projects"
+        ]
       },
       {
         "id": "UFSC",
         "type": "Education",
-        "degree": "Electrical Engineering",
-        "years": "2017 - 2023"
+        "degree": "Electrical Engineering", 
+        "years": "2017 - 2023",
+        "responsibilities": [
+          "Studied advanced mathematics, physics, and engineering fundamentals",
+          "Learned circuit analysis, digital electronics, and power systems",
+          "Gained experience with microcontrollers and embedded systems programming",
+          "Conducted laboratory experiments and practical projects",
+          "Studied control systems and automation",
+          "Learned signal processing and telecommunications principles",
+          "Developed skills in electrical system design and simulation",
+          "Participated in research projects involving renewable energy systems"
+        ]
       },
       {
         "id": "IFSC",
         "type": "Education",
         "degree": "Technical High School in Electrotechnics",
         "years": "2012 - 2016"
+      ,
+        "responsibilities": [
+          "Learned fundamentals of electrical systems and circuit analysis",
+          "Gained hands-on experience with electrical installations and maintenance",
+          "Studied industrial automation and control systems",
+          "Practiced electrical safety protocols and regulations",
+          "Developed skills in reading and creating electrical schematics",
+          "Learned about power distribution systems and transformers",
+          "Gained experience with electrical measurement instruments",
+          "Participated in practical laboratory projects"
+        ]
       },
       {
         "id": "Trinnix AI Lab",
@@ -36,12 +66,21 @@
         "title": "AI and Computer Vision Engineer",
         "years": "February 2024 - November 2024",
         "responsibilities": [
-          "Developed scalable platforms in TypeScript, tRPC, and Node.js, integrating computer vision models for agricultural map analysis. The models, trained with YoloX and Roboflow, achieved an accuracy of +95% in identifying plant diseases and pests, as well as counting and identifying cattle behavior.",
-          "Built ontological knowledge graphs using Neo4j, enabling complex analysis and business insights.",
+          "Developed scalable platforms in TypeScript, tRPC, and Node.js, integrating computer vision models for agricultural map analysis with Qgis. The models, trained with YoloX and Roboflow, achieved an accuracy of +95% in identifying plant diseases and pests, as well as counting and identifying cattle behavior.",
+          "Built ontological knowledge graphs using MongoDB, Milvus, and Cytoscape.js for visualization, enabling complex analysis and business insights. Implemented vector embeddings for semantic search and relationship mapping between entities.",
           "Integrated LLMs (Gemini 1.5 pro, Claude 3.5 sonnet, Ollama 3, gpt-4o) through APIs, utilizing advanced prompt engineering techniques to ingest data from documents based on the ontology, generate automated reports from the insights, and issue alerts.",
-          "Managed the project's relational database with Prisma ORM."
+          "Managed the project's relational database with Prisma ORM.",
+          "Researched and implemented various ontology frameworks and tools including:",
+          "- Portkey for secure authentication and access control in knowledge graph systems",
+          "- Cognee for semantic reasoning and inference capabilities",
+          "- Palantir Foundry for large-scale data integration and analysis",
+          "- Neo4j for graph database management and querying",
+          "- RDF/OWL standards for knowledge representation",
+          "- SPARQL for complex graph queries and data retrieval",
+          "Developed custom ontology schemas and taxonomies to model agricultural domain knowledge",
+          "Implemented semantic search and recommendation systems using vector embeddings and similarity metrics"
         ],
-        "technologies": ["TypeScript", "tRPC", "Node.js", "YoloX", "Roboflow", "Neo4j", "Gemini", "Claude", "Ollama", "gpt-40"]
+        "technologies": ["TypeScript", "tRPC", "Node.js", "YoloX", "Ultralytics", "Roboflow", "Knowledge-graphs", "Gemini1.5", "Claude", "Ollama", "gpt-40", "Cloudflare", "digital ocean", "Qgis", "Python scripting"]
       },
       {
         "id": "Simulated Reality",
@@ -56,7 +95,7 @@
           "Implemented a robust and scalable infrastructure in Azure App Service and Blob Storage, using CI/CD (GitOps) practices to automate the deployment process and ensure environment stability.",
           "Ensured compliance with US healthcare industry security and privacy standards (FedRAMP and HIPAA), implementing a deployment protocol with Red Hat OpenShift containers."
         ],
-        "technologies": ["Node.js", "React", "Express", "Jest", "Azure", "Chart.js", "FedRAMP", "HIPAA"]
+        "technologies": ["Node.js", "React", "Express", "Jest","OpenShift Redhat" ,"Azure", "Chart.js", "FedRAMP", "HIPAA"]
       },
       {
         "id": "QI Tech",
@@ -143,6 +182,11 @@
         "description": "Pedro is a highly motivated and skilled full-stack developer and data engineer with a proven track record of delivering successful projects in various domains. His experience ranges from building scalable APIs and data pipelines to implementing complex VR solutions and integrating AI/ML models. He's a quick learner, adaptable to new technologies, and possesses strong problem-solving and communication skills. Pedro's passion for innovation and his commitment to quality make him a valuable asset to any team."
       },
       {
+        "id": "Personal Life",
+        "type": "Profile",
+        "description": "A calm and balanced individual born and raised in Florianópolis. Married to Anna, a theater teacher and photographer. Pedro maintains a healthy lifestyle and values spending time in nature. He has a background in martial arts, having practiced both judo and jiu-jitsu. In his free time, he enjoys playing guitar, video games, and cherishes moments with friends. He appreciates meeting new people while also valuing moments of peace and quiet"
+      },
+      {
         "id": "Soft Skills",
         "type": "Skills",
         "items": [
@@ -200,7 +244,7 @@
       { "source": "Pedro Reichow", "target": "Personal", "relation": "HAS_PROFILE" },
       { "source": "Personal", "target": "Soft Skills", "relation": "HAS_SKILLS" },
       { "source": "Personal", "target": "Main Achievements", "relation": "HAS_ACHIEVEMENTS" },
-      { "source": "Personal", "target": "Future Interests", "relation": "HAS_INTERESTS" }
+      { "source": "Personal", "target": "Future Interests", "relation": "HAS_INTERESTS" },
+      { "source": "Pedro Reichow", "target": "Personal Life", "relation": "HAS_PROFILE" }
     ]
   }
-  
