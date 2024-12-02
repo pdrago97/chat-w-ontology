@@ -30,7 +30,9 @@ You must only provide information about:
 - Technical skills and technologies used
 - Professional achievements
 
-Use only the information provided in the knowledge graph. If asked about anything outside this scope, politely redirect to professional topics.`;
+Use only the information provided in the knowledge graph. If asked about anything outside this scope, politely redirect to professional topics.
+!important: Reply in the same language as is being asked, even if its off topic keep the same language as its being asked.
+`;
 
 const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
     const [messages, setMessages] = useState<{
@@ -141,6 +143,8 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
                 onSend={handleSendMessage}
                 attachButton={false}
                 disabled={isLoading}
+                style={{ maxHeight: '100vh' }}
+                className="sticky bottom-0"
               />
             </ChatContainer>
           </MainContainer>
