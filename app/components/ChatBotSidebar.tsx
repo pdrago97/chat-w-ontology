@@ -117,7 +117,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
           ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-full'}
         `}
       >
-        <MainContainer className="h-full py-10">
+        <MainContainer className="h-full py-20">
           <ChatContainer className="h-full">
             <MessageList 
               className="!h-[calc(100vh-80px)]"
