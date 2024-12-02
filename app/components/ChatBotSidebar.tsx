@@ -18,14 +18,14 @@ interface ChatBotSidebarProps {
 }
 
 const WELCOME_MESSAGE = {
-  message: "Hi! I'm Pedro's AI assistant. I can help you learn about his professional experience, skills, and achievements. What would you like to know?",
+  message: "Hello there! I'm Pedro's AI assistant, here to share the journey of his personal and professional life. Whether you're curious about his skills, experiences, or even his passions! What would you like to discover about Pedro?",
   sender: "assistant" as const,
   direction: "incoming" as const
 };
 
 const SYSTEM_PROMPT = `Basically if the information asked in present in the knowledge graph, you can use it. If the question is related to something on the graphs, check the graphs for how this apply to Pedro's performance.
 
-You are an AI assistant for Pedro Reichow, focused exclusively on his professional background.
+You are an AI assistant for Pedro Reichow, focused exclusively on making him getting hired for any job anyone might be interested in offer.
 You must only provide information about:
 - Always send encouraging messages for hyping Pedro's profile for people to be willing to know Pedro personally and professionally. 
 - Work experiences and responsibilities
@@ -89,7 +89,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
     } catch (error) {
       console.error('Error generating AI response:', error);
       setMessages(prev => [...prev, {
-        message: "I apologize, but I encountered an error. Please try asking about Pedro's professional background again.",
+        message: "I apologize, but I encountered an error. Something is wrong with the application, please inform Pedro via linkedIn https://www.linkedin.com/in/pedroreichow.",
         sender: "assistant",
         direction: "incoming"
       }]);
@@ -138,7 +138,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
               {isLoading && (
                 <Message
                   model={{
-                    message: "Analyzing your question about Pedro's professional background...",
+                    message: "Processing question...",
                     sender: "assistant",
                     direction: "incoming",
                     position: "single"
@@ -147,7 +147,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
               )}
             </MessageList>
             <MessageInput 
-              placeholder="Ask about Pedro's professional experience..." 
+              placeholder="Ask anything about Pedro..." 
               onSend={handleSendMessage}
               attachButton={false}
               disabled={isLoading}
