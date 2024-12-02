@@ -209,6 +209,22 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
             font-style: italic;
             color: #666;
           }
+          .download-resume-btn {
+          display: block;
+          background-color: #4CAF50;
+          color: white;
+          text-decoration: none;
+          padding: 8px 12px;
+          border-radius: 4px;
+          text-align: center;
+          margin-top: 12px;
+          font-size: 12px;
+          transition: background-color 0.2s;
+        }
+        
+        .download-resume-btn:hover {
+          background-color: #45a049;
+        }
         `}
       </style>
     </>
@@ -241,6 +257,13 @@ function createTooltipContent(data: any): string {
             <li>LinkedIn: ${data.contact?.linkedin || ''}</li>
             <li>GitHub: ${data.contact?.github || ''}</li>
           </ul>
+          <a 
+            href="/assets/Pedro Reichow - Professional Resume.pdf" 
+            download 
+            class="download-resume-btn"
+          >
+            Download Resume
+          </a>
         `;
       case 'Education':
         return `
