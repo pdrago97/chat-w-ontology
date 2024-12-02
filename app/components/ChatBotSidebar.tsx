@@ -92,7 +92,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
     }
   };
   return (
-    <div className={`h-full flex flex-col transition-all duration-300 ${isCollapsed ? 'w-12' : 'w-96'}`}>
+    <div className="h-screen flex flex-col transition-all duration-300 relative" style={{ width: isCollapsed ? '3rem' : '24rem' }}>
       {/* Collapse Toggle Button */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
@@ -111,10 +111,10 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
           ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-full'}
         `}
       >
-        <MainContainer className="h-full flex flex-col">
-          <ChatContainer className="h-full flex flex-col">
+        <MainContainer className="h-full">
+          <ChatContainer className="h-full">
             <MessageList 
-              className="flex-1 overflow-y-auto"
+              className="!h-[calc(100vh-80px)]"
               scrollBehavior="smooth"
             >
               {messages.map((msg, idx) => (
@@ -145,7 +145,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
               onSend={handleSendMessage}
               attachButton={false}
               disabled={isLoading}
-              className="border-t border-gray-200 bg-white p-2"
+              className="border-t border-gray-200 bg-white"
             />
           </ChatContainer>
         </MainContainer>

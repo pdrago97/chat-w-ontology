@@ -23,4 +23,13 @@ body {
   .chat-sidebar-expanded {
     @apply w-full md:w-80 lg:w-96;
   }
+
+  /* Add these new styles */
+  .cs-message-list {
+    @apply !h-[calc(100vh-80px)] !overflow-y-auto;
+  }
+
+  .cs-chat-container {
+    @apply !h-full !overflow-hidden;
+  }
 }
