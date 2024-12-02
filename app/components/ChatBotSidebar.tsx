@@ -98,60 +98,60 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
         onClick={() => setIsCollapsed(!isCollapsed)}
         className="absolute -left-4 top-4 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50 transition-colors"
         aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-        >
+      >
         {isCollapsed ? (
-            <ArrowLeftIcon className="h-4 w-4 text-gray-600" />
+          <ArrowLeftIcon className="h-4 w-4 text-gray-600" />
         ) : (
-            <ArrowRightIcon className="h-4 w-4 text-gray-600" />
+          <ArrowRightIcon className="h-4 w-4 text-gray-600" />
         )}
-        </button>      
+      </button>      
       <div 
         className={`
-          flex-1 overflow-hidden transition-all duration-300
+          flex-1 overflow-hidden transition-all duration-300 flex flex-col
           ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-full'}
         `}
       >
-        <div className="h-full flex flex-col">
-          <MainContainer className="h-full">
-            <ChatContainer className="h-full">
-              <MessageList className="h-full overflow-y-auto">
-                {messages.map((msg, idx) => (
-                  <Message
-                    key={idx}
-                    model={{
-                      message: msg.message,
-                      sentTime: "just now",
-                      sender: msg.sender,
-                      direction: msg.direction,
-                      position: "single"
-                    }}
-                  />
-                ))}
-                {isLoading && (
-                  <Message
-                    model={{
-                      message: "Analyzing your question about Pedro's professional background...",
-                      sender: "assistant",
-                      direction: "incoming",
-                      position: "single"
-                    }}
-                  />
-                )}
-              </MessageList>
-              <MessageInput 
-                placeholder="Ask about Pedro's professional experience..." 
-                onSend={handleSendMessage}
-                attachButton={false}
-                disabled={isLoading}
-                style={{ maxHeight: '100vh' }}
-                className="sticky bottom-0"
-              />
-            </ChatContainer>
-          </MainContainer>
-        </div>
+        <MainContainer className="h-full flex flex-col">
+          <ChatContainer className="h-full flex flex-col">
+            <MessageList 
+              className="flex-1 overflow-y-auto"
+              scrollBehavior="smooth"
+            >
+              {messages.map((msg, idx) => (
+                <Message
+                  key={idx}
+                  model={{
+                    message: msg.message,
+                    sentTime: "just now",
+                    sender: msg.sender,
+                    direction: msg.direction,
+                    position: "single"
+                  }}
+                />
+              ))}
+              {isLoading && (
+                <Message
+                  model={{
+                    message: "Analyzing your question about Pedro's professional background...",
+                    sender: "assistant",
+                    direction: "incoming",
+                    position: "single"
+                  }}
+                />
+              )}
+            </MessageList>
+            <MessageInput 
+              placeholder="Ask about Pedro's professional experience..." 
+              onSend={handleSendMessage}
+              attachButton={false}
+              disabled={isLoading}
+              className="border-t border-gray-200 bg-white p-2"
+            />
+          </ChatContainer>
+        </MainContainer>
       </div>
     </div>
   );
-};
+}
 
 export default ChatBotSidebar;
