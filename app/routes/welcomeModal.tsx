@@ -63,7 +63,7 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose }) => {
         
         <div className="space-y-4 text-sm sm:text-base mt-14">
           <p className="text-gray-700 leading-relaxed">
-            This is an interactive way to explore my professional background through a knowledge graph and AI-powered chat interface.
+            This is an interactive way to explore my professional background through a knowledge graph and AI-powered chat interface. Built with RemixJS (an evolution of NextJS adopted by ChatGPT) for server-side rendering and routing, this app features Retrieval Augmented Generation (RAG) capabilities that combine a structured knowledge base with AI to provide accurate responses. It uses Portkey AI for LLM routing, gateway and guardrails to ensure high-quality interactions. The visualization is powered by Cytoscape.js for interactive graph exploration, while TailwindCSS provides responsive styling. The system leverages vector embeddings and semantic search to match user queries with relevant information from my professional background, enabling natural conversations grounded in factual data.
           </p>
           
           <div className="space-y-2">
