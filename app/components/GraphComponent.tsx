@@ -112,30 +112,160 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
 
     // Add click event for nodes
     cyRef.current.on('tap', 'node', function(e: any) {
+      e.preventDefault();
+      e.stopPropagation();
+      
       const node = e.target;
       const data = node.data();
       
       // Remove any existing tooltips
-      const existingTooltip = containerRef.current?.querySelector('.node-tooltip');
+      const existingTooltip = document.querySelector('.modal-overlay');
       if (existingTooltip) {
         existingTooltip.remove();
       }
+
+      // Create modal overlay
+      const modalOverlay = document.createElement('div');
+      modalOverlay.className = 'modal-overlay';
       
-      // Create and position new tooltip
+      // Create modal content with proper styling classes
       const tooltip = document.createElement('div');
-      tooltip.className = 'node-tooltip';
+      tooltip.className = 'modal-content tooltip-content';
       tooltip.innerHTML = createTooltipContent(data);
       
-      const pos = e.renderedPosition;
-      tooltip.style.left = `${pos.x}px`;
-      tooltip.style.top = `${pos.y - 10}px`;
-      containerRef.current?.appendChild(tooltip);
+      modalOverlay.appendChild(tooltip);
+      document.body.appendChild(modalOverlay);
+
+      // Add styles dynamically
+      const style = document.createElement('style');
+      style.textContent = `
+        .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          backdrop-filter: blur(2px);
+        }
+
+        .modal-content {
+          background: white;
+          border-radius: 12px;
+          padding: 24px;
+          max-width: 90vw;
+          width: 100%;
+          max-height: 85vh;
+          overflow-y: auto;
+          position: relative;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+          z-index: 10000;
+        }
+
+        .tooltip-content h3 {
+          margin: 0 0 16px 0;
+          font-size: 20px;
+          color: #333;
+        }
+
+        .tooltip-content p {
+          margin: 8px 0;
+          color: #555;
+          font-size: 14px;
+          line-height: 1.5;
+        }
+
+        .tooltip-content ul {
+          margin: 8px 0;
+          padding-left: 20px;
+          color: #555;
+          font-size: 14px;
+          line-height: 1.5;
+        }
+
+        .tooltip-content .technologies {
+          margin-top: 12px;
+          padding-top: 12px;
+          border-top: 1px solid #eee;
+          font-style: italic;
+          color: #666;
+        }
+
+        .download-container {
+          margin-top: 20px;
+          padding: 16px;
+          background: #f5f5f5;
+          border-radius: 8px;
+          text-align: center;
+          z-index: 10001;
+        }
+
+        .download-resume-btn {
+          display: block;
+          width: 100%;
+          background-color: #4CAF50;
+          color: white;
+          padding: 16px 24px;
+          border: none;
+          border-radius: 8px;
+          font-size: 18px;
+          font-weight: 500;
+          cursor: pointer;
+          text-decoration: none;
+          text-align: center;
+          transition: all 0.2s ease;
+          z-index: 10001;
+          position: relative;
+        }
+
+        .download-resume-btn:hover {
+          background-color: #45a049;
+          transform: translateY(-1px);
+        }
+
+        .download-resume-btn:active {
+          background-color: #3d8b40;
+          transform: translateY(1px);
+        }
+
+        @media (min-width: 768px) {
+          .modal-content {
+            max-width: 600px;
+          }
+          
+          .download-resume-btn {
+            font-size: 16px;
+            padding: 12px 24px;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Handle click events
+      modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+          modalOverlay.remove();
+          style.remove();
+        }
+      });
+
+      // Prevent download button clicks from closing the modal
+      const downloadBtn = tooltip.querySelector('.download-resume-btn');
+      if (downloadBtn) {
+        downloadBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+      }
     });
 
     // Close tooltip when clicking on background
     cyRef.current.on('tap', function(e: any) {
       if (e.target === cyRef.current) {
-        const tooltip = containerRef.current?.querySelector('.node-tooltip');
+        const tooltip = document.querySelector('.modal-overlay');
         if (tooltip) {
           tooltip.remove();
         }
@@ -157,77 +287,14 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
   }, [graphData]);
 
   return (
-    <>
-      <div 
-        ref={containerRef} 
-        style={{ 
-          width: '100%', 
-          height: '100vh',
-          backgroundColor: '#ffffff'
-        }} 
-      />
-      <style>
-        {`
-          .node-tooltip {
-            position: absolute;
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 12px 16px;
-            max-width: 400px;
-            z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            font-size: 11px;
-            transform: translate(-50%, -100%);
-            line-height: 1.4;
-            pointer-events: auto;
-            cursor: text;
-            user-select: text;
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-          }
-          .node-tooltip h3 {
-            margin: 0 0 8px 0;
-            font-size: 11px;
-            font-weight: 600;
-            color: #333;
-          }
-          .node-tooltip p {
-            margin: 6px 0;
-            color: #444;
-          }
-          .node-tooltip ul {
-            margin: 8px 0;
-            padding-left: 20px;
-            color: #555;
-          }
-          .node-tooltip .technologies {
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 1px solid #eee;
-            font-style: italic;
-            color: #666;
-          }
-          .download-resume-btn {
-          display: block;
-          background-color: #4CAF50;
-          color: white;
-          text-decoration: none;
-          padding: 8px 12px;
-          border-radius: 4px;
-          text-align: center;
-          margin-top: 12px;
-          font-size: 12px;
-          transition: background-color 0.2s;
-        }
-        
-        .download-resume-btn:hover {
-          background-color: #45a049;
-        }
-        `}
-      </style>
-    </>
+    <div 
+      ref={containerRef} 
+      style={{ 
+        width: '100%', 
+        height: '100vh',
+        backgroundColor: '#ffffff'
+      }} 
+    />
   );
 };
 
