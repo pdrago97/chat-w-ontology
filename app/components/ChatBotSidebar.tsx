@@ -33,7 +33,7 @@ You must only provide information about:
 - Educational background
 - Technical skills and technologies used
 - Professional achievements
-- Personal information available in the graphs
+- Personal and contact information available in the graphs
 
 !important 
 

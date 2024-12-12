@@ -1,10 +1,31 @@
 import { json } from "@remix-run/node";
 import type { ActionFunction } from "@remix-run/node";
-
 import { Portkey } from "portkey-ai";
+import { queryVectorStore } from './pdfProcessor';
 
+interface GraphNode {
+  id: string;
+  type: 'Person' | 'Experience' | 'Education' | 'Profile' | 'Skills' | 'Achievements' | 'Interests';
+  title?: string;
+  location?: string;
+  contact?: {
+    email: string;
+    linkedin: string;
+    github: string;
+  };
+  years?: string;
+  responsibilities?: string[];
+  technologies?: string[];
+  degree?: string;
+  description?: string;
+  items?: string[];
+}
 
-function formatGraphDataForLLM(graphData: any): string {
+interface GraphData {
+  nodes: GraphNode[];
+}
+
+function formatGraphDataForLLM(graphData: GraphData): string {
   let formattedText = '';
   
   // Format nodes
@@ -102,31 +123,37 @@ You must:
    - Soft Skills
    - Future Interests
    - Professional achievements
-2. Use ONLY the information provided in the knowledge graph
+2. Use information from BOTH the knowledge graph AND the resume content provided
 3. If asked about anything outside of Pedro's professional background, politely decline and redirect to professional topics
 4. Keep responses concise and factual
-5. Never make assumptions or add information not present in the knowledge graph
+5. Never make assumptions or add information not present in either the knowledge graph or resume
 
 You must not:
 1. Discuss personal matters
 2. Make recommendations
 3. Share opinions
-4. Provide information not explicitly stated in the knowledge graph
+4. Provide information not explicitly stated in the knowledge graph or resume
 `;
 
 export const action: ActionFunction = async ({ request }) => {
   if (request.method !== "POST") {
     return json({ error: "Method not allowed" }, { status: 405 });
   }
-
   try {
     const { message, systemPrompt, graphData, conversationHistory }: ChatRequest = await request.json();
     const formattedGraph = formatGraphDataForLLM(graphData);
+    
+    // Get relevant resume content
+    const resumeContent = await queryVectorStore(message);
+    console.log('Resume content for query:', resumeContent);
 
     const messages = [
       {
-        role: "system",
-        content: `${systemPrompt}\n\n${GUARDRAILS}\n\nKnowledge Graph Data:\n${formattedGraph}`
+        role: "system", 
+        content: `You are an AI assistant that answers questions based on Pedro's resume.
+Use ONLY the following resume content to answer the question: ${resumeContent}
+
+${systemPrompt}\n\n${GUARDRAILS}\n\nKnowledge Graph Data:\n${formattedGraph}`
       },
       ...conversationHistory.map(msg => ({
         role: msg.sender === "user" ? "user" : "assistant",

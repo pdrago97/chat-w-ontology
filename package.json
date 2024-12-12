@@ -13,7 +13,7 @@
   "dependencies": {
     "@chatscope/chat-ui-kit-react": "^2.0.3",
     "@chatscope/chat-ui-kit-styles": "^1.4.0",
-    "@fortawesome/fontawesome-svg-core": "^6.7.1",
+    "@fortawesome/fontawesome-svg-core": "^6.7.1", 
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@heroicons/react": "^2.2.0",
     "@remix-run/node": "^2.15.0",
@@ -23,6 +23,8 @@
     "cytoscape-cose-bilkent": "^4.1.0",
     "cytoscape-popper": "^4.0.1",
     "isbot": "^4.1.0",
+    "langchain": "^0.0.96",
+    "pdf-parse": "^1.1.1",
     "portkey-ai": "^1.5.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
