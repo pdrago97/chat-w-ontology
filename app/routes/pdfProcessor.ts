@@ -14,7 +14,7 @@ export async function initializeVectorStore() {
 
   try {
     console.log('Loading PDF document...');
-    const loader = new PDFLoader('public/assets/Pedro Reichow - Professional Resume.pdf');
+    const loader = new PDFLoader('public/assets/resume.pdf');
     const docs = await loader.load();
     console.log('PDF loaded successfully:', docs.length, 'pages');
     console.log('First page content sample:', docs[0].pageContent.substring(0, 200));
