@@ -2,6 +2,7 @@ import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
+import path from 'path';
 
 let vectorStore: MemoryVectorStore | null = null;
 
@@ -13,8 +14,9 @@ export async function initializeVectorStore() {
   }
 
   try {
-    console.log('Loading PDF document...');
-    const loader = new PDFLoader('public/assets/resume.pdf');
+    const resumePath = path.join(process.cwd(), 'public', 'assets', 'resume.pdf');
+    console.log('Loading PDF document from:', resumePath);
+    const loader = new PDFLoader(resumePath);
     const docs = await loader.load();
     console.log('PDF loaded successfully:', docs.length, 'pages');
     console.log('First page content sample:', docs[0].pageContent.substring(0, 200));
