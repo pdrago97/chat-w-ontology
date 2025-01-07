@@ -228,6 +228,41 @@
           "Cloud Computing",
           "Blockchain Technology"
         ]
+      },
+      {
+        "id": "Languages",
+        "type": "Skills",
+        "description": "Languages spoken and learning interests"
+      },
+      {
+        "id": "English",
+        "type": "Language",
+        "proficiency": "Fluent"
+      },
+      {
+        "id": "Portuguese",
+        "type": "Language",
+        "proficiency": "Native"
+      },
+      {
+        "id": "Spanish",
+        "type": "Language",
+        "proficiency": "Advanced"
+      },
+      {
+        "id": "German",
+        "type": "Language",
+        "proficiency": "Wish to learn"
+      },
+      {
+        "id": "French",
+        "type": "Language",
+        "proficiency": "Wish to learn"
+      },
+      {
+        "id": "Chinese",
+        "type": "Language",
+        "proficiency": "Wish to learn"
       }
     ],
     "edges": [
@@ -245,6 +280,13 @@
       { "source": "Personal", "target": "Soft Skills", "relation": "HAS_SKILLS" },
       { "source": "Personal", "target": "Main Achievements", "relation": "HAS_ACHIEVEMENTS" },
       { "source": "Personal", "target": "Future Interests", "relation": "HAS_INTERESTS" },
-      { "source": "Pedro Reichow", "target": "Personal Life", "relation": "HAS_PROFILE" }
+      { "source": "Pedro Reichow", "target": "Personal Life", "relation": "HAS_PROFILE" },
+      { "source": "Pedro Reichow", "target": "Languages", "relation": "HAS_SKILLS" },
+      { "source": "Languages", "target": "English", "relation": "SPEAKS" },
+      { "source": "Languages", "target": "Portuguese", "relation": "SPEAKS" },
+      { "source": "Languages", "target": "Spanish", "relation": "SPEAKS" },
+      { "source": "Languages", "target": "German", "relation": "WISH_TO_LEARN" },
+      { "source": "Languages", "target": "French", "relation": "WISH_TO_LEARN" },
+      { "source": "Languages", "target": "Chinese", "relation": "WISH_TO_LEARN" }
     ]
   }

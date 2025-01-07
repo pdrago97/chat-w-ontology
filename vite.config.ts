@@ -24,5 +24,6 @@ export default defineConfig({
   // Add this to ensure environment variables are available
   define: {
     'process.env.PORTKEY_API_KEY': JSON.stringify(process.env.PORTKEY_API_KEY),
+    'process.env.OPENAI_API_KEY': JSON.stringify(process.env.OPENAI_API_KEY),
   },
 });
