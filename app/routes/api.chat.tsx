@@ -95,7 +95,7 @@ console.log(process.env.OPENAI_API_KEY)
 
 
 const portkey = new Portkey({
-  apiKey: "XqPR2+XZjPsrPqfAf/DICRdaADX5",
+  apiKey: process.env.PORTKEY_API_KEY,
   virtualKey: "open-ai-virtual-e16edd"
 })
 
@@ -194,7 +194,6 @@ ${systemPrompt}\n\n${GUARDRAILS}\n\nKnowledge Graph Data:\n${formattedGraph}`
 
     const response = completion.choices[0].message.content;
     
-    // Additional validation to ensure response is about professional background
     if (!isValidResponse(response)) {
       return json({ 
         response: "I can only provide information about Pedro's professional background. Could you please ask something about his work experience, education, or skills?" 
@@ -220,4 +219,3 @@ function isValidResponse(response: string): boolean {
   );
 }
 
-// Rest of the formatGraphDataForLLM function remains the same
