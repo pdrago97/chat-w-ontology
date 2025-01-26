@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import cytoscape from 'cytoscape';
+import cytoscape, { NodeSingular, EdgeSingular, LayoutOptions } from 'cytoscape';
 
 interface GraphComponentProps {
   graphData: any;
@@ -9,6 +9,62 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const cyRef = useRef<any>(null);
 
+  const validateGraphData = (graphData: any) => {
+    if (!graphData?.nodes || !graphData?.edges) {
+      throw new Error('Invalid graph data structure');
+    }
+
+    // Create set of node IDs for quick lookup
+    const nodeIds = new Set(graphData.nodes.map((node: any) => node.id));
+
+    // Validate nodes
+    graphData.nodes.forEach((node: any) => {
+      if (!node.id || typeof node.id !== 'string') {
+        throw new Error(`Invalid node found: ${JSON.stringify(node)}\nNodes must have a valid string id`);
+      }
+    });
+
+    // Validate edges
+    const invalidEdges = graphData.edges.filter((edge: any) => {
+      if (!edge.source || !edge.target) {
+        return true;
+      }
+      return !nodeIds.has(edge.source) || !nodeIds.has(edge.target);
+    });
+
+    if (invalidEdges.length > 0) {
+      const invalidEdgeDetails = invalidEdges.map((edge: any) => {
+        const sourceValid = nodeIds.has(edge.source);
+        const targetValid = nodeIds.has(edge.target);
+        return `Edge from "${edge.source}" (${sourceValid ? 'valid' : 'invalid'}) to "${edge.target}" (${targetValid ? 'valid' : 'invalid'})`;
+      }).join('\n');
+      
+      throw new Error(`Invalid edges found:\n${invalidEdgeDetails}\n\nPlease ensure all edges reference existing nodes.`);
+    }
+
+    // Additional validation for cytoscape
+    const cyElements = {
+      nodes: graphData.nodes.map((node: any) => ({
+        data: { ...node, label: getNodeLabel(node) },
+        classes: node?.type?.toLowerCase() || 'default'
+      })),
+      edges: graphData.edges.map((edge: any) => ({
+        data: {
+          source: edge.source,
+          target: edge.target,
+          label: edge.relation
+        }
+      }))
+    };
+
+    // Validate cytoscape elements
+    cyElements.edges.forEach((edge: any) => {
+      if (!edge.data.source || !edge.data.target) {
+        throw new Error(`Edge missing source or target: ${JSON.stringify(edge)}`);
+      }
+    });
+  };
+
   useEffect(() => {
     if (!containerRef.current || !graphData) return;
 
@@ -16,101 +72,138 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData }) => {
       cyRef.current.destroy();
     }
 
-    cyRef.current = cytoscape({
-      container: containerRef.current,
-      elements: {
-        nodes: graphData.nodes.map((node: any) => ({
-          data: { ...node, label: getNodeLabel(node) },
-          // Add null check for node.type
-          classes: node?.type?.toLowerCase() || 'default'
-        })),
-        edges: graphData.edges.map((edge: any) => ({
-          data: {
-            source: edge.source,
-            target: edge.target,
-            label: edge.relation
-          }
-        }))
-      },
-      style: [
-        {
-          selector: 'node',
-          style: {
-            'label': 'data(label)',
-            'text-valign': 'center',
-            'text-halign': 'center',
-            'text-wrap': 'wrap',
-            'text-max-width': '2000px',
-            'font-size': '12px',
-            'border-width': '1px',
-            'padding': '15px',
-            'shape': 'roundrectangle',
-            'width': 'label',
-            'height': 'label',
-            'text-margin-y': '5px'
-          }
+    try {
+      // Validate graph data before creating the graph
+      validateGraphData(graphData);
+
+      cyRef.current = cytoscape({
+        container: containerRef.current,
+        elements: {
+          nodes: graphData.nodes.map((node: any) => ({
+            data: { ...node, label: getNodeLabel(node) },
+            classes: node?.type?.toLowerCase() || 'default'
+          })),
+          edges: graphData.edges.map((edge: any) => ({
+            data: {
+              source: edge.source,
+              target: edge.target,
+              label: edge.relation
+            }
+          }))
         },
-        {
-          selector: 'node.person',
-          style: {
-            'background-color': '#4CAF50',
-            'border-color': '#2E7D32'
+        style: [
+          {
+            selector: 'node',
+            style: {
+              'label': (node: NodeSingular) => node.data('label') as string,
+              'text-valign': 'center',
+              'text-halign': 'center',
+              'text-wrap': 'wrap',
+              'text-max-width': '200px',
+              'font-size': '12px',
+              'border-width': '1px',
+              'text-margin-x': 15,
+              'shape': 'roundrectangle',
+              'width': (node: NodeSingular) => {
+                const label = node.data('label') as string;
+                return Math.min(
+                  label.length * 8,
+                  node.data('maxLength') ? 200 : 300
+                );
+              },
+              'height': (node: NodeSingular) => {
+                const label = node.data('label') as string;
+                return Math.min(
+                  label.split('\n').length * 20,
+                  node.data('maxLength') ? 100 : 150
+                );
+              }
+            }
+          },
+          {
+            selector: 'node.person',
+            style: {
+              'background-color': '#4CAF50',
+              'border-color': '#2E7D32'
+            }
+          },
+          {
+            selector: 'node.education',
+            style: {
+              'background-color': '#2196F3',
+              'border-color': '#1565C0'
+            }
+          },
+          {
+            selector: 'node.experience',
+            style: {
+              'background-color': '#9C27B0',
+              'border-color': '#6A1B9A'
+            }
+          },
+          {
+            selector: 'node.group',
+            style: {
+              'background-color': '#FF9800',
+              'border-color': '#F57C00',
+              'shape': 'hexagon'
+            }
+          },
+          {
+            selector: 'node.status',
+            style: {
+              'background-color': '#E91E63',
+              'border-color': '#C2185B',
+              'shape': 'ellipse'
+            }
+          },
+          {
+            selector: 'edge',
+            style: {
+              'width': (edge: EdgeSingular) => 1,
+              'line-color': (edge: EdgeSingular) => '#999',
+              'target-arrow-color': (edge: EdgeSingular) => '#999',
+              'target-arrow-shape': (edge: EdgeSingular) => 'triangle',
+              'curve-style': (edge: EdgeSingular) => 'bezier',
+              'label': (edge: EdgeSingular) => edge.data('label'),
+              'font-size': (edge: EdgeSingular) => 16,
+              'text-rotation': 'autorotate',
+              'text-margin-y': (edge: EdgeSingular) => -10,
+              'text-opacity': (edge: EdgeSingular) => 0.8
+            }
           }
-        },
-        {
-          selector: 'node.education',
-          style: {
-            'background-color': '#2196F3',
-            'border-color': '#1565C0'
+        ],
+        layout: {
+          name: 'cose',
+          padding: 100,
+          nodeRepulsion: (node: any) => 100000000,
+          idealEdgeLength: (edge: any) => 200,
+          nodeOverlap: 90000000,
+          gravity: 2,
+          edgeElasticity: (edge: any) => 4,
+          spacingFactor: 9.5,
+          randomize: false,
+          componentSpacing: 0.000000000000000001,
+          refresh: 20,
+          fit: true,
+          stop: function() {
+            cyRef.current.center();
+            cyRef.current.fit();
           }
-        },
-        {
-          selector: 'node.experience',
-          style: {
-            'background-color': '#9C27B0',
-            'border-color': '#6A1B9A'
-          }
-        },
-        {
-          selector: 'edge',
-          style: {
-            'width': 1,
-            'line-color': '#999',
-            'target-arrow-color': '#999',
-            'target-arrow-shape': 'triangle',
-            'curve-style': 'bezier',
-            'label': 'data(label)',
-            'font-size': '16px',
-            'text-rotation': 'autorotate',
-            'text-margin-y': '-10px',
-            'text-opacity': 0.8
-          }
-        }
-      ],
-      layout: {
-        name: 'cose',
-        padding: 100,
-        nodeRepulsion: 100000000,
-        idealEdgeLength: 200,
-        nodeOverlap: 90000000,
-        gravity: 2,
-        edgeElasticity: 4,
-        spacingFactor: 9.5,
-        randomize: false,
-        componentSpacing: 0.000000000000000001,
-        refresh: 20,
-        fit: true,
-        stop: function() {
-          cyRef.current.center();
-          cyRef.current.fit();
-        }
-      },
-      minZoom: 0.2,
-      maxZoom: 3,
-      wheelSensitivity: 0.2
-    });
+        } as LayoutOptions,
+        minZoom: 0.2,
+        maxZoom: 3,
+        wheelSensitivity: 0.2
+      });
+
+    } catch (error) {
+      console.error('Error initializing cytoscape:', error);
+    }
 
     // Add click event for nodes
+
+    // Add click event for nodes
+    if (!cyRef.current) return;
     cyRef.current.on('tap', 'node', function(e: any) {
       e.preventDefault();
       e.stopPropagation();
@@ -306,6 +399,10 @@ function getNodeLabel(node: any): string {
       return `${node.id}\n${node.degree}\n${node.years}`;
     case 'Experience':
       return `${node.id}\n${node.title}\n${node.years}`;
+    case 'Group':
+      return `${node.id}\n${node.description}`;
+    case 'Status':
+      return `${node.id}\n${node.description}`;
     default:
       return node?.id || '';
   }
@@ -365,6 +462,16 @@ function createTooltipContent(data: any): string {
           </ul>
         `;
       case 'Profile':
+        return `
+          <h3>${data.id}</h3>
+          <p>${data.description}</p>
+        `;
+      case 'Group':
+        return `
+          <h3>${data.id}</h3>
+          <p>${data.description}</p>
+        `;
+      case 'Status':
         return `
           <h3>${data.id}</h3>
           <p>${data.description}</p>

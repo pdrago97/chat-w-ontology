@@ -1,292 +1,355 @@
 {
-    "nodes": [
-      {
-        "id": "Pedro Reichow",
-        "type": "Person",
-        "location": "Florianópolis, Santa Catarina, Brazil",
-        "title": "Fullstack Developer/Data Engineer\n\nDownload resume here",
-        "contact": {
-          "email": "pedro_reichow@hotmail.com",
-          "linkedin": "https://www.linkedin.com/in/pedroreichow", 
-          "github": "https://github.com/pdrago97",
-          "phone": "+5548999052697"
-        }
-      },
-      {
-        "id": "Estácio",
-        "type": "Education",
-        "degree": "Systems Analysis and Development",
-        "years": "2021 - 2023",
-        "responsibilities": [
-          "Developed strong programming fundamentals in languages like Java, Python, and JavaScript",
-          "Learned software engineering principles including OOP, design patterns, and clean code practices",
-          "Gained experience with databases, both SQL and NoSQL",
-          "Studied web development technologies and frameworks",
-          "Learned systems analysis, requirements gathering, and software architecture",
-          "Practiced agile methodologies and project management",
-          "Built full-stack applications as course projects"
-        ]
-      },
-      {
-        "id": "UFSC",
-        "type": "Education",
-        "degree": "Electrical Engineering", 
-        "years": "2017 - 2023",
-        "responsibilities": [
-          "Studied advanced mathematics, physics, and engineering fundamentals",
-          "Learned circuit analysis, digital electronics, and power systems",
-          "Gained experience with microcontrollers and embedded systems programming",
-          "Conducted laboratory experiments and practical projects",
-          "Studied control systems and automation",
-          "Learned signal processing and telecommunications principles",
-          "Developed skills in electrical system design and simulation",
-          "Participated in research projects involving renewable energy systems"
-        ]
-      },
-      {
-        "id": "IFSC",
-        "type": "Education",
-        "degree": "Technical High School in Electrotechnics",
-        "years": "2012 - 2016"
-      ,
-        "responsibilities": [
-          "Learned fundamentals of electrical systems and circuit analysis",
-          "Gained hands-on experience with electrical installations and maintenance",
-          "Studied industrial automation and control systems",
-          "Practiced electrical safety protocols and regulations",
-          "Developed skills in reading and creating electrical schematics",
-          "Learned about power distribution systems and transformers",
-          "Gained experience with electrical measurement instruments",
-          "Participated in practical laboratory projects"
-        ]
-      },
-      {
-        "id": "Trinnix AI Lab",
-        "type": "Experience",
-        "title": "AI and Computer Vision Engineer",
-        "years": "February 2024 - November 2024",
-        "responsibilities": [
-          "Developed scalable platforms in TypeScript, tRPC, and Node.js, integrating computer vision models for agricultural map analysis with Qgis. The models, trained with YoloX and Roboflow, achieved an accuracy of +95% in identifying plant diseases and pests, as well as counting and identifying cattle behavior.",
-          "Built ontological knowledge graphs using MongoDB, Milvus, and Cytoscape.js for visualization, enabling complex analysis and business insights. Implemented vector embeddings for semantic search and relationship mapping between entities.",
-          "Integrated LLMs (Gemini 1.5 pro, Claude 3.5 sonnet, Ollama 3, gpt-4o) through APIs, utilizing advanced prompt engineering techniques to ingest data from documents based on the ontology, generate automated reports from the insights, and issue alerts.",
-          "Managed the project's relational database with Prisma ORM.",
-          "Researched and implemented various ontology frameworks and tools including:",
-          "- Portkey for secure authentication and access control in knowledge graph systems",
-          "- Cognee for semantic reasoning and inference capabilities",
-          "- Palantir Foundry for large-scale data integration and analysis",
-          "- Neo4j for graph database management and querying",
-          "- RDF/OWL standards for knowledge representation",
-          "- SPARQL for complex graph queries and data retrieval",
-          "Developed custom ontology schemas and taxonomies to model agricultural domain knowledge",
-          "Implemented semantic search and recommendation systems using vector embeddings and similarity metrics"
-        ],
-        "technologies": ["TypeScript", "tRPC", "Node.js", "YoloX", "Ultralytics", "Roboflow", "Knowledge-graphs", "Gemini1.5", "Claude", "Ollama", "gpt-40", "Cloudflare", "digital ocean", "Qgis", "Python scripting"]
-      },
-      {
-        "id": "Simulated Reality",
-        "type": "Experience",
-        "title": "Full Stack Engineer",
-        "years": "February 2023 - February 2024",
-        "responsibilities": [
-          "Developed VR solutions in Node.js and React for training and wellness, implementing features such as interaction with 3D objects, physics simulations.",
-          "Built scalable APIs with Node.js and Express, using queues for asynchronous task processing and pub/sub for real-time communication between system components. The use of queues enabled the processing of large 3D video files and updates of games compiled in Unity and Unreal.",
-          "Implemented unit and integration tests with Jest, ensuring software quality and reliability.",
-          "Created data visualization dashboards with Chart.js, integrated with a CRM system to track user progress in training, headset usage insights, and more.",
-          "Implemented a robust and scalable infrastructure in Azure App Service and Blob Storage, using CI/CD (GitOps) practices to automate the deployment process and ensure environment stability.",
-          "Ensured compliance with US healthcare industry security and privacy standards (FedRAMP and HIPAA), implementing a deployment protocol with Red Hat OpenShift containers."
-        ],
-        "technologies": ["Node.js", "React", "Express", "Jest","OpenShift Redhat" ,"Azure", "Chart.js", "FedRAMP", "HIPAA"]
-      },
-      {
-        "id": "QI Tech",
-        "type": "Experience",
-        "title": "Full Stack Engineer",
-        "years": "March 2022 - February 2023",
-        "responsibilities": [
-          "Developed scalable microservice APIs in Python with Flask and FastAPI, using the gRPC framework for inter-service communication. These APIs processed an average of 100,000 requests per day with an average latency of 150 ms.",
-          "Implemented data pipelines in Python, using Apache Beam and the Google Cloud Dataflow service for distributed and large-scale processing. The pipelines processed countless GB of data daily, from tax documents, credit agreements, and images for security identification services.",
-          "Orchestrated data pipelines with Apache Airflow, deployed on Google Cloud Composer, scheduling and monitoring workflow execution.",
-          "Used Google Cloud Pub/Sub to implement asynchronous and decoupled communication between microservices, ensuring system scalability and resilience.",
-          "Stored processed data in a Data Lake on Google Cloud Storage (GCS), optimized for analytical queries with Google Cloud BigQuery.",
-          "Implemented unit and integration tests (TDD) with pytest, ensuring code quality and API reliability.",
-          "Monitored system performance and health with Google Cloud Monitoring and Logging, configuring alerts to guarantee service availability.",
-          "Managed infrastructure as code (IaC) with Terraform, automating resource provisioning and management in GCP.",
-          "Built responsive web interfaces with React and NextJS, consuming microservice APIs."
-        ],
-        "technologies": ["Python", "Flask", "FastAPI", "gRPC", "Apache Beam", "Google Cloud Dataflow", "Apache Airflow", "Google Cloud Composer", "Google Cloud Pub/Sub", "BigQuery", "pytest", "Terraform", "React", "Next.js"]
-      },
-      {
-        "id": "PecSmart",
-        "type": "Experience",
-        "title": "Backend Developer Intern",
-        "years": "December 2021 - February 2022",
-        "responsibilities": [
-          "Developed RESTful APIs in Python with Django and Django REST Framework (DRF) to collect and manage sensor data. The APIs processed data from sensors, transmitting information every minutes/seconds.",
-          "Implemented the sensor data collection logic on Raspberry Pi devices using BalenaCLI, integrating with DRF. The collected data included silo volume, microphone audio, and camera images.",
-          "Built a data processing pipeline in Python to receive, process, and feed the RDS database where the ML models would consume it.",
-          "Created Bash automation scripts to back up data and update software on Raspberry Pi devices.",
-          "Developed front-end interfaces with Vue.js for real-time visualization of sensor data, allowing livestock farmers to monitor their swine herds. The interfaces displayed information such as health indicators in pig pens, volume with loading and unloading in silos, and translation of volume to kg/ton.",
-          "Used BalenaCLI to manage and deploy software on Raspberry Pi devices, facilitating system updates and maintenance in the field."
-        ],
-        "technologies": ["Python", "Raspberry Pi", "Django", "DRF", "BalenaCLI", "Vue.js"]
-      },
-      {
-        "id": "Fontes Promotora",
-        "type": "Experience",
-        "title": "Backend Developer",
-        "years": "May 2021 - October 2021",
-        "responsibilities": [
-          "Developed web scraping solutions using Scrapy and Requests",
-          "Built and maintained APIs using FastAPI, Flask, and Django Rest Framework",
-          "Managed databases using MongoDB and PostgreSQL",
-          "Implemented data processing pipelines with Pandas",
-          "Created frontend interfaces using ReactJS",
-          "Deployed and maintained applications using Docker and AWS",
-          "Automated project management workflows with Smartsheets"
-        ],
-        "technologies": ["Python", "JavaScript", "Web scraping", "FastAPI", "Flask", "MongoDB", "PostgreSQL", "React", "Docker", "AWS", "Smartsheets"]
-      },
-      {
-        "id": "Intelbras",
-        "type": "Experience",
-        "title": "Product Developer",
-        "years": "November 2020 - May 2021",
-        "responsibilities": [
-          "Created technical documentation for analog camera systems",
-          "Executed product testing and validation procedures",
-          "Conducted negotiations with international suppliers",
-          "Designed and built electronic product prototypes",
-          "Conducted feasibility studies and failure mode analysis",
-          "Managed product certification processes",
-          "Collaborated with cross-functional teams for product development"
-        ],
-        "technologies": ["Analog Camera Systems", "Electronic Prototyping"]
-      },
-      {
-        "id": "Hostgator.com",
-        "type": "Experience",
-        "title": "IT Technical Support",
-        "years": "September 2018 - August 2019",
-        "responsibilities": [
-          "Assisted clients with technical issues and inquiries",
-          "Acquired foundational knowledge in HTML, CSS, PHP, and WordPress",
-          "Became proficient in Cpanel and WHMCS",
-          "Supported small businesses in establishing their online presence",
-          "Maintained online performance and reliability for large enterprises"
-        ],
-        "technologies": ["HTML", "CSS", "PHP", "WordPress", "Cpanel", "WHMCS"]
-      },
-      {
-        "id": "Personal",
-        "type": "Profile",
-        "description": "Pedro is a highly motivated and skilled full-stack developer and data engineer with a proven track record of delivering successful projects in various domains. His experience ranges from building scalable APIs and data pipelines to implementing complex VR solutions and integrating AI/ML models. He's a quick learner, adaptable to new technologies, and possesses strong problem-solving and communication skills. Pedro's passion for innovation and his commitment to quality make him a valuable asset to any team."
-      },
-      {
-        "id": "Personal Life",
-        "type": "Profile",
-        "description": "A calm and balanced individual born and raised in Florianópolis. Married to Anna, a theater teacher and photographer. Pedro maintains a healthy lifestyle and values spending time in nature. He has a background in martial arts, having practiced both judo and jiu-jitsu. In his free time, he enjoys playing guitar, video games, and cherishes moments with friends. He appreciates meeting new people while also valuing moments of peace and quiet"
-      },
-      {
-        "id": "Soft Skills",
-        "type": "Skills",
-        "items": [
-          "Problem-solving",
-          "Communication", 
-          "Teamwork",
-          "Adaptability",
-          "Time management",
-          "Creativity",
-          "Leadership",
-          "Critical Thinking",
-          "He's a simple guy, looking a long term partnership with a cool project that he can help excel"
-        ]
-      },
-      {
-        "id": "Main Achievements",
-        "type": "Achievements",
-        "items": [
-          "Developed scalable platforms integrating Computer Vision models with +95% accuracy at Trinnix AI Lab.",
-          "Implemented robust and scalable VR training solutions compliant with FedRAMP and HIPAA at Simulated Reality.",
-          "Built data pipelines processing countless GB of data daily at QI Tech, achieving 150ms average latency for 100,000 daily requests.",
-          "Developed a full-stack IoT solution for livestock monitoring at PecSmart, from sensor integration to data visualization."
-        ]
-      },
-      {
-        "id": "Future Interests",
-        "type": "Interests",
-        "items": [
-          "Computer Vision",
-          "Quantun computing",
-          "Fintechs",
-          "Future of work",
-          "Remote consulting",
-          "Business development",
-          "Healthcare industry",
-          "AI automation",
-          "AI/ML Engineering",
-          "Distributed Systems", 
-          "Cloud Computing",
-          "Blockchain Technology"
-        ]
-      },
-      {
-        "id": "Languages",
-        "type": "Skills",
-        "description": "Languages spoken and learning interests"
-      },
-      {
-        "id": "English",
-        "type": "Language",
-        "proficiency": "Fluent"
-      },
-      {
-        "id": "Portuguese",
-        "type": "Language",
-        "proficiency": "Native"
-      },
-      {
-        "id": "Spanish",
-        "type": "Language",
-        "proficiency": "Advanced"
-      },
-      {
-        "id": "German",
-        "type": "Language",
-        "proficiency": "Wish to learn"
-      },
-      {
-        "id": "French",
-        "type": "Language",
-        "proficiency": "Wish to learn"
-      },
-      {
-        "id": "Chinese",
-        "type": "Language",
-        "proficiency": "Wish to learn"
+  "nodes": [
+    {
+      "id": "Professional History",
+      "type": "Group",
+      "description": "Professional experience and career progression",
+      "maxLength": 50
+    },
+    {
+      "id": "Education History", 
+      "type": "Group",
+      "description": "Academic background and qualifications",
+      "maxLength": 50
+    },
+    {
+      "id": "Current Status",
+      "type": "Status",
+      "description": "Actively seeking new challenges to leverage my full-stack development and data engineering expertise. With a proven ability to deliver complex technical solutions, I'm excited to contribute to innovative projects that push boundaries. My experience spans building scalable systems, implementing AI/ML solutions, and leading technical projects from concept to deployment. I thrive in collaborative environments where I can apply my problem-solving skills and passion for innovation to create impactful solutions.",
+      "maxLength": 50
+    },
+    {
+      "id": "Pedro Reichow",
+      "type": "Person",
+      "location": "Florianópolis, Santa Catarina, Brazil",
+      "title": "Fullstack Developer/Data Engineer\n\nDownload resume here",
+      "contact": {
+        "email": "pedro_reichow@hotmail.com",
+        "linkedin": "https://www.linkedin.com/in/pedroreichow", 
+        "github": "https://github.com/pdrago97",
+        "phone": "+5548999052697"
       }
-    ],
-    "edges": [
-      { "source": "Pedro Reichow", "target": "Estácio", "relation": "EDUCATED_AT" },
-      { "source": "Pedro Reichow", "target": "UFSC", "relation": "EDUCATED_AT" },
-      { "source": "Pedro Reichow", "target": "IFSC", "relation": "EDUCATED_AT" },
-      { "source": "Pedro Reichow", "target": "Trinnix AI Lab", "relation": "WORKED_AT" },
-      { "source": "Pedro Reichow", "target": "Simulated Reality", "relation": "WORKED_AT" },
-      { "source": "Pedro Reichow", "target": "QI Tech", "relation": "WORKED_AT" },
-      { "source": "Pedro Reichow", "target": "PecSmart", "relation": "WORKED_AT" },
-      { "source": "Pedro Reichow", "target": "Fontes Promotora", "relation": "WORKED_AT" },
-      { "source": "Pedro Reichow", "target": "Intelbras", "relation": "WORKED_AT" },
-      { "source": "Pedro Reichow", "target": "Hostgator.com", "relation": "WORKED_AT" },
-      { "source": "Pedro Reichow", "target": "Personal", "relation": "HAS_PROFILE" },
-      { "source": "Personal", "target": "Soft Skills", "relation": "HAS_SKILLS" },
-      { "source": "Personal", "target": "Main Achievements", "relation": "HAS_ACHIEVEMENTS" },
-      { "source": "Personal", "target": "Future Interests", "relation": "HAS_INTERESTS" },
-      { "source": "Pedro Reichow", "target": "Personal Life", "relation": "HAS_PROFILE" },
-      { "source": "Pedro Reichow", "target": "Languages", "relation": "HAS_SKILLS" },
-      { "source": "Languages", "target": "English", "relation": "SPEAKS" },
-      { "source": "Languages", "target": "Portuguese", "relation": "SPEAKS" },
-      { "source": "Languages", "target": "Spanish", "relation": "SPEAKS" },
-      { "source": "Languages", "target": "German", "relation": "WISH_TO_LEARN" },
-      { "source": "Languages", "target": "French", "relation": "WISH_TO_LEARN" },
-      { "source": "Languages", "target": "Chinese", "relation": "WISH_TO_LEARN" }
-    ]
-  }
+    },
+    {
+      "id": "Estácio",
+      "type": "Education",
+      "degree": "Systems Analysis and Development",
+      "years": "2021 - 2023",
+      "responsibilities": [
+        "Developed strong programming fundamentals in languages like Java, Python, and JavaScript",
+        "Learned software engineering principles including OOP, design patterns, and clean code practices",
+        "Gained experience with databases, both SQL and NoSQL",
+        "Studied web development technologies and frameworks",
+        "Learned systems analysis, requirements gathering, and software architecture",
+        "Practiced agile methodologies and project management",
+        "Built full-stack applications as course projects"
+      ]
+    },
+    {
+      "id": "UFSC",
+      "type": "Education",
+      "degree": "Electrical Engineering", 
+      "years": "2017 - 2023",
+      "responsibilities": [
+        "Studied advanced mathematics, physics, and engineering fundamentals",
+        "Learned circuit analysis, digital electronics, and power systems",
+        "Gained experience with microcontrollers and embedded systems programming",
+        "Conducted laboratory experiments and practical projects",
+        "Studied control systems and automation",
+        "Learned signal processing and telecommunications principles",
+        "Developed skills in electrical system design and simulation",
+        "Participated in research projects involving renewable energy systems"
+      ]
+    },
+    {
+      "id": "IFSC",
+      "type": "Education",
+      "degree": "Technical High School in Electrotechnics",
+      "years": "2012 - 2016",
+      "responsibilities": [
+        "Learned fundamentals of electrical systems and circuit analysis",
+        "Gained hands-on experience with electrical installations and maintenance",
+        "Studied industrial automation and control systems",
+        "Practiced electrical safety protocols and regulations",
+        "Developed skills in reading and creating electrical schematics",
+        "Learned about power distribution systems and transformers",
+        "Gained experience with electrical measurement instruments",
+        "Participated in practical laboratory projects"
+      ]
+    },
+    {
+      "id": "Trinnix AI Lab",
+      "type": "Experience",
+      "title": "AI and Computer Vision Engineer",
+      "years": "February 2024 - November 2024",
+      "responsibilities": [
+        "Developed scalable platforms in TypeScript, tRPC, and Node.js, integrating computer vision models for agricultural map analysis with Qgis. The models, trained with YoloX and Roboflow, achieved an accuracy of +95% in identifying plant diseases and pests, as well as counting and identifying cattle behavior.",
+        "Built ontological knowledge graphs using MongoDB, Milvus, and Cytoscape.js for visualization, enabling complex analysis and business insights. Implemented vector embeddings for semantic search and relationship mapping between entities.",
+        "Integrated LLMs (Gemini 1.5 pro, Claude 3.5 sonnet, Ollama 3, gpt-4o) through APIs, utilizing advanced prompt engineering techniques to ingest data from documents based on the ontology, generate automated reports from the insights, and issue alerts.",
+        "Managed the project's relational database with Prisma ORM.",
+        "Researched and implemented various ontology frameworks and tools including:",
+        "- Portkey for secure authentication and access control in knowledge graph systems",
+        "- Cognee for semantic reasoning and inference capabilities",
+        "- Palantir Foundry for large-scale data integration and analysis",
+        "- Neo4j for graph database management and querying",
+        "- RDF/OWL standards for knowledge representation",
+        "- SPARQL for complex graph queries and data retrieval",
+        "Developed custom ontology schemas and taxonomies to model agricultural domain knowledge",
+        "Implemented semantic search and recommendation systems using vector embeddings and similarity metrics"
+      ],
+      "technologies": ["TypeScript", "tRPC", "Node.js", "YoloX", "Ultralytics", "Roboflow", "Knowledge-graphs", "Gemini1.5", "Claude", "Ollama", "gpt-40", "Cloudflare", "digital ocean", "Qgis", "Python scripting"]
+    },
+    {
+      "id": "Simulated Reality",
+      "type": "Experience",
+      "title": "Full Stack Engineer",
+      "years": "February 2023 - February 2024",
+      "responsibilities": [
+        "Developed VR solutions in Node.js and React for training and wellness, implementing features such as interaction with 3D objects, physics simulations.",
+        "Built scalable APIs with Node.js and Express, using queues for asynchronous task processing and pub/sub for real-time communication between system components. The use of queues enabled the processing of large 3D video files and updates of games compiled in Unity and Unreal.",
+        "Implemented unit and integration tests with Jest, ensuring software quality and reliability.",
+        "Created data visualization dashboards with Chart.js, integrated with a CRM system to track user progress in training, headset usage insights, and more.",
+        "Implemented a robust and scalable infrastructure in Azure App Service and Blob Storage, using CI/CD (GitOps) practices to automate the deployment process and ensure environment stability.",
+        "Ensured compliance with US healthcare industry security and privacy standards (FedRAMP and HIPAA), implementing a deployment protocol with Red Hat OpenShift containers."
+      ],
+      "technologies": ["Node.js", "React", "Express", "Jest","OpenShift Redhat" ,"Azure", "Chart.js", "FedRAMP", "HIPAA"]
+    },
+    {
+      "id": "QI Tech",
+      "type": "Experience",
+      "title": "Full Stack Engineer",
+      "years": "March 2022 - February 2023",
+      "responsibilities": [
+        "Developed scalable microservice APIs in Python with Flask and FastAPI, using the gRPC framework for inter-service communication. These APIs processed an average of 100,000 requests per day with an average latency of 150 ms.",
+        "Implemented data pipelines in Python, using Apache Beam and the Google Cloud Dataflow service for distributed and large-scale processing. The pipelines processed countless GB of data daily, from tax documents, credit agreements, and images for security identification services.",
+        "Orchestrated data pipelines with Apache Airflow, deployed on Google Cloud Composer, scheduling and monitoring workflow execution.",
+        "Used Google Cloud Pub/Sub to implement asynchronous and decoupled communication between microservices, ensuring system scalability and resilience.",
+        "Stored processed data in a Data Lake on Google Cloud Storage (GCS), optimized for analytical queries with Google Cloud BigQuery.",
+        "Implemented unit and integration tests (TDD) with pytest, ensuring code quality and API reliability.",
+        "Monitored system performance and health with Google Cloud Monitoring and Logging, configuring alerts to guarantee service availability.",
+        "Managed infrastructure as code (IaC) with Terraform, automating resource provisioning and management in GCP.",
+        "Built responsive web interfaces with React and NextJS, consuming microservice APIs."
+      ],
+      "technologies": ["Python", "Flask", "FastAPI", "gRPC", "Apache Beam", "Google Cloud Dataflow", "Apache Airflow", "Google Cloud Composer", "Google Cloud Pub/Sub", "BigQuery", "pytest", "Terraform", "React", "Next.js"]
+    },
+    {
+      "id": "PecSmart",
+      "type": "Experience",
+      "title": "Backend Developer Intern",
+      "years": "December 2021 - February 2022",
+      "responsibilities": [
+        "Developed RESTful APIs in Python with Django and Django REST Framework (DRF) to collect and manage sensor data. The APIs processed data from sensors, transmitting information every minutes/seconds.",
+        "Implemented the sensor data collection logic on Raspberry Pi devices using BalenaCLI, integrating with DRF. The collected data included silo volume, microphone audio, and camera images.",
+        "Built a data processing pipeline in Python to receive, process, and feed the RDS database where the ML models would consume it.",
+        "Created Bash automation scripts to back up data and update software on Raspberry Pi devices.",
+        "Developed front-end interfaces with Vue.js for real-time visualization of sensor data, allowing livestock farmers to monitor their swine herds. The interfaces displayed information such as health indicators in pig pens, volume with loading and unloading in silos, and translation of volume to kg/ton.",
+        "Used BalenaCLI to manage and deploy software on Raspberry Pi devices, facilitating system updates and maintenance in the field."
+      ],
+      "technologies": ["Python", "Raspberry Pi", "Django", "DRF", "BalenaCLI", "Vue.js"]
+    },
+    {
+      "id": "Fontes Promotora",
+      "type": "Experience",
+      "title": "Backend Developer",
+      "years": "May 2021 - October 2021",
+      "responsibilities": [
+        "Developed web scraping solutions using Scrapy and Requests",
+        "Built and maintained APIs using FastAPI, Flask, and Django Rest Framework",
+        "Managed databases using MongoDB and PostgreSQL",
+        "Implemented data processing pipelines with Pandas",
+        "Created frontend interfaces using ReactJS",
+        "Deployed and maintained applications using Docker and AWS",
+        "Automated project management workflows with Smartsheets"
+      ],
+      "technologies": ["Python", "JavaScript", "Web scraping", "FastAPI", "Flask", "MongoDB", "PostgreSQL", "React", "Docker", "AWS", "Smartsheets"]
+    },
+    {
+      "id": "Intelbras",
+      "type": "Experience",
+      "title": "Product Developer",
+      "years": "November 2020 - May 2021",
+      "responsibilities": [
+        "Created technical documentation for analog camera systems",
+        "Executed product testing and validation procedures",
+        "Conducted negotiations with international suppliers",
+        "Designed and built electronic product prototypes",
+        "Conducted feasibility studies and failure mode analysis",
+        "Managed product certification processes",
+        "Collaborated with cross-functional teams for product development"
+      ],
+      "technologies": ["Analog Camera Systems", "Electronic Prototyping"]
+    },
+    {
+      "id": "Hostgator.com",
+      "type": "Experience",
+      "title": "IT Technical Support",
+      "years": "September 2018 - August 2019",
+      "responsibilities": [
+        "Assisted clients with technical issues and inquiries",
+        "Acquired foundational knowledge in HTML, CSS, PHP, and WordPress",
+        "Became proficient in Cpanel and WHMCS",
+        "Supported small businesses in establishing their online presence",
+        "Maintained online performance and reliability for large enterprises"
+      ],
+      "technologies": ["HTML", "CSS", "PHP", "WordPress", "Cpanel", "WHMCS"]
+    },
+    {
+      "id": "Personal",
+      "type": "Profile",
+      "description": "Pedro is a highly motivated and skilled full-stack developer and data engineer with a proven track record of delivering successful projects in various domains. His experience ranges from building scalable APIs and data pipelines to implementing complex VR solutions and integrating AI/ML models. He's a quick learner, adaptable to new technologies, and possesses strong problem-solving and communication skills. Pedro's passion for innovation and his commitment to quality make him a valuable asset to any team."
+    },
+    {
+      "id": "Personal Life",
+      "type": "Profile",
+      "description": "A calm and balanced individual born and raised in Florianópolis. Married to Anna, a theater teacher and photographer. Pedro maintains a healthy lifestyle and values spending time in nature. He has a background in martial arts, having practiced both judo and jiu-jitsu. In his free time, he enjoys playing guitar, video games, and cherishes moments with friends. He appreciates meeting new people while also valuing moments of peace and quiet"
+    },
+    {
+      "id": "Soft Skills",
+      "type": "Skills",
+      "items": [
+        "Problem-solving",
+        "Communication", 
+        "Teamwork",
+        "Adaptability",
+        "Time management",
+        "Creativity",
+        "Leadership",
+        "Critical Thinking",
+        "He's a simple guy, looking a long term partnership with a cool project that he can help excel"
+      ]
+    },
+    {
+      "id": "Main Achievements",
+      "type": "Achievements",
+      "items": [
+        "Developed scalable platforms integrating Computer Vision models with +95% accuracy at Trinnix AI Lab.",
+        "Implemented robust and scalable VR training solutions compliant with FedRAMP and HIPAA at Simulated Reality.",
+        "Built data pipelines processing countless GB of data daily at QI Tech, achieving 150ms average latency for 100,000 daily requests.",
+        "Developed a full-stack IoT solution for livestock monitoring at PecSmart, from sensor integration to data visualization."
+      ]
+    },
+    {
+      "id": "Future Interests",
+      "type": "Interests",
+      "items": [
+        "Computer Vision",
+        "Quantun computing",
+        "Fintechs",
+        "Future of work",
+        "Remote consulting",
+        "Business development",
+        "Healthcare industry",
+        "AI automation",
+        "AI/ML Engineering",
+        "Distributed Systems", 
+        "Cloud Computing",
+        "Blockchain Technology"
+      ]
+    },
+    {
+      "id": "Languages",
+      "type": "Skills",
+      "description": "Languages spoken and learning interests",
+      "maxLength": 30
+    },
+    {
+      "id": "English",
+      "type": "Language",
+      "proficiency": "Fluent"
+    },
+    {
+      "id": "Portuguese",
+      "type": "Language",
+      "proficiency": "Native"
+    },
+    {
+      "id": "Spanish",
+      "type": "Language",
+      "proficiency": "Advanced"
+    },
+    {
+      "id": "German",
+      "type": "Language",
+      "proficiency": "Wish to learn"
+    },
+    {
+      "id": "French",
+      "type": "Language",
+      "proficiency": "Wish to learn"
+    },
+    {
+      "id": "Chinese",
+      "type": "Language",
+      "proficiency": "Wish to learn"
+    },
+    {
+      "id": "Russian",
+      "type": "Language",
+      "proficiency": "Wish to learn"
+    },
+    {
+      "id": "Work History",
+      "type": "ExperienceGroup",
+      "description": "Main node grouping all professional work experience",
+      "maxLength": 50
+    },
+    {
+      "id": "Work History Group",
+      "type": "EdgeGroup",
+      "description": "Consolidated professional experience showcasing diverse technical roles and achievements",
+      "maxLength": 50
+    },
+    {
+      "id": "Education Group",
+      "type": "EdgeGroup",
+      "description": "Educational background connections"
+    },
+    {
+      "id": "Skills Group",
+      "type": "EdgeGroup",
+      "description": "Skills and capabilities connections"
+    }
+  ],
+  "edges": [
+    { "source": "Languages", "target": "English", "relation": "SPEAKS" },
+    { "source": "Languages", "target": "Portuguese", "relation": "SPEAKS" },
+    { "source": "Languages", "target": "Spanish", "relation": "SPEAKS" },
+    { "source": "Languages", "target": "German", "relation": "WANTS_TO_LEARN" },
+    { "source": "Languages", "target": "French", "relation": "WANTS_TO_LEARN" },
+    { "source": "Languages", "target": "Chinese", "relation": "WANTS_TO_LEARN" },
+    { "source": "Languages", "target": "Russian", "relation": "WANTS_TO_LEARN" },
+    { "source": "Pedro Reichow", "target": "Professional History", "relation": "HAS_PROFESSIONAL_HISTORY" },
+    { "source": "Pedro Reichow", "target": "Education History", "relation": "HAS_EDUCATION_HISTORY" },
+    { "source": "Pedro Reichow", "target": "Current Status", "relation": "CURRENT_STATUS" },
+    
+    { "source": "Professional History", "target": "Work History Group", "relation": "HAS_EDGE_GROUP" },
+    { "source": "Work History Group", "target": "Work History", "relation": "HAS_MAIN_NODE" },
+    { "source": "Current Status", "target": "Work History Group", "relation": "BUILT_ON" },
+    { "source": "Work History", "target": "Trinnix AI Lab", "relation": "WORKED_AT" },
+    { "source": "Work History", "target": "Simulated Reality", "relation": "WORKED_AT" },
+    { "source": "Work History", "target": "QI Tech", "relation": "WORKED_AT" },
+    { "source": "Work History", "target": "PecSmart", "relation": "WORKED_AT" },
+    { "source": "Work History", "target": "Fontes Promotora", "relation": "WORKED_AT" },
+    { "source": "Work History", "target": "Intelbras", "relation": "WORKED_AT" },
+    { "source": "Work History", "target": "Hostgator.com", "relation": "WORKED_AT" },
+    { "source": "Current Status", "target": "Work History", "relation": "BUILT_ON" },
+    
+    { "source": "Education History", "target": "Education Group", "relation": "HAS_EDGE_GROUP" },
+    { "source": "Education Group", "target": "Estácio", "relation": "EDUCATED_AT" },
+    { "source": "Education Group", "target": "UFSC", "relation": "EDUCATED_AT" },
+    { "source": "Education Group", "target": "IFSC", "relation": "EDUCATED_AT" },
+    
+    { "source": "Pedro Reichow", "target": "Personal", "relation": "HAS_PROFILE" },
+    { "source": "Personal", "target": "Skills Group", "relation": "HAS_EDGE_GROUP" },
+    { "source": "Personal", "target": "Personal Life", "relation": "HAS_PROFILE" },
+    { "source": "Personal", "target": "Languages", "relation": "HAS_SKILLS" },
+    { "source": "Skills Group", "target": "Soft Skills", "relation": "HAS_SKILLS" },
+    { "source": "Skills Group", "target": "Main Achievements", "relation": "HAS_ACHIEVEMENTS" },
+    { "source": "Skills Group", "target": "Future Interests", "relation": "HAS_INTERESTS" },
+    { "source": "Skills Group", "target": "Languages", "relation": "HAS_SKILLS" },
+    { "source": "Languages", "target": "German", "relation": "WANTS_TO_LEARN" },
+    { "source": "Languages", "target": "French", "relation": "WANTS_TO_LEARN" },
+    { "source": "Languages", "target": "Chinese", "relation": "WANTS_TO_LEARN" },
+    { "source": "Languages", "target": "Russian", "relation": "WANTS_TO_LEARN" }
+  ]
+}
