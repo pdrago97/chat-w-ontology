@@ -824,7 +824,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
             ? 'linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%)'
             : 'linear-gradient(135deg, #3498db 0%, #2980b9 100%)',
           color: 'white',
-          border: 'none',
+          border: '1px solid rgba(255,255,255,0.2)',
           borderRadius: '25px',
           cursor: isRefreshing ? 'not-allowed' : 'pointer',
           fontSize: '14px',
@@ -835,8 +835,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
             : '0 6px 12px rgba(52, 152, 219, 0.3)',
           transition: 'all 0.3s ease',
           transform: isRefreshing ? 'scale(0.95)' : 'scale(1)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255,255,255,0.2)'
+          backdropFilter: 'blur(10px)'
         }}
         title={lastUpdated ? `Last updated: ${new Date(lastUpdated).toLocaleTimeString()}` : t('graph.refresh')}
         onMouseEnter={(e) => {

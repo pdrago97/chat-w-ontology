@@ -1,23 +1,37 @@
 import { json } from "@remix-run/node";
 import type { ActionFunction } from "@remix-run/node";
 import { Portkey } from "portkey-ai";
-import fs from "fs/promises";
-import path from "path";
-import { fileURLToPath } from "url";
 
 // Import PDF processor with fallback
 let queryVectorStore: ((query: string) => Promise<string>) | null = null;
-try {
-  const pdfProcessor = await import("./pdfProcessor");
-  queryVectorStore = pdfProcessor.queryVectorStore;
-} catch (error) {
-  console.warn("PDF processor not available, using fallback");
-  queryVectorStore = null;
+
+// Initialize server-side modules function
+async function initializeServerModules() {
+  if (typeof window !== "undefined") return null;
+
+  try {
+    const pdfProcessor = await import("./pdfProcessor");
+    return pdfProcessor.queryVectorStore;
+  } catch (error) {
+    console.warn("Server modules not available, using fallback");
+    return null;
+  }
 }
 
-// Get the directory name in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Server-side directory helper
+function getServerPaths() {
+  if (typeof window !== "undefined") return { __filename: "", __dirname: "" };
+
+  try {
+    const path = require("path");
+    const { fileURLToPath } = require("url");
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    return { __filename, __dirname };
+  } catch {
+    return { __filename: "", __dirname: "" };
+  }
+}
 
 interface GraphNode {
   id: string;
@@ -174,7 +188,12 @@ export const action: ActionFunction = async ({ request }) => {
   try {
     const { message, systemPrompt, graphData, conversationHistory, language = 'en' }: ChatRequest = await request.json();
     const formattedGraph = formatGraphDataForLLM(graphData);
-    
+
+    // Initialize server modules if not already done
+    if (!queryVectorStore) {
+      queryVectorStore = await initializeServerModules();
+    }
+
     // Get relevant resume content
     let resumeContent = "";
     if (queryVectorStore) {

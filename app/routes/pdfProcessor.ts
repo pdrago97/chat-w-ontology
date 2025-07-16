@@ -2,7 +2,6 @@ import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
-import path from 'path';
 
 let vectorStore: MemoryVectorStore | null = null;
 
@@ -14,6 +13,8 @@ export async function initializeVectorStore() {
   }
 
   try {
+    // Use require for server-side path operations
+    const path = require('path');
     const resumePath = path.join(process.cwd(), 'public', 'assets', 'resume.pdf');
     console.log('Loading PDF document from:', resumePath);
     const loader = new PDFLoader(resumePath);

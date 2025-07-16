@@ -21,6 +21,20 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  // Server-side configuration
+  ssr: {
+    noExternal: ["portkey-ai", "langchain"],
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    exclude: ["fs", "path", "url", "zlib", "http", "https"],
+  },
+  // Build configuration
+  build: {
+    rollupOptions: {
+      external: ["fs", "path", "url", "zlib", "http", "https", "node:fs/promises"],
+    },
+  },
   // Add this to ensure environment variables are available
   define: {
     'process.env.PORTKEY_API_KEY': JSON.stringify(process.env.PORTKEY_API_KEY),
