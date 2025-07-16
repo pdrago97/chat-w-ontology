@@ -1,6 +1,16 @@
 import { json } from "@remix-run/node";
 import type { ActionFunction } from "@remix-run/node";
-import { Portkey } from "portkey-ai";
+
+// Dynamic import for portkey-ai to avoid SSR issues
+let Portkey: any = null;
+if (typeof window === "undefined") {
+  try {
+    const portkeyModule = await import("portkey-ai");
+    Portkey = portkeyModule.Portkey;
+  } catch (error) {
+    console.warn("Portkey-ai not available:", error);
+  }
+}
 
 // Import PDF processor with fallback
 let queryVectorStore: ((query: string) => Promise<string>) | null = null;
@@ -123,7 +133,7 @@ function formatGraphDataForLLM(graphData: GraphData): string {
 // Initialize LLM client function
 async function initializeLLMClient() {
   try {
-    if (process.env.PORTKEY_API_KEY) {
+    if (process.env.PORTKEY_API_KEY && Portkey) {
       const llmClient = new Portkey({
         apiKey: process.env.PORTKEY_API_KEY,
         virtualKey: "open-ai-virtual-e16edd"

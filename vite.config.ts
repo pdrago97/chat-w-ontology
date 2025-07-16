@@ -23,11 +23,12 @@ export default defineConfig({
   ],
   // Server-side configuration
   ssr: {
-    noExternal: ["portkey-ai", "langchain"],
+    noExternal: ["portkey-ai"],
+    external: ["fs", "path", "url", "zlib", "http", "https", "node:fs/promises"],
   },
   // Optimize dependencies
   optimizeDeps: {
-    exclude: ["fs", "path", "url", "zlib", "http", "https"],
+    exclude: ["fs", "path", "url", "zlib", "http", "https", "portkey-ai"],
   },
   // Build configuration
   build: {

@@ -15,6 +15,41 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const { language, t } = useLanguage();
 
+  // Helper function to brighten colors on hover
+  const brightenColor = (color: string, amount: number) => {
+    // Handle RGB format
+    if (color.startsWith('rgb')) {
+      const matches = color.match(/\d+/g);
+      if (matches && matches.length >= 3) {
+        const r = parseInt(matches[0]);
+        const g = parseInt(matches[1]);
+        const b = parseInt(matches[2]);
+
+        const newR = Math.min(255, Math.floor(r + (255 - r) * amount));
+        const newG = Math.min(255, Math.floor(g + (255 - g) * amount));
+        const newB = Math.min(255, Math.floor(b + (255 - b) * amount));
+
+        return `rgb(${newR}, ${newG}, ${newB})`;
+      }
+    }
+
+    // Handle hex format
+    if (color.startsWith('#')) {
+      const hex = color.replace('#', '');
+      const r = parseInt(hex.substr(0, 2), 16);
+      const g = parseInt(hex.substr(2, 2), 16);
+      const b = parseInt(hex.substr(4, 2), 16);
+
+      const newR = Math.min(255, Math.floor(r + (255 - r) * amount));
+      const newG = Math.min(255, Math.floor(g + (255 - g) * amount));
+      const newB = Math.min(255, Math.floor(b + (255 - b) * amount));
+
+      return `rgb(${newR}, ${newG}, ${newB})`;
+    }
+
+    return color; // Return original if format not recognized
+  };
+
   // Function to refresh graph data
   // Transform any data structure to Cytoscape format
   const transformDataForCytoscape = (data: any) => {
@@ -175,7 +210,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
               'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
               'color': '#ffffff',
               'text-outline-width': '2px',
-              'text-outline-color': 'rgba(0,0,0,0.3)',
+              'text-outline-color': 'rgba(0,0,0,0.7)',
               'border-width': '3px',
               'border-style': 'solid',
               'shape': 'roundrectangle',
@@ -189,18 +224,19 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
                 const lines = label.split('\n').length;
                 return Math.max(60, Math.min(lines * 25 + 20, 120));
               },
-              'background-gradient-stop-colors': (node: NodeSingular) => {
+              'background-color': (node: NodeSingular) => {
                 const type = (node.data('type') || 'default').toLowerCase();
                 switch (type) {
-                  case 'person': return '#4CAF50 #66BB6A';
-                  case 'experience': return '#9C27B0 #BA68C8';
-                  case 'education': return '#2196F3 #42A5F5';
-                  case 'skills': return '#FF5722 #FF7043';
-                  case 'project': return '#FFC107 #FFD54F';
-                  default: return '#9E9E9E #BDBDBD';
+                  case 'person': return '#4CAF50';
+                  case 'experience': return '#9C27B0';
+                  case 'education': return '#2196F3';
+                  case 'skills': return '#FF5722';
+                  case 'project': return '#FFC107';
+                  case 'group': return '#FF9800';
+                  case 'status': return '#E91E63';
+                  default: return '#607D8B';
                 }
               },
-              'background-gradient-direction': 'to-bottom-right',
               'box-shadow-blur': '8px',
               'box-shadow-color': 'rgba(0,0,0,0.2)',
               'box-shadow-offset-x': '2px',
@@ -213,7 +249,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           {
             selector: 'node.person',
             style: {
-              'background-gradient-stop-colors': '#4CAF50 #66BB6A #81C784',
+              'background-color': '#4CAF50',
               'border-color': '#2E7D32',
               'shape': 'round-diamond',
               'border-width': '4px'
@@ -222,7 +258,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           {
             selector: 'node.education',
             style: {
-              'background-gradient-stop-colors': '#2196F3 #42A5F5 #64B5F6',
+              'background-color': '#2196F3',
               'border-color': '#1565C0',
               'shape': 'round-octagon'
             }
@@ -230,7 +266,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           {
             selector: 'node.experience',
             style: {
-              'background-gradient-stop-colors': '#9C27B0 #BA68C8 #CE93D8',
+              'background-color': '#9C27B0',
               'border-color': '#6A1B9A',
               'shape': 'roundrectangle'
             }
@@ -238,7 +274,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           {
             selector: 'node.skills',
             style: {
-              'background-gradient-stop-colors': '#FF5722 #FF7043 #FF8A65',
+              'background-color': '#FF5722',
               'border-color': '#D84315',
               'shape': 'round-hexagon'
             }
@@ -246,15 +282,39 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           {
             selector: 'node.project',
             style: {
-              'background-gradient-stop-colors': '#FFC107 #FFD54F #FFE082',
+              'background-color': '#FFC107',
               'border-color': '#F57C00',
               'shape': 'round-tag'
             }
           },
           {
+            selector: 'node.achievements',
+            style: {
+              'background-color': '#E91E63',
+              'border-color': '#AD1457',
+              'shape': 'star'
+            }
+          },
+          {
+            selector: 'node.interests',
+            style: {
+              'background-color': '#FF9800',
+              'border-color': '#E65100',
+              'shape': 'round-triangle'
+            }
+          },
+          {
+            selector: 'node.profile',
+            style: {
+              'background-color': '#607D8B',
+              'border-color': '#37474F',
+              'shape': 'ellipse'
+            }
+          },
+          {
             selector: 'node.group',
             style: {
-              'background-gradient-stop-colors': '#FF9800 #FFB74D #FFCC02',
+              'background-color': '#FF9800',
               'border-color': '#F57C00',
               'shape': 'round-hexagon'
             }
@@ -262,7 +322,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           {
             selector: 'node.status',
             style: {
-              'background-gradient-stop-colors': '#E91E63 #F06292 #F48FB1',
+              'background-color': '#E91E63',
               'border-color': '#C2185B',
               'shape': 'ellipse'
             }
@@ -375,14 +435,19 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
     // Add enhanced interactions for nodes
     if (!cyRef.current) return;
 
-    // Add hover effects
+    // Add enhanced hover effects with color brightening
     cyRef.current.on('mouseover', 'node', function(e: any) {
       const node = e.target;
+      const originalColor = node.style('background-color');
+      const brightenedColor = brightenColor(originalColor, 0.3);
+
       node.animate({
         style: {
-          'border-width': '5px',
-          'box-shadow-blur': '15px',
-          'box-shadow-color': 'rgba(0,0,0,0.4)'
+          'border-width': '6px',
+          'box-shadow-blur': '20px',
+          'box-shadow-color': 'rgba(0,0,0,0.6)',
+          'background-color': brightenedColor,
+          'z-index': 999
         }
       }, {
         duration: 200,
@@ -405,11 +470,30 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
 
     cyRef.current.on('mouseout', 'node', function(e: any) {
       const node = e.target;
+      const nodeType = node.data('type') || 'default';
+
+      // Restore original color based on node type
+      let originalColor = '#607D8B'; // default
+      switch (nodeType.toLowerCase()) {
+        case 'person': originalColor = '#4CAF50'; break;
+        case 'experience': originalColor = '#9C27B0'; break;
+        case 'education': originalColor = '#2196F3'; break;
+        case 'skills': originalColor = '#FF5722'; break;
+        case 'project': originalColor = '#FFC107'; break;
+        case 'group': originalColor = '#FF9800'; break;
+        case 'status': originalColor = '#E91E63'; break;
+        case 'achievements': originalColor = '#E91E63'; break;
+        case 'interests': originalColor = '#FF9800'; break;
+        case 'profile': originalColor = '#607D8B'; break;
+      }
+
       node.animate({
         style: {
           'border-width': '3px',
           'box-shadow-blur': '8px',
-          'box-shadow-color': 'rgba(0,0,0,0.2)'
+          'box-shadow-color': 'rgba(0,0,0,0.2)',
+          'background-color': originalColor,
+          'z-index': 1
         }
       }, {
         duration: 200,

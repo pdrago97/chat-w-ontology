@@ -1,6 +1,6 @@
-import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
-import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
+import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
+import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
+import { OpenAIEmbeddings } from '@langchain/openai';
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
 
 let vectorStore: MemoryVectorStore | null = null;
