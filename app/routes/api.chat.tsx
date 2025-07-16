@@ -1,8 +1,7 @@
 import { json } from "@remix-run/node";
 import type { ActionFunction } from "@remix-run/node";
 
-// Dynamic import for portkey-ai to avoid SSR issues
-let Portkey: any = null;
+// Using OpenAI directly for better Vercel compatibility
 
 // Import PDF processor with fallback
 let queryVectorStore: ((query: string) => Promise<string>) | null = null;
@@ -124,38 +123,22 @@ function formatGraphDataForLLM(graphData: GraphData): string {
 
 // Initialize LLM client function
 async function initializeLLMClient() {
+  // Always use OpenAI directly for better reliability on Vercel
   try {
-    if (process.env.PORTKEY_API_KEY) {
-      // Dynamic import of Portkey
-      if (!Portkey) {
-        try {
-          const portkeyModule = await import("portkey-ai");
-          Portkey = portkeyModule.Portkey;
-        } catch (error) {
-          console.warn("Portkey-ai not available:", error);
-          Portkey = null;
-        }
-      }
-
-      if (Portkey) {
-        const llmClient = new Portkey({
-          apiKey: process.env.PORTKEY_API_KEY,
-          virtualKey: "open-ai-virtual-e16edd"
-        });
-        console.log("Using Portkey for LLM calls");
-        return { client: llmClient, usePortkey: true };
-      }
-    } else {
-      throw new Error("Portkey API key not available");
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error("OPENAI_API_KEY not found");
     }
-  } catch (error) {
-    console.warn("Portkey not available, using OpenAI directly");
-    // Fallback to OpenAI directly
+
     const { OpenAI } = await import("openai");
     const llmClient = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY
     });
+
+    console.log("Using OpenAI directly for LLM calls");
     return { client: llmClient, usePortkey: false };
+  } catch (error) {
+    console.error("Failed to initialize OpenAI client:", error);
+    throw new Error("LLM client initialization failed");
   }
 }
 
