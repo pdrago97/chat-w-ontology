@@ -3,14 +3,6 @@ import type { ActionFunction } from "@remix-run/node";
 
 // Dynamic import for portkey-ai to avoid SSR issues
 let Portkey: any = null;
-if (typeof window === "undefined") {
-  try {
-    const portkeyModule = await import("portkey-ai");
-    Portkey = portkeyModule.Portkey;
-  } catch (error) {
-    console.warn("Portkey-ai not available:", error);
-  }
-}
 
 // Import PDF processor with fallback
 let queryVectorStore: ((query: string) => Promise<string>) | null = null;
@@ -133,13 +125,26 @@ function formatGraphDataForLLM(graphData: GraphData): string {
 // Initialize LLM client function
 async function initializeLLMClient() {
   try {
-    if (process.env.PORTKEY_API_KEY && Portkey) {
-      const llmClient = new Portkey({
-        apiKey: process.env.PORTKEY_API_KEY,
-        virtualKey: "open-ai-virtual-e16edd"
-      });
-      console.log("Using Portkey for LLM calls");
-      return { client: llmClient, usePortkey: true };
+    if (process.env.PORTKEY_API_KEY) {
+      // Dynamic import of Portkey
+      if (!Portkey) {
+        try {
+          const portkeyModule = await import("portkey-ai");
+          Portkey = portkeyModule.Portkey;
+        } catch (error) {
+          console.warn("Portkey-ai not available:", error);
+          Portkey = null;
+        }
+      }
+
+      if (Portkey) {
+        const llmClient = new Portkey({
+          apiKey: process.env.PORTKEY_API_KEY,
+          virtualKey: "open-ai-virtual-e16edd"
+        });
+        console.log("Using Portkey for LLM calls");
+        return { client: llmClient, usePortkey: true };
+      }
     } else {
       throw new Error("Portkey API key not available");
     }
