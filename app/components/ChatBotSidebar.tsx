@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { 
-  MainContainer, 
-  ChatContainer, 
-  MessageList, 
-  Message, 
-  MessageInput 
+import {
+  MainContainer,
+  ChatContainer,
+  MessageList,
+  Message,
+  MessageInput
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface ChatBotSidebarProps {
   graphData: any;
@@ -42,13 +43,27 @@ Use only the information provided in the knowledge graph. If asked about anythin
 `;
 
 const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
+    const { language, t } = useLanguage();
+
+    // Dynamic welcome message based on language
+    const getWelcomeMessage = () => ({
+      message: `${t('welcome.title')}, ${t('welcome.subtitle')} ${t('welcome.question')}`,
+      sender: "assistant" as const,
+      direction: "incoming" as const
+    });
+
     const [messages, setMessages] = useState<{
       message: string;
       sender: "user" | "assistant";
       direction: "incoming" | "outgoing";
-    }[]>([WELCOME_MESSAGE]);
+    }[]>([getWelcomeMessage()]);
     const [isLoading, setIsLoading] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(false);
+
+    // Update welcome message when language changes
+    React.useEffect(() => {
+      setMessages([getWelcomeMessage()]);
+    }, [language]);
 
   const handleSendMessage = async (message: string) => {
     if (!message.trim() || isLoading) return;
@@ -72,7 +87,8 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
           message,
           systemPrompt: SYSTEM_PROMPT,
           graphData,
-          conversationHistory: messages
+          conversationHistory: messages,
+          language: language // Include language preference
         }),
       });
 
@@ -147,8 +163,8 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
                 />
               )}
             </MessageList>
-            <MessageInput 
-              placeholder="Ask anything about Pedro..." 
+            <MessageInput
+              placeholder={t('chat.placeholder')}
               onSend={handleSendMessage}
               attachButton={false}
               disabled={isLoading}

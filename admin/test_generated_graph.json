@@ -1,0 +1,330 @@
+{
+  "nodes": [
+    {
+      "id": "Pedro Reichow",
+      "type": "Person",
+      "contact": {
+        "email": "pedroreichow3@gmail.com",
+        "linkedin": "https://www.linkedin.com/in/pedroreichow",
+        "github": "https://github.com/pdrago97"
+      },
+      "location": "S\u00e3o Paulo, Brazil",
+      "summary": "Experienced software engineer with 6+ years in fintech, AI, and cloud technologies. Led development of high-performance trading platforms processing $50M+ daily transactions. Expert in Python, React, and distributed systems architecture."
+    },
+    {
+      "id": "QI Tech",
+      "type": "Experience",
+      "title": "Senior Software Engineer",
+      "years": "2022-2024",
+      "location": "S\u00e3o Paulo, Brazil",
+      "technologies": [
+        "Python",
+        "React",
+        "Apache Kafka",
+        "Redis",
+        "PostgreSQL",
+        "Docker",
+        "Kubernetes"
+      ],
+      "responsibilities": [
+        "Led development of fintech platform serving 100,000+ users",
+        "Implemented microservices architecture using Python, FastAPI, and Apache Kafka",
+        "Built real-time trading system processing 10,000+ transactions per minute"
+      ],
+      "achievements": [
+        "Reduced system latency by 60%",
+        "Increased throughput by 300%"
+      ]
+    },
+    {
+      "id": "Microsoft",
+      "type": "Experience",
+      "title": "Software Developer",
+      "years": "2020-2022",
+      "location": "Remote",
+      "technologies": [
+        "C#",
+        ".NET Core",
+        "Azure",
+        "TypeScript",
+        "React",
+        "SQL Server"
+      ],
+      "responsibilities": [
+        "Developed Azure cloud services for enterprise clients",
+        "Built scalable APIs serving 1M+ requests daily",
+        "Implemented CI/CD pipelines reducing deployment time by 80%"
+      ],
+      "achievements": [
+        "Led team of 5 developers",
+        "Delivered 15+ major features"
+      ]
+    },
+    {
+      "id": "Startup XYZ",
+      "type": "Experience",
+      "title": "Full Stack Developer",
+      "years": "2019-2020",
+      "location": "S\u00e3o Paulo, Brazil",
+      "technologies": [
+        "Node.js",
+        "React",
+        "MongoDB",
+        "Stripe API"
+      ],
+      "responsibilities": [
+        "Built MVP for e-commerce platform from scratch",
+        "Implemented payment integration with multiple providers"
+      ],
+      "achievements": [
+        "Platform reached 10,000+ users in first 6 months"
+      ]
+    },
+    {
+      "id": "Universidade Federal do Rio Grande do Sul",
+      "type": "Education",
+      "degree": "Bachelor in Computer Science",
+      "years": "2015-2019",
+      "gpa": "3.8/4.0",
+      "relevant_courses": [
+        "Data Structures",
+        "Algorithms",
+        "Machine Learning",
+        "Database Systems"
+      ],
+      "activities": [
+        "Programming Competition Team (3rd place regional)",
+        "Tech Club President"
+      ],
+      "thesis": "Machine Learning Applications in Financial Trading"
+    },
+    {
+      "id": "Technical Skills",
+      "type": "Skills",
+      "programming_languages": [
+        "Python (Expert)",
+        "JavaScript/TypeScript (Expert)",
+        "C# (Advanced)",
+        "Java (Intermediate)",
+        "Go (Intermediate)",
+        "Rust (Beginner)"
+      ],
+      "web_development": [
+        "React",
+        "Next.js",
+        "Node.js",
+        "Express",
+        "FastAPI",
+        "Django",
+        "Flask",
+        "HTML5",
+        "CSS3"
+      ],
+      "cloud_devops": [
+        "AWS (EC2, S3, Lambda, RDS)",
+        "Azure (App Service, Functions, SQL Database)",
+        "Docker",
+        "Kubernetes",
+        "Jenkins",
+        "GitHub Actions"
+      ],
+      "databases": [
+        "PostgreSQL",
+        "MongoDB",
+        "Redis",
+        "SQL Server",
+        "DynamoDB"
+      ],
+      "ai_ml": [
+        "TensorFlow",
+        "PyTorch",
+        "Scikit-learn",
+        "Pandas",
+        "NumPy",
+        "Jupyter"
+      ],
+      "other": [
+        "Apache Kafka",
+        "RabbitMQ",
+        "Elasticsearch",
+        "GraphQL",
+        "REST APIs",
+        "Microservices"
+      ]
+    },
+    {
+      "id": "AI-Powered Trading Platform",
+      "type": "Project",
+      "year": "2023",
+      "description": "Built machine learning platform for algorithmic trading. Implemented real-time market data processing and prediction models.",
+      "technologies": [
+        "Python",
+        "TensorFlow",
+        "Apache Kafka",
+        "PostgreSQL",
+        "Redis"
+      ],
+      "impact": "Generated 15% higher returns compared to traditional strategies"
+    },
+    {
+      "id": "E-commerce Microservices Platform",
+      "type": "Project",
+      "year": "2022",
+      "description": "Designed and implemented scalable microservices architecture. Built user management, product catalog, and payment services.",
+      "technologies": [
+        "Node.js",
+        "React",
+        "MongoDB",
+        "Docker",
+        "Kubernetes"
+      ],
+      "impact": "Handled 50,000+ concurrent users during peak traffic"
+    },
+    {
+      "id": "Real-time Analytics Dashboard",
+      "type": "Project",
+      "year": "2021",
+      "description": "Created interactive dashboard for business intelligence. Implemented real-time data streaming and visualization.",
+      "technologies": [
+        "React",
+        "D3.js",
+        "WebSockets",
+        "Python",
+        "PostgreSQL"
+      ],
+      "impact": "Reduced decision-making time by 40% for business teams"
+    },
+    {
+      "id": "AWS Solutions Architect Associate",
+      "type": "Certification",
+      "issuer": "Amazon Web Services",
+      "year": "2023",
+      "credential_id": "AWS-SAA-123456",
+      "validation": "aws.amazon.com/verification"
+    },
+    {
+      "id": "Microsoft Azure Developer Associate",
+      "type": "Certification",
+      "issuer": "Microsoft",
+      "year": "2022",
+      "credential_id": "MS-AZ-204-789012",
+      "validation": "learn.microsoft.com/credentials"
+    },
+    {
+      "id": "Google Cloud Professional Developer",
+      "type": "Certification",
+      "issuer": "Google Cloud",
+      "year": "2023",
+      "credential_id": "GCP-PD-345678",
+      "validation": "cloud.google.com/certification"
+    },
+    {
+      "id": "Languages",
+      "type": "Languages",
+      "languages": [
+        "Portuguese: Native",
+        "English: Fluent (C2)",
+        "Spanish: Intermediate (B2)",
+        "German: Basic (A2)"
+      ]
+    },
+    {
+      "id": "Achievements & Awards",
+      "type": "Achievements",
+      "achievements": [
+        "Top Performer Award - QI Tech (2023, 2024)",
+        "Innovation Award - Microsoft (2021)",
+        "Hackathon Winner - FinTech Challenge S\u00e3o Paulo (2022)",
+        "Open Source Contributor - 500+ GitHub contributions",
+        "Technical Blog Writer - 50,000+ monthly readers"
+      ]
+    },
+    {
+      "id": "Code for Brazil",
+      "type": "Volunteer Experience",
+      "role": "Volunteer Developer",
+      "years": "2020-Present",
+      "responsibilities": [
+        "Develop civic technology solutions for local communities",
+        "Mentor junior developers in programming fundamentals"
+      ],
+      "technologies": [
+        "Python",
+        "React",
+        "PostgreSQL"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "Pedro Reichow",
+      "target": "QI Tech",
+      "relation": "WORKED_AT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Microsoft",
+      "relation": "WORKED_AT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Startup XYZ",
+      "relation": "WORKED_AT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Universidade Federal do Rio Grande do Sul",
+      "relation": "STUDIED_AT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Technical Skills",
+      "relation": "HAS_SKILL"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "AI-Powered Trading Platform",
+      "relation": "CREATED"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "E-commerce Microservices Platform",
+      "relation": "CREATED"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Real-time Analytics Dashboard",
+      "relation": "CREATED"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "AWS Solutions Architect Associate",
+      "relation": "CERTIFIED_BY"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Microsoft Azure Developer Associate",
+      "relation": "CERTIFIED_BY"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Google Cloud Professional Developer",
+      "relation": "CERTIFIED_BY"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Languages",
+      "relation": "SPEAKS"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Achievements & Awards",
+      "relation": "ACHIEVED"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Code for Brazil",
+      "relation": "VOLUNTEERED_AT"
+    }
+  ]
+}

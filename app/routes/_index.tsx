@@ -3,6 +3,8 @@ import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import GraphComponent from "../components/GraphComponent";
 import ChatBotSidebar from "../components/ChatBotSidebar";
+import LanguageToggle from "../components/LanguageToggle";
+import { LanguageProvider } from "../contexts/LanguageContext";
 import WelcomeModal from "./welcomeModal";
 import fs from "fs/promises";
 import path from "path";
@@ -26,20 +28,30 @@ export const loader: LoaderFunction = async () => {
 };
 
 export default function Index() {
-  const graphData = useLoaderData();
+  const initialGraphData = useLoaderData();
+  const [graphData, setGraphData] = useState(initialGraphData);
   const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const handleGraphUpdate = (newGraphData: any) => {
+    setGraphData(newGraphData);
+  };
 
   if (!graphData) {
     return <div>Loading...</div>;
   }
 
   return (
-    <>
+    <LanguageProvider>
       <div className="flex h-screen w-full bg-white">
+        {/* Language Toggle - Top Right */}
+        <div className="absolute top-4 right-4 z-50">
+          <LanguageToggle />
+        </div>
+
         {/* Main graph area */}
         <div className="flex-1 h-full relative">
           <div className="absolute inset-0">
-            <GraphComponent graphData={graphData} />
+            <GraphComponent graphData={graphData} onGraphUpdate={handleGraphUpdate} />
           </div>
         </div>
         
@@ -49,10 +61,10 @@ export default function Index() {
         </div>
       </div>
 
-      <WelcomeModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <WelcomeModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
-    </>
+    </LanguageProvider>
   );
 }

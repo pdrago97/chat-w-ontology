@@ -1,7 +1,23 @@
 import { json } from "@remix-run/node";
 import type { ActionFunction } from "@remix-run/node";
 import { Portkey } from "portkey-ai";
-import { queryVectorStore } from './pdfProcessor';
+import fs from "fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Import PDF processor with fallback
+let queryVectorStore: ((query: string) => Promise<string>) | null = null;
+try {
+  const pdfProcessor = await import("./pdfProcessor");
+  queryVectorStore = pdfProcessor.queryVectorStore;
+} catch (error) {
+  console.warn("PDF processor not available, using fallback");
+  queryVectorStore = null;
+}
+
+// Get the directory name in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 interface GraphNode {
   id: string;
@@ -90,14 +106,29 @@ function formatGraphDataForLLM(graphData: GraphData): string {
   return formattedText;
 }
 
-console.log(process.env.PORTKEY_API_KEY)
-console.log(process.env.OPENAI_API_KEY)
-
-
-const portkey = new Portkey({
-  apiKey: process.env.PORTKEY_API_KEY,
-  virtualKey: "open-ai-virtual-e16edd"
-})
+// Initialize LLM client function
+async function initializeLLMClient() {
+  try {
+    if (process.env.PORTKEY_API_KEY) {
+      const llmClient = new Portkey({
+        apiKey: process.env.PORTKEY_API_KEY,
+        virtualKey: "open-ai-virtual-e16edd"
+      });
+      console.log("Using Portkey for LLM calls");
+      return { client: llmClient, usePortkey: true };
+    } else {
+      throw new Error("Portkey API key not available");
+    }
+  } catch (error) {
+    console.warn("Portkey not available, using OpenAI directly");
+    // Fallback to OpenAI directly
+    const { OpenAI } = await import("openai");
+    const llmClient = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
+    });
+    return { client: llmClient, usePortkey: false };
+  }
+}
 
 
 interface Message {
@@ -111,6 +142,7 @@ interface ChatRequest {
   systemPrompt: string;
   graphData: any;
   conversationHistory: Message[];
+  language?: 'en' | 'pt';
 }
 
 const GUARDRAILS = `
@@ -140,20 +172,44 @@ export const action: ActionFunction = async ({ request }) => {
     return json({ error: "Method not allowed" }, { status: 405 });
   }
   try {
-    const { message, systemPrompt, graphData, conversationHistory }: ChatRequest = await request.json();
+    const { message, systemPrompt, graphData, conversationHistory, language = 'en' }: ChatRequest = await request.json();
     const formattedGraph = formatGraphDataForLLM(graphData);
     
     // Get relevant resume content
-    const resumeContent = await queryVectorStore(message);
-    console.log('Resume content for query:', resumeContent);
+    let resumeContent = "";
+    if (queryVectorStore) {
+      try {
+        resumeContent = await queryVectorStore(message);
+        console.log('Resume content for query:', resumeContent);
+      } catch (error) {
+        console.warn('Error querying vector store:', error);
+        resumeContent = "Resume content not available";
+      }
+    } else {
+      resumeContent = "Resume content not available - using knowledge graph only";
+    }
 
     const messages = [
       {
-        role: "system", 
-        content: `You are an AI assistant that answers questions based on Pedro's resume.
-Use ONLY the following resume content to answer the question: ${resumeContent}
+        role: "system",
+        content: `You are an AI assistant that answers questions about Pedro's professional profile.
 
-${systemPrompt}\n\n${GUARDRAILS}\n\nKnowledge Graph Data:\n${formattedGraph}`
+${language === 'pt' ? 'IMPORTANTE: Responda SEMPRE em português brasileiro.' : 'IMPORTANT: Always respond in English.'}
+
+You have access to two sources of information:
+1. Resume Content (from PDF): ${resumeContent}
+2. Knowledge Graph (structured data): ${formattedGraph}
+
+Use BOTH sources to provide comprehensive answers. The knowledge graph contains structured information about Pedro's experience, skills, education, and projects. The resume content provides additional context and details.
+
+When answering:
+- Prioritize information from the knowledge graph for structured data (companies, roles, technologies, dates)
+- Use resume content for additional context and details
+- If information conflicts, prefer the knowledge graph as it's more up-to-date
+- Only answer questions related to Pedro's professional background
+${language === 'pt' ? '- Sempre responda em português brasileiro, mesmo que a pergunta seja em inglês' : '- Always respond in English, even if the question is in Portuguese'}
+
+${systemPrompt}\n\n${GUARDRAILS}`
       },
       ...conversationHistory.map(msg => ({
         role: msg.sender === "user" ? "user" : "assistant",
@@ -162,34 +218,15 @@ ${systemPrompt}\n\n${GUARDRAILS}\n\nKnowledge Graph Data:\n${formattedGraph}`
       { role: "user", content: message }
     ];
 
-    // Use Portkey to manage the LLM call
-    const completion = await portkey.chat.completions.create({
+    // Initialize LLM client
+    const { client: llmClient, usePortkey } = await initializeLLMClient();
+
+    // Use LLM client (Portkey or OpenAI)
+    const completion = await llmClient.chat.completions.create({
       messages,
-      model: "gpt-4o-mini", // or your preferred model
-      temperature: 0.3, // Lower temperature for more focused responses
-      max_tokens: 500,
-      stop: ["I don't know", "I'm not sure"], // Prevent uncertain responses
-      tools: [{
-        type: "function",
-        function: {
-          name: "validateResponse",
-          description: "Validates if the response contains only information from the knowledge graph",
-          parameters: {
-            type: "object",
-            properties: {
-              isValid: {
-                type: "boolean",
-                description: "Whether the response contains only valid information"
-              },
-              response: {
-                type: "string",
-                description: "The validated response"
-              }
-            },
-            required: ["isValid", "response"]
-          }
-        }
-      }]
+      model: "gpt-4o-mini",
+      temperature: 0.3,
+      max_tokens: 500
     });
 
     const response = completion.choices[0].message.content;
