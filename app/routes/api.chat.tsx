@@ -258,7 +258,17 @@ ${systemPrompt}\n\n${GUARDRAILS}`
 
   } catch (error) {
     console.error('Error in chat endpoint:', error);
-    return json({ error: "Internal server error" }, { status: 500 });
+
+    // Check if it's an API key issue
+    if (error instanceof Error && error.message.includes("OPENAI_API_KEY")) {
+      return json({
+        error: "I apologize, but I encountered an error. Something is wrong with the application, please inform Pedro via LinkedIn https://www.linkedin.com/in/pedroreichow."
+      }, { status: 500 });
+    }
+
+    return json({
+      error: "I apologize, but I encountered an error. Something is wrong with the application, please inform Pedro via LinkedIn https://www.linkedin.com/in/pedroreichow."
+    }, { status: 500 });
   }
 };
 
