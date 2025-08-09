@@ -192,16 +192,16 @@ const FlexibleGraphVisualization = ({
               'background-color': (ele) => {
                 const type = (ele.data('type') || 'default').toLowerCase();
                 switch (type) {
-                  case 'person': return '#4CAF50';
-                  case 'experience': return '#9C27B0';
-                  case 'skills': return '#FF5722';
-                  case 'education': return '#2196F3';
-                  case 'project': return '#FFC107';
-                  case 'group': return '#FF9800';
-                  case 'status': return '#E91E63';
-                  case 'arrayitem': return '#DDA0DD';
-                  case 'property': return '#F0E68C';
-                  default: return '#9E9E9E';
+                  case 'person': return '#22c55e';
+                  case 'experience': return '#a855f7';
+                  case 'skills': return '#f97316';
+                  case 'education': return '#3b82f6';
+                  case 'project': return '#f59e0b';
+                  case 'group': return '#06b6d4';
+                  case 'status': return '#ef4444';
+                  case 'arrayitem': return '#c084fc';
+                  case 'property': return '#eab308';
+                  default: return '#64748b';
                 }
               },
               'label': 'data(label)',

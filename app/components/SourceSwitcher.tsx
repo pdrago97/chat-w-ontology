@@ -14,9 +14,12 @@ const SOURCES = {
 
 
 const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
-  const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [health, setHealth] = useState<Record<string, Health>>({});
+
+
+  const ORDER: (keyof typeof SOURCES)[] = ['curated', 'supabase', 'cognee'];
+  const [current, setCurrent] = useState<keyof typeof SOURCES>('curated');
 
   async function parseJsonSafe(res: Response) {
     try {
@@ -78,22 +81,15 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   }
 
   useEffect(() => {
-    if (open) {
-      refreshHealth();
-    }
-  }, [open]);
+    // Preload health information for quick glance counts
+    refreshHealth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  function reasonFor(urlKey: keyof typeof SOURCES): string | null {
-    const h = health[urlKey];
-    if (!h) return null;
-    if (h.ok && h.okStatus !== false) return null;
-    if (urlKey === 'supabase' || urlKey === 'cognee') {
-      return 'Check SUPABASE_URL and SUPABASE_SERVICE_KEY in env.';
-    }
-    return h.error || 'Endpoint unavailable';
-  }
 
-  async function loadFrom(url: string) {
+
+  async function loadFrom(key: keyof typeof SOURCES) {
+    const url = SOURCES[key].url;
     try {
       setBusy(true);
 
@@ -112,12 +108,12 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
       }
       const data = await parseJsonSafe(res);
       onGraphUpdate(data);
+      setCurrent(key);
     } catch (e) {
       console.error('SourceSwitcher loadFrom error', url, e);
       alert('Failed to load graph. Check console.');
     } finally {
       setBusy(false);
-      setOpen(false);
     }
   }
 
@@ -133,39 +129,40 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
     if (!h || !h.sample || !h.sample.counts) return '';
     const n = h.sample.counts.nodes ?? '?';
     const e = h.sample.counts.edges ?? '?';
-    return ` (${n} nodes${e !== undefined ? ", " + e + " edges" : ''})`;
+    return `${n}${e !== undefined ? '•' + e : ''}`;
   };
 
+  const colorClass = (key: keyof typeof SOURCES, selected: boolean) => {
+    const common = 'px-2.5 py-1.5 rounded-full text-sm font-medium border shadow-sm focus:outline-none focus:ring-2 transition';
+    if (selected) {
+      switch (key) {
+        case 'curated': return `${common} bg-slate-900 border-slate-900 text-white focus:ring-slate-900/40`;
+        case 'supabase': return `${common} bg-cyan-600 border-cyan-600 text-white focus:ring-cyan-700/40`;
+        case 'cognee': return `${common} bg-violet-600 border-violet-600 text-white focus:ring-violet-700/40`;
+      }
+    }
+    return `${common} bg-white text-slate-900 border-slate-300 hover:bg-slate-50`;
+  };
+
+  const nextKey = (k: keyof typeof SOURCES): keyof typeof SOURCES => {
+    const idx = ORDER.indexOf(k);
+    return ORDER[(idx + 1) % ORDER.length];
+  };
+
+  const btnClass = colorClass(current, true);
+
   return (
-    <div className="relative" style={{ zIndex: 10001 }}>
-      <button
-        onClick={() => setOpen(!open)}
-        className="ml-2 px-3 py-2 rounded-lg bg-white/90 text-gray-800 border border-gray-300 shadow hover:bg-white transition"
-        title="Select graph source"
-      >
-        {busy ? 'Loading…' : 'Source'}
-      </button>
-      {open && (
-        <div className="absolute right-0 mt-2 w-72 p-3 bg-white border rounded-lg shadow-lg z-50">
-          <div className="text-xs text-gray-500 mb-2 flex items-center justify-between">
-            <span>Load graph from</span>
-            <button className="text-xs text-blue-600 hover:underline" onClick={refreshHealth}>Validate</button>
-          </div>
-          <div className="flex flex-col gap-2">
-            <button className="px-2 py-2 text-sm bg-gray-100 rounded hover:bg-gray-200 text-left disabled:opacity-50" onClick={() => loadFrom(SOURCES.curated.url)} disabled={disabled.curated}>
-              {SOURCES.curated.label}{counts('curated')}
-            </button>
-            <button className="px-2 py-2 text-sm bg-gray-100 rounded hover:bg-gray-200 text-left disabled:opacity-50" onClick={() => loadFrom(SOURCES.supabase.url)} disabled={disabled.supabase} title={reasonFor('supabase') || ''}>
-              {SOURCES.supabase.label}{counts('supabase')}
-            </button>
-            <button className="px-2 py-2 text-sm bg-gray-100 rounded hover:bg-gray-200 text-left disabled:opacity-50" onClick={() => loadFrom(SOURCES.cognee.url)} disabled={disabled.cognee} title={reasonFor('cognee') || ''}>
-              {SOURCES.cognee.label}{counts('cognee')}
-            </button>
-          </div>
-          <div className="text-[11px] text-gray-500 mt-2">Switch sources any time.</div>
-        </div>
-      )}
-    </div>
+    <button
+      aria-label={`Source: ${SOURCES[current].label}`}
+      title={`Click to switch source — current: ${SOURCES[current].label}`}
+      className={btnClass}
+      disabled={disabled[current]}
+      onClick={() => loadFrom(nextKey(current))}
+      style={{ zIndex: 10001, display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+    >
+      <span>{SOURCES[current].label}</span>
+      <span className="ml-1 text-[10px] opacity-80">{counts(current)}</span>
+    </button>
   );
 };
 

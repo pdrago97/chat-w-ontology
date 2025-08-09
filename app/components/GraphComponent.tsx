@@ -3,6 +3,9 @@ import cytoscape, { NodeSingular, EdgeSingular, LayoutOptions } from 'cytoscape'
 import { useLanguage } from '../contexts/LanguageContext';
 import { translateGraphData } from '../services/graphTranslation';
 import SourceSwitcher from './SourceSwitcher';
+import GraphModeToggle from './GraphModeToggle';
+import ReactLazy = React.lazy;
+const ForceGraph3DView = React.lazy(() => import('./ForceGraph3DView'));
 
 
 interface GraphComponentProps {
@@ -18,6 +21,13 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const { language, t } = useLanguage();
+  const [mode, setMode] = useState<'2d' | '3d'>('2d');
+
+  // UI guardrails & controls
+  const [initAttempts, setInitAttempts] = useState(0);
+  const [autoPan, setAutoPan] = useState(false);
+  const [containerSize, setContainerSize] = useState({ w: 0, h: 0 });
+  const [counts, setCounts] = useState({ nodes: 0, edges: 0 });
 
   // Helper function to brighten colors on hover
   const brightenColor = (color: string, amount: number) => {
@@ -160,7 +170,26 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
   };
 
   useEffect(() => {
+    // only init Cytoscape in 2D mode
+    if (mode !== '2d') return;
     if (!containerRef.current || !graphData) return;
+
+    // measure container; if 0x0, delay one tick and retry a few times
+    const el = containerRef.current;
+    const rect = el.getBoundingClientRect();
+    const w = Math.floor(rect.width);
+    const h = Math.floor(rect.height);
+    setContainerSize({ w, h });
+
+    if ((w === 0 || h === 0) && initAttempts < 5) {
+      const id = requestAnimationFrame(() => setInitAttempts((n) => n + 1));
+      return () => cancelAnimationFrame(id);
+    }
+
+    // reset attempts once we have size
+    if (initAttempts !== 0 && w > 0 && h > 0) {
+      setInitAttempts(0);
+    }
 
     if (cyRef.current) {
       cyRef.current.destroy();
@@ -198,6 +227,8 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
         }))
       };
 
+      setCounts({ nodes: cyElements.nodes.length, edges: cyElements.edges.length });
+
       cyRef.current = cytoscape({
         container: containerRef.current,
         elements: [...cyElements.nodes, ...cyElements.edges],
@@ -232,14 +263,14 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
               'background-color': (node: NodeSingular) => {
                 const type = (node.data('type') || 'default').toLowerCase();
                 switch (type) {
-                  case 'person': return '#4CAF50';
-                  case 'experience': return '#9C27B0';
-                  case 'education': return '#2196F3';
-                  case 'skills': return '#FF5722';
-                  case 'project': return '#FFC107';
-                  case 'group': return '#FF9800';
-                  case 'status': return '#E91E63';
-                  default: return '#607D8B';
+                  case 'person': return '#22c55e';       // green-500
+                  case 'experience': return '#a855f7';   // purple-500
+                  case 'education': return '#3b82f6';    // blue-500
+                  case 'skills': return '#f97316';       // orange-500
+                  case 'project': return '#f59e0b';      // amber-500
+                  case 'group': return '#06b6d4';        // cyan-500
+                  case 'status': return '#ef4444';       // red-500
+                  default: return '#64748b';             // slate-500
                 }
               },
               'box-shadow-blur': '8px',
@@ -254,8 +285,8 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           {
             selector: 'node.person',
             style: {
-              'background-color': '#4CAF50',
-              'border-color': '#2E7D32',
+              'background-color': '#22c55e',
+              'border-color': '#16a34a',
               'shape': 'round-diamond',
               'border-width': '4px'
             }
@@ -263,56 +294,56 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           {
             selector: 'node.education',
             style: {
-              'background-color': '#2196F3',
-              'border-color': '#1565C0',
+              'background-color': '#3b82f6',
+              'border-color': '#1d4ed8',
               'shape': 'round-octagon'
             }
           },
           {
             selector: 'node.experience',
             style: {
-              'background-color': '#9C27B0',
-              'border-color': '#6A1B9A',
+              'background-color': '#a855f7',
+              'border-color': '#9333ea',
               'shape': 'roundrectangle'
             }
           },
           {
             selector: 'node.skills',
             style: {
-              'background-color': '#FF5722',
-              'border-color': '#D84315',
+              'background-color': '#f97316',
+              'border-color': '#ea580c',
               'shape': 'round-hexagon'
             }
           },
           {
             selector: 'node.project',
             style: {
-              'background-color': '#FFC107',
-              'border-color': '#F57C00',
+              'background-color': '#f59e0b',
+              'border-color': '#d97706',
               'shape': 'round-tag'
             }
           },
           {
             selector: 'node.achievements',
             style: {
-              'background-color': '#E91E63',
-              'border-color': '#AD1457',
+              'background-color': '#ef4444',
+              'border-color': '#dc2626',
               'shape': 'star'
             }
           },
           {
             selector: 'node.interests',
             style: {
-              'background-color': '#FF9800',
-              'border-color': '#E65100',
+              'background-color': '#06b6d4',
+              'border-color': '#0891b2',
               'shape': 'round-triangle'
             }
           },
           {
             selector: 'node.profile',
             style: {
-              'background-color': '#607D8B',
-              'border-color': '#37474F',
+              'background-color': '#64748b',
+              'border-color': '#475569',
               'shape': 'ellipse'
             }
           },
@@ -480,16 +511,16 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
       // Restore original color based on node type
       let originalColor = '#607D8B'; // default
       switch (nodeType.toLowerCase()) {
-        case 'person': originalColor = '#4CAF50'; break;
-        case 'experience': originalColor = '#9C27B0'; break;
-        case 'education': originalColor = '#2196F3'; break;
-        case 'skills': originalColor = '#FF5722'; break;
-        case 'project': originalColor = '#FFC107'; break;
-        case 'group': originalColor = '#FF9800'; break;
-        case 'status': originalColor = '#E91E63'; break;
-        case 'achievements': originalColor = '#E91E63'; break;
-        case 'interests': originalColor = '#FF9800'; break;
-        case 'profile': originalColor = '#607D8B'; break;
+        case 'person': originalColor = '#22c55e'; break;
+        case 'experience': originalColor = '#a855f7'; break;
+        case 'education': originalColor = '#3b82f6'; break;
+        case 'skills': originalColor = '#f97316'; break;
+        case 'project': originalColor = '#f59e0b'; break;
+        case 'group': originalColor = '#06b6d4'; break;
+        case 'status': originalColor = '#ef4444'; break;
+        case 'achievements': originalColor = '#ef4444'; break;
+        case 'interests': originalColor = '#06b6d4'; break;
+        case 'profile': originalColor = '#64748b'; break;
       }
 
       node.animate({
@@ -586,32 +617,35 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           left: 0;
           right: 0;
           bottom: 0;
-          background: rgba(0, 0, 0, 0.4);
+          background: rgba(2, 6, 23, 0.72); /* darker dim for readability */
           display: flex;
           align-items: center;
           justify-content: center;
           z-index: 9999;
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
         }
 
         .modal-content {
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          border-radius: 20px;
-          padding: 32px;
+          background: #ffffff;
+          color: #0b1220; /* slate-950/900 mix */
+          border: 1px solid #e5e7eb;
+          border-radius: 16px;
+          padding: 24px 28px;
           max-width: 90vw;
           width: 100%;
-          max-height: 85vh;
+          max-height: 80vh;
           overflow-y: auto;
           position: relative;
           box-shadow:
-            0 25px 50px -12px rgba(0, 0, 0, 0.25),
-            0 0 0 1px rgba(255, 255, 255, 0.05);
+            0 22px 45px -12px rgba(0, 0, 0, 0.35),
+            0 0 0 1px rgba(0, 0, 0, 0.03);
           z-index: 10000;
           transform-origin: center center;
+          -webkit-font-smoothing: antialiased;
+          text-rendering: optimizeLegibility;
+          line-height: 1.6;
+          font-size: 16px;
         }
 
         .tooltip-content-wrapper {
@@ -631,16 +665,10 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
         }
 
         .tooltip-title {
-          margin: 0 0 12px 0;
-          font-size: 24px;
+          margin: 0 0 8px 0;
+          font-size: 22px;
           font-weight: 700;
-          color: #1a1a1a;
-          border-bottom: 3px solid #4CAF50;
-          padding-bottom: 12px;
-          background: linear-gradient(135deg, #4CAF50, #66BB6A);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          color: #0b1220;
         }
 
         .tooltip-subtitle {
@@ -720,6 +748,32 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           position: absolute;
           left: -8px;
         }
+
+        /* Close button */
+        .modal-close-btn {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 32px;
+          height: 32px;
+          border-radius: 9999px;
+          border: 1px solid #e5e7eb;
+          background: #ffffff;
+          color: #334155;
+          font-size: 18px;
+          line-height: 1;
+          cursor: pointer;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        }
+        .modal-close-btn:hover { background: #f8fafc; }
+        .modal-close-btn:active { transform: scale(0.98); }
+
+        /* Collapsible sections for heavy content */
+        .collapsible { margin: 12px 0; border: 1px solid #e5e7eb; border-radius: 8px; background: #f8fafc; }
+        .collapsible > summary { cursor: pointer; list-style: none; padding: 10px 12px; font-weight: 600; color: #0b1220; }
+        .collapsible[open] > summary { border-bottom: 1px solid #e5e7eb; background: #f1f5f9; }
+        .collapsible > summary::-webkit-details-marker { display: none; }
+        .code-block { margin: 0; padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size: 12.5px; line-height: 1.5; max-height: 260px; overflow: auto; background: #ffffff; color: #0b1220; }
 
         .action-section {
           margin-top: 24px;
@@ -869,7 +923,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
     });
 
     // Initial positioning with smooth animation
-    setTimeout(() => {
+    const initTimer = setTimeout(() => {
       if (cyRef.current) {
         cyRef.current.fit(undefined, 80);
 
@@ -890,76 +944,104 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
       }
     }, 100);
 
+    // optional auto-pan animation
+    let autoPanId: number | null = null;
+    if (autoPan && cyRef.current) {
+      const cy = cyRef.current;
+      let angle = 0;
+      const tick = () => {
+        if (!autoPan || !cyRef.current) return;
+        angle += 0.5; // degrees per frame
+        const zoom = cy.zoom();
+        const center = cy.extent();
+        // gently pan in a small circle
+        const dx = Math.cos(angle * Math.PI / 180) * 5 / zoom;
+        const dy = Math.sin(angle * Math.PI / 180) * 5 / zoom;
+        cy.panBy({ x: dx, y: dy });
+        autoPanId = requestAnimationFrame(tick);
+      };
+      autoPanId = requestAnimationFrame(tick);
+    }
+
     return () => {
       if (cyRef.current) {
         cyRef.current.destroy();
       }
+      if (autoPanId) cancelAnimationFrame(autoPanId);
+      clearTimeout(initTimer);
     };
-  }, [graphData, language]); // Re-render when language changes
+  }, [graphData, language, initAttempts, autoPan]); // Re-render when language changes
+
+  const resetView = () => {
+    if (!cyRef.current) return;
+    cyRef.current.stop();
+    cyRef.current.fit(undefined, 80);
+    cyRef.current.center();
+    cyRef.current.zoom(0.8);
+  };
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      {/* Refresh + Source switcher */}
-      <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 10001, display: 'flex', alignItems: 'center' }}>
+      {/* Bottom-left control cluster (no overlap with canvas center) */}
+      <div style={{ position: 'absolute', bottom: '16px', left: '16px', zIndex: 10002, display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+        <GraphModeToggle mode={mode} onChange={setMode} />
+        {mode === '2d' && (
+          <>
+            <button
+              onClick={resetView}
+              className="px-2.5 py-1.5 rounded-md bg-white text-slate-900 border border-slate-300 shadow hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-900/40"
+              title="Reset camera"
+            >
+              Reset camera
+            </button>
+            <button
+              onClick={() => setAutoPan(v => !v)}
+              className="px-2.5 py-1.5 rounded-md bg-white text-slate-900 border border-slate-300 shadow hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-900/40"
+              title="Toggle gentle auto-rotate"
+            >
+              {autoPan ? 'Auto-rotate: On' : 'Auto-rotate: Off'}
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Top-right cluster: Refresh + Source (tri-state) */}
+      <div style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 10001, display: 'flex', alignItems: 'center', gap: '8px' }}>
         <button
           onClick={refreshGraphData}
           disabled={isRefreshing}
-          style={{
-            padding: '12px 20px',
-            background: isRefreshing
-              ? 'linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%)'
-              : 'linear-gradient(135deg, #3498db 0%, #2980b9 100%)',
-            color: 'white',
-            border: '1px solid rgba(255,255,255,0.2)',
-            borderRadius: '25px',
-            cursor: isRefreshing ? 'not-allowed' : 'pointer',
-            fontSize: '14px',
-            fontWeight: '600',
-            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-            boxShadow: isRefreshing
-              ? '0 4px 8px rgba(0,0,0,0.1)'
-              : '0 6px 12px rgba(52, 152, 219, 0.3)',
-            transition: 'all 0.3s ease',
-            transform: isRefreshing ? 'scale(0.95)' : 'scale(1)',
-            backdropFilter: 'blur(10px)'
-          }}
+          className="px-3 py-2 rounded-full bg-blue-600 text-white shadow hover:bg-blue-700 disabled:opacity-60"
           title={lastUpdated ? `Last updated: ${new Date(lastUpdated).toLocaleTimeString()}` : t('graph.refresh')}
-          onMouseEnter={(e) => {
-            if (!isRefreshing) {
-              e.currentTarget.style.transform = 'scale(1.05)';
-              e.currentTarget.style.boxShadow = '0 8px 16px rgba(52, 152, 219, 0.4)';
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (!isRefreshing) {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.boxShadow = '0 6px 12px rgba(52, 152, 219, 0.3)';
-            }
-          }}
         >
           {isRefreshing ? `🔄 ${t('graph.loading')}` : `🔄 ${t('graph.refresh')}`}
         </button>
-      {/* Mount source switcher here to sit next to refresh */}
-      <SourceSwitcher onGraphUpdate={onGraphUpdate || (() => {})} />
-
-        <div id="source-switcher-root" style={{ marginLeft: '8px' }}></div>
+        <SourceSwitcher onGraphUpdate={onGraphUpdate || (() => {})} />
       </div>
 
-      {/* Graph container */}
-      <div
-        ref={containerRef}
-        style={{
-          width: '100%',
-          height: '100vh',
-          background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-          backgroundImage: `
-            radial-gradient(circle at 25% 25%, rgba(255,255,255,0.3) 2px, transparent 2px),
-            radial-gradient(circle at 75% 75%, rgba(255,255,255,0.3) 2px, transparent 2px)
-          `,
-          backgroundSize: '40px 40px',
-          position: 'relative'
-        }}
-      />
+      {/* small debug overlay top-right, pushed inward slightly */}
+      <div style={{ position: 'absolute', top: '16px', right: '240px', zIndex: 10000, fontSize: '12px', color: '#111', background: 'rgba(255,255,255,0.85)', padding: '6px 10px', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+        container: {containerSize.w}x{containerSize.h} • nodes: {counts.nodes} • edges: {counts.edges}
+      </div>
+
+      {/* Graph container(s) */}
+      {mode === '2d' && (
+        <div
+          ref={containerRef}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            minHeight: '100vh',
+            width: '100%',
+            height: '100%',
+            background: '#f8fafc' // slate-50 for clean, high-contrast canvas
+          }}
+        />
+      )}
+      {mode === '3d' && (
+        <React.Suspense fallback={<div style={{position:'absolute',inset:0,display:'grid',placeItems:'center'}}>Loading 3D…</div>}>
+          <ForceGraph3DView graphData={graphData} />
+        </React.Suspense>
+      )}
     </div>
   );
 };
