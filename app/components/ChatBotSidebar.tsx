@@ -78,17 +78,15 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
     setMessages(prev => [...prev, userMessage]);
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch('/api.chat.n8n', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           message,
-          systemPrompt: SYSTEM_PROMPT,
-          graphData,
-          conversationHistory: messages,
-          language: language // Include language preference
+          language,
+          history: messages.map(m => ({ role: m.sender === 'user' ? 'user' : 'assistant', content: m.message }))
         }),
       });
 
@@ -97,7 +95,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
       }
 
       const data = await response.json();
-      
+
       setMessages(prev => [...prev, {
         message: data.response,
         sender: "assistant",

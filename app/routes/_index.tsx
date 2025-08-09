@@ -14,15 +14,34 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const loader: LoaderFunction = async () => {
+const GRAPH_SOURCE = process.env.GRAPH_SOURCE || "file"; // "file" | "cognee-live" | "cognee-db"
+const COGNEE_PROXY_LIVE = "/api.graph.fromSupabase";
+const COGNEE_PROXY_DB = "/api.graph.fromDb";
+
+export const loader: LoaderFunction = async ({ request }) => {
   try {
+    const origin = new URL(request.url).origin;
+
+    if (GRAPH_SOURCE === "cognee-live") {
+      const res = await fetch(origin + COGNEE_PROXY_LIVE);
+      if (!res.ok) throw new Error(`Cognee live error ${res.status}`);
+      const graphData = await res.json();
+      return json(graphData);
+    }
+
+    if (GRAPH_SOURCE === "cognee-db") {
+      const res = await fetch(origin + COGNEE_PROXY_DB);
+      if (!res.ok) throw new Error(`Cognee db error ${res.status}`);
+      const graphData = await res.json();
+      return json(graphData);
+    }
+
     const filePath = path.join(__dirname, "..", "..", "public", "knowledge-graph.json");
     const fileContents = await fs.readFile(filePath, "utf-8");
     const graphData = JSON.parse(fileContents);
-    console.log("Loaded graph data:", graphData); // Debug log
     return json(graphData);
   } catch (error) {
-    console.error("Error reading knowledge-graph.json:", error);
+    console.error("Error loading graph data:", error);
     throw new Response("Error loading graph data", { status: 500 });
   }
 };
@@ -43,10 +62,7 @@ export default function Index() {
   return (
     <LanguageProvider>
       <div className="flex h-screen w-full bg-white">
-        {/* Language Toggle - Top Right */}
-        <div className="absolute top-4 right-4 z-50">
-          <LanguageToggle />
-        </div>
+        <LanguageToggle />
 
         {/* Main graph area */}
         <div className="flex-1 h-full relative">
@@ -54,7 +70,7 @@ export default function Index() {
             <GraphComponent graphData={graphData} onGraphUpdate={handleGraphUpdate} />
           </div>
         </div>
-        
+
         {/* Sidebar */}
         <div className="relative h-full border-l border-gray-200 bg-white shadow-lg">
           <ChatBotSidebar graphData={graphData} />

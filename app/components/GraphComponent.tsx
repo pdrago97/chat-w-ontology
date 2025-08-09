@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import cytoscape, { NodeSingular, EdgeSingular, LayoutOptions } from 'cytoscape';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translateGraphData } from '../services/graphTranslation';
+import SourceSwitcher from './SourceSwitcher';
+
 
 interface GraphComponentProps {
   graphData: any;
@@ -9,6 +11,8 @@ interface GraphComponentProps {
 }
 
 const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdate }) => {
+
+
   const containerRef = useRef<HTMLDivElement>(null);
   const cyRef = useRef<any>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -114,6 +118,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
     }
   };
 
+  // Default refresh pulls the curated JSON. Use the menu next to this button to switch source.
   const refreshGraphData = useCallback(async () => {
     if (isRefreshing) return;
 
@@ -538,7 +543,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           });
         }
       });
-      
+
       // Remove any existing tooltips
       const existingTooltip = document.querySelector('.modal-overlay');
       if (existingTooltip) {
@@ -774,7 +779,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           .modal-content {
             max-width: 600px;
           }
-          
+
           .download-resume-btn {
             font-size: 16px;
             padding: 12px 24px;
@@ -894,49 +899,51 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      {/* Refresh button */}
-      <button
-        onClick={refreshGraphData}
-        disabled={isRefreshing}
-        style={{
-          position: 'absolute',
-          top: '20px',
-          right: '20px',
-          zIndex: 1000,
-          padding: '12px 20px',
-          background: isRefreshing
-            ? 'linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%)'
-            : 'linear-gradient(135deg, #3498db 0%, #2980b9 100%)',
-          color: 'white',
-          border: '1px solid rgba(255,255,255,0.2)',
-          borderRadius: '25px',
-          cursor: isRefreshing ? 'not-allowed' : 'pointer',
-          fontSize: '14px',
-          fontWeight: '600',
-          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-          boxShadow: isRefreshing
-            ? '0 4px 8px rgba(0,0,0,0.1)'
-            : '0 6px 12px rgba(52, 152, 219, 0.3)',
-          transition: 'all 0.3s ease',
-          transform: isRefreshing ? 'scale(0.95)' : 'scale(1)',
-          backdropFilter: 'blur(10px)'
-        }}
-        title={lastUpdated ? `Last updated: ${new Date(lastUpdated).toLocaleTimeString()}` : t('graph.refresh')}
-        onMouseEnter={(e) => {
-          if (!isRefreshing) {
-            e.currentTarget.style.transform = 'scale(1.05)';
-            e.currentTarget.style.boxShadow = '0 8px 16px rgba(52, 152, 219, 0.4)';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (!isRefreshing) {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 6px 12px rgba(52, 152, 219, 0.3)';
-          }
-        }}
-      >
-        {isRefreshing ? `🔄 ${t('graph.loading')}` : `🔄 ${t('graph.refresh')}`}
-      </button>
+      {/* Refresh + Source switcher */}
+      <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 10001, display: 'flex', alignItems: 'center' }}>
+        <button
+          onClick={refreshGraphData}
+          disabled={isRefreshing}
+          style={{
+            padding: '12px 20px',
+            background: isRefreshing
+              ? 'linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%)'
+              : 'linear-gradient(135deg, #3498db 0%, #2980b9 100%)',
+            color: 'white',
+            border: '1px solid rgba(255,255,255,0.2)',
+            borderRadius: '25px',
+            cursor: isRefreshing ? 'not-allowed' : 'pointer',
+            fontSize: '14px',
+            fontWeight: '600',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            boxShadow: isRefreshing
+              ? '0 4px 8px rgba(0,0,0,0.1)'
+              : '0 6px 12px rgba(52, 152, 219, 0.3)',
+            transition: 'all 0.3s ease',
+            transform: isRefreshing ? 'scale(0.95)' : 'scale(1)',
+            backdropFilter: 'blur(10px)'
+          }}
+          title={lastUpdated ? `Last updated: ${new Date(lastUpdated).toLocaleTimeString()}` : t('graph.refresh')}
+          onMouseEnter={(e) => {
+            if (!isRefreshing) {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.boxShadow = '0 8px 16px rgba(52, 152, 219, 0.4)';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!isRefreshing) {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = '0 6px 12px rgba(52, 152, 219, 0.3)';
+            }
+          }}
+        >
+          {isRefreshing ? `🔄 ${t('graph.loading')}` : `🔄 ${t('graph.refresh')}`}
+        </button>
+      {/* Mount source switcher here to sit next to refresh */}
+      <SourceSwitcher onGraphUpdate={onGraphUpdate || (() => {})} />
+
+        <div id="source-switcher-root" style={{ marginLeft: '8px' }}></div>
+      </div>
 
       {/* Graph container */}
       <div
