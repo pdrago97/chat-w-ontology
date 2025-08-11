@@ -10,6 +10,7 @@ const SOURCES = {
   curated: { label: 'Curated JSON', url: '/api/graph' },
   supabase: { label: 'Supabase (Raw)', url: '/api/graph/supabase/raw?limit=400' },
   cognee: { label: 'Cognee (Refined)', url: '/api/graph/cognee?limit=2000' },
+  langextractDb: { label: 'LangExtract (DB)', url: '/api/graph/langextract/db' },
   langextract: { label: 'LangExtract (Curated)', url: '/api/graph/langextract/curated' },
   graphdb: { label: 'GraphDB (SPARQL)', url: '/api/graph/graphdb?limit=2000' },
 } as const;
@@ -20,8 +21,8 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   const [health, setHealth] = useState<Record<string, Health>>({});
 
 
-  const ORDER: (keyof typeof SOURCES)[] = ['curated', 'supabase', 'cognee', 'langextract', 'graphdb'];
-  const [current, setCurrent] = useState<keyof typeof SOURCES>('langextract');
+  const ORDER: (keyof typeof SOURCES)[] = ['curated', 'supabase', 'cognee', 'langextractDb', 'langextract', 'graphdb'];
+  const [current, setCurrent] = useState<keyof typeof SOURCES>('langextractDb');
 
   async function parseJsonSafe(res: Response) {
     try {
@@ -90,33 +91,54 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
 
 
 
-  async function loadFrom(key: keyof typeof SOURCES) {
+  async function tryFetch(key: keyof typeof SOURCES) {
     const url = SOURCES[key].url;
+    const before = await healthCheck(url).catch(()=>({ ok:false } as any));
+    if (!before.ok || before.okStatus === false) {
+      console.warn('Health check not OK, trying fetch anyway', url, before);
+    }
+    const absolute = (() => { try { return new URL(url, window.location.origin).toString(); } catch { return url; } })();
+    const res = await fetch(absolute, { cache: 'no-store' });
+    if (!res.ok) {
+      const payload = await parseJsonSafe(res);
+      console.warn('loadFrom failed for', url, res.status, payload);
+      return null;
+    }
+    const data = await parseJsonSafe(res);
+    return data;
+  }
+
+  async function loadFrom(startKey: keyof typeof SOURCES): Promise<boolean> {
     try {
       setBusy(true);
-
-      const before = await healthCheck(url);
-      if (!before.ok || before.okStatus === false) {
-        console.warn('Health check did not confirm OK, attempting direct fetch anyway', url, before);
+      const startIdx = ORDER.indexOf(startKey);
+      for (let i = 0; i < ORDER.length; i++) {
+        const idx = (startIdx + i) % ORDER.length;
+        const key = ORDER[idx];
+        const data = await tryFetch(key);
+        if (data) {
+          onGraphUpdate(data);
+          setCurrent(key);
+          return true;
+        }
       }
-
-      const absolute = (() => { try { return new URL(url, window.location.origin).toString(); } catch { return url; } })();
-      const res = await fetch(absolute, { cache: 'no-store' });
-      if (!res.ok) {
-        const payload = await parseJsonSafe(res);
-        console.error('SourceSwitcher loadFrom failed:', url, res.status, payload);
-        alert(`Failed to load graph: ${res.status}. See console for details.`);
-        return;
-      }
-      const data = await parseJsonSafe(res);
-      onGraphUpdate(data);
-      setCurrent(key);
+      alert('No sources loaded successfully. Check server logs and env variables.');
+      return false;
     } catch (e) {
-      console.error('SourceSwitcher loadFrom error', url, e);
+      console.error('SourceSwitcher loadFrom error starting at', startKey, e);
       alert('Failed to load graph. Check console.');
+      return false;
     } finally {
       setBusy(false);
     }
+  }
+
+  async function handleClick() {
+    const original = current;
+    const target = nextKey(current);
+    setCurrent(target); // optimistic label change
+    const ok = await loadFrom(target);
+    if (!ok) setCurrent(original);
   }
 
   // Keep buttons enabled; we validate live and show tooltips, but do not block selection
@@ -124,7 +146,9 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
     curated: busy,
     supabase: busy,
     cognee: busy,
+    langextractDb: busy,
     langextract: busy,
+    graphdb: busy,
   }), [busy]);
 
   const counts = (key: keyof typeof SOURCES) => {
@@ -160,7 +184,7 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
       title={`Click to switch source — current: ${SOURCES[current].label}`}
       className={btnClass}
       disabled={disabled[current]}
-      onClick={() => loadFrom(nextKey(current))}
+      onClick={handleClick}
       style={{ zIndex: 10001, display: 'inline-flex', alignItems: 'center', gap: '6px' }}
     >
       <span>{SOURCES[current].label}</span>

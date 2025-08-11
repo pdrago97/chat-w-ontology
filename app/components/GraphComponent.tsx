@@ -5,7 +5,6 @@ try { cytoscape.use(coseBilkent as any); } catch {}
 
 import { useLanguage } from '../contexts/LanguageContext';
 import { translateGraphData } from '../services/graphTranslation';
-import { toJsonLd } from '../services/ontology';
 
 import GraphModeToggle from './GraphModeToggle';
 import SourceSwitcher from './SourceSwitcher';
@@ -1125,7 +1124,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
         )}
       </div>
 
-      {/* Top-right: Source switcher + refresh + export JSON-LD */}
+      {/* Top-right: Source switcher + refresh */}
       <div style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 10001, display: 'flex', alignItems: 'center', gap: '8px' }}>
         <SourceSwitcher onGraphUpdate={onGraphUpdate || (() => {})} />
         <button
@@ -1135,29 +1134,6 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           title={lastUpdated ? `Last updated: ${new Date(lastUpdated).toLocaleTimeString()}` : t('graph.refresh')}
         >
           {isRefreshing ? `🔄 ${t('graph.loading')}` : `🔄 ${t('graph.refresh')}`}
-        </button>
-        <button
-          onClick={() => {
-            try {
-              const jsonld = toJsonLd(graphData);
-              const blob = new Blob([JSON.stringify(jsonld, null, 2)], { type: 'application/ld+json' });
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement('a');
-              a.href = url;
-              a.download = 'knowledge-graph.jsonld';
-              document.body.appendChild(a);
-              a.click();
-              a.remove();
-              URL.revokeObjectURL(url);
-            } catch (e) {
-              console.error('JSON-LD export failed', e);
-              alert('Failed to export JSON-LD');
-            }
-          }}
-          className="px-3 py-2 rounded-full bg-emerald-600 text-white shadow hover:bg-emerald-700"
-          title="Export JSON-LD (ontology-backed)"
-        >
-          ⤓ Export JSON-LD
         </button>
       </div>
 

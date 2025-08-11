@@ -254,9 +254,13 @@ st.caption("Upload resume PDF(s), extract entities/relations with LangExtract, p
 
 # Sidebar controls
 model = st.sidebar.text_input("Model ID", value=os.environ.get("LANGEXTRACT_MODEL_ID", "gpt-4o-mini"))
-openai_key_ui = st.sidebar.text_input("OpenAI API Key (optional)", type="password", value=os.environ.get("OPENAI_API_KEY", ""))
+openai_key_ui = st.sidebar.text_input("OpenAI API Key (optional)", type="password", value(os.environ.get("OPENAI_API_KEY", "")))
 service_url_ui = st.sidebar.text_input("Service URL", value=os.environ.get("LANGEXTRACT_SERVICE_URL", "http://127.0.0.1:8788"))
 show_jsonld = st.sidebar.checkbox("Show JSON‑LD preview", value=True)
+
+st.sidebar.markdown("---")
+supabase_url_ui = st.sidebar.text_input("Supabase URL", value=os.environ.get("SUPABASE_URL", ""))
+supabase_key_ui = st.sidebar.text_input("Supabase Service Key", type="password", value=os.environ.get("SUPABASE_SERVICE_KEY", ""))
 
 if st.sidebar.button("Test service"):
     try:
@@ -383,13 +387,20 @@ if uploaded is not None:
 
             c3, c4 = st.columns(2)
             with c3:
-                if st.button("Save as main knowledge-graph.json (for the Remix app)"):
+                if st.button("Save to Supabase (langextract_graphs)"):
                     try:
-                        target = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "public", "knowledge-graph.json"))
-                        os.makedirs(os.path.dirname(target), exist_ok=True)
-                        with open(target, "w") as f:
-                            json.dump(out, f, indent=2)
-                        st.success(f"Saved to {target}")
+                        if not supabase_url_ui or not supabase_key_ui:
+                            raise RuntimeError("Provide Supabase URL and Service Key in the sidebar")
+                        payload = {
+                            "source": "streamlit-poc",
+                            "meta": { "model": model, "service_url": service_url_ui },
+                            "graph": out,
+                        }
+                        headers = {"apikey": supabase_key_ui, "Authorization": f"Bearer {supabase_key_ui}", "Content-Type": "application/json", "Prefer": "return=representation"}
+                        r = requests.post(f"{supabase_url_ui}/rest/v1/langextract_graphs", headers=headers, json=payload, timeout=60)
+                        if not r.ok:
+                            raise RuntimeError(f"Supabase insert failed {r.status_code}: {r.text[:200]}")
+                        st.success("Saved current graph JSON to public.langextract_graphs")
                     except Exception as e:
                         st.error(f"Save failed: {e}")
             with c4:
