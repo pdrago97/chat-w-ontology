@@ -6,3 +6,8 @@ node_modules
 
 .vercel
 .env*.local
+.venv
+tools/.env.langextract.local
+workers/langextract-proxy/.dev.vars
+
+.venv312

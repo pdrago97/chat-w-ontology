@@ -1,0 +1,16 @@
+{
+  "name": "langextract-proxy",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --local",
+    "build": "esbuild src/index.ts --bundle --format=esm --outfile=dist/index.js",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "devDependencies": {
+    "esbuild": "^0.21.5",
+    "wrangler": "^4.28.1"
+  }
+}
+

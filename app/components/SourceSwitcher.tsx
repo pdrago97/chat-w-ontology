@@ -10,6 +10,8 @@ const SOURCES = {
   curated: { label: 'Curated JSON', url: '/api/graph' },
   supabase: { label: 'Supabase (Raw)', url: '/api/graph/supabase/raw?limit=400' },
   cognee: { label: 'Cognee (Refined)', url: '/api/graph/cognee?limit=2000' },
+  langextract: { label: 'LangExtract (Curated)', url: '/api/graph/langextract/curated' },
+  graphdb: { label: 'GraphDB (SPARQL)', url: '/api/graph/graphdb?limit=2000' },
 } as const;
 
 
@@ -18,8 +20,8 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   const [health, setHealth] = useState<Record<string, Health>>({});
 
 
-  const ORDER: (keyof typeof SOURCES)[] = ['curated', 'supabase', 'cognee'];
-  const [current, setCurrent] = useState<keyof typeof SOURCES>('curated');
+  const ORDER: (keyof typeof SOURCES)[] = ['curated', 'supabase', 'cognee', 'langextract', 'graphdb'];
+  const [current, setCurrent] = useState<keyof typeof SOURCES>('langextract');
 
   async function parseJsonSafe(res: Response) {
     try {
@@ -122,6 +124,7 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
     curated: busy,
     supabase: busy,
     cognee: busy,
+    langextract: busy,
   }), [busy]);
 
   const counts = (key: keyof typeof SOURCES) => {

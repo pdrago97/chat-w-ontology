@@ -70,24 +70,67 @@ export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
   // Prepare data with flexible mapping
   const toFGData = (data: any) => {
     const safe = data || { nodes: [], edges: [] };
-    const nodes = (safe.nodes || []).map((n: any, i: number) => ({
-      id: String(n.id || n.name || `node_${i}`),
-      label: String(n.label || n.name || n.id || `Node ${i}`),
-      type: String(n.type || 'Unknown'),
-      ...n
-    }));
+
+    // Remove heavy/internal fields so UI doesn't show engine internals
+    const sanitize = (obj: any) => {
+      if (!obj || typeof obj !== 'object') return obj;
+      const out: any = {};
+      for (const [k, v] of Object.entries(obj)) {
+        if (k.startsWith('__')) continue; // e.g., __threeObj, __lineObj, __indexColor
+        if (['fx','fy','fz','vx','vy','vz','x','y','z','index'].includes(k)) continue;
+        out[k] = v;
+      }
+      return out;
+    };
+
+    // Deep-clean for modal/inspection to avoid showing engine internals and circular refs
+    const cleanForModal = (obj: any) => {
+      const seen = new WeakSet();
+      const rec = (o: any): any => {
+        if (o === null || o === undefined) return o;
+        if (typeof o !== 'object') return o;
+        if (seen.has(o)) return undefined;
+        seen.add(o);
+        if (Array.isArray(o)) return o.map(rec).filter(v => v !== undefined);
+        const out: any = {};
+        for (const [k, v] of Object.entries(o)) {
+          if (k.startsWith('__')) continue;
+          if (['fx','fy','fz','vx','vy','vz','x','y','z','index','__indexColor'].includes(k)) continue;
+          const sv = rec(v);
+          if (sv !== undefined) out[k] = sv;
+        }
+        return out;
+      };
+      return rec(obj);
+    };
+
+    const nodes = (safe.nodes || []).map((n: any, i: number) => {
+      const s = sanitize(n) || {};
+      const id = String(s.id || s.name || `node_${i}`);
+      const label = String(s.label || s.name || s.id || `Node ${i}`);
+      const type = String(s.type || 'Unknown');
+      // stash a cleaned copy for modal usage
+      const clean = cleanForModal({ id, label, type, ...s });
+      return { ...clean };
+    });
+
     const validIds = new Set(nodes.map((n: any) => n.id));
+
     const links = (safe.edges || safe.links || []).filter((e: any) => {
       const s = String(e.source || e.from || '');
       const t = String(e.target || e.to || '');
       return s && t && validIds.has(s) && validIds.has(t);
-    }).map((e: any, i: number) => ({
-      id: String(e.id || `edge_${i}`),
-      source: String(e.source || e.from),
-      target: String(e.target || e.to),
-      relation: String(e.relation || e.label || ''),
-      ...e
-    }));
+    }).map((e: any, i: number) => {
+      const s = sanitize(e) || {};
+      return {
+        id: String(s.id || `edge_${i}`),
+        source: String(s.source || s.from),
+        target: String(s.target || s.to),
+        relation: String(s.relation || s.label || ''),
+        ...s
+      };
+    });
+
     return { nodes, links };
   };
 
@@ -246,21 +289,45 @@ function showInfoModal(data: any) {
   const existing = document.querySelector('.modal-overlay');
   if (existing) existing.remove();
 
+  // Inject scoped styles for readability
+  const style = document.createElement('style');
+  style.textContent = `
+    .modal-overlay { position:fixed; inset:0; background:rgba(2,6,23,0.72); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:9999; opacity:0; }
+    .modal-content { background:#ffffff; color:#0b1220; border:1px solid #e5e7eb; border-radius:16px; padding:24px 28px; max-width:640px; width:92vw; max-height:80vh; overflow:auto; box-shadow:0 22px 45px -12px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.03); transform-origin:center center; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; line-height:1.6; font-size:16px; position:relative; }
+    .modal-title { margin:0 0 8px 0; font-size:22px; font-weight:700; }
+    .modal-sub { margin:0 0 12px 0; font-size:13px; color:#475569; }
+    .modal-close { position:absolute; top:10px; right:10px; width:32px; height:32px; border-radius:9999px; border:1px solid #e5e7eb; background:#fff; color:#334155; font-size:18px; line-height:1; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,0.08); }
+    .modal-close:hover { background:#f8fafc; }
+    .kv { margin:6px 0; font-size:15px; }
+    .kv strong { color:#0f172a; }
+    .long { margin:12px 0; padding:12px; background:#f8fafc; border-left:3px solid #94a3b8; border-radius:8px; font-size:15px; }
+  `;
+  document.head.appendChild(style);
+
   const overlay = document.createElement('div');
   overlay.className = 'modal-overlay';
-  overlay.style.cssText = `position:fixed;inset:0;background:rgba(2,6,23,0.55);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;`;
 
   const content = document.createElement('div');
   content.className = 'modal-content';
-  content.style.cssText = `background:rgba(255,255,255,0.95);border-radius:16px;padding:24px;max-width:600px;width:90vw;max-height:80vh;overflow:auto;box-shadow:0 25px 50px rgba(0,0,0,0.2)`;
+
+  // Close button
+  const btn = document.createElement('button');
+  btn.className = 'modal-close';
+  btn.textContent = '×';
+  btn.addEventListener('click', (e) => { e.stopPropagation(); close(); });
+
   content.innerHTML = renderNodeHtml(data);
+  content.appendChild(btn);
 
   overlay.appendChild(content);
   document.body.appendChild(overlay);
 
   requestAnimationFrame(() => { overlay.style.transition = 'opacity .3s ease'; overlay.style.opacity = '1'; });
 
-  const close = () => { overlay.style.opacity = '0'; setTimeout(() => overlay.remove(), 250); };
+  function close() {
+    overlay.style.opacity = '0';
+    setTimeout(() => { overlay.remove(); style.remove(); }, 250);
+  }
   overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); }, { once: true });
 }
@@ -269,8 +336,9 @@ function renderNodeHtml(data: any) {
   if (!data) return '<h3>No data</h3>';
   const title = data.label || data.name || data.id || 'Node';
   const type = data.type ? `<div style="font-size:12px;color:#666;margin-bottom:8px">${data.type}</div>` : '';
+  const shouldSkip = (k: string) => k.startsWith('__') || ['fx','fy','fz','vx','vy','vz','x','y','z','index','__indexColor'].includes(k);
   const kv = Object.entries(data)
-    .filter(([k, v]) => !['fx','fy','fz','vx','vy','vz','x','y','z','__indexColor'].includes(k) && v !== null && v !== undefined)
+    .filter(([k, v]) => !shouldSkip(k) && v !== null && v !== undefined)
     .map(([k, v]) => `<div style="margin:6px 0"><strong>${k}:</strong> ${typeof v === 'object' ? JSON.stringify(v) : v}</div>`)
     .join('');
   return `<h3 style="margin:0 0 8px 0">${title}</h3>${type}${kv || '<div>No fields</div>'}`;

@@ -1,0 +1,13 @@
+name = "langextract-proxy"
+main = "./dist/index.js"
+compatibility_date = "2024-06-20"
+
+[vars]
+# Set these with `wrangler secret put` or `wrangler kv:namespace` if needed
+# UPSTREAM_URL = "https://YOUR-UPSTREAM/extract"
+# SERVICE_TOKEN = ""
+SUPABASE_URL = "https://zafvnssmznpeurboybnd.supabase.co"
+
+[observability]
+enabled = true
+

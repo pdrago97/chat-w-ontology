@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { json, type ActionFunction } from "@remix-run/node";
 
 // Proxies chat requests to the provided n8n webhook. Minimal, adaptable.
@@ -13,8 +14,8 @@ export const action: ActionFunction = async ({ request }) => {
       return json({ error: 'Missing message' }, { status: 400 });
     }
 
-    const webhookUrl = process.env.N8N_CHAT_WEBHOOK_URL ||
-      'https://n8n-moveup-u53084.vm.elestio.app/webhook/9ba11544-5c4e-4f91-818a-08a4ecb596c5';
+    const webhookUrl = process.env.N8N_CHAT_WEBHOOK_URL;
+    if (!webhookUrl) return json({ error: 'N8N_CHAT_WEBHOOK_URL not configured' }, { status: 500 });
 
     const res = await fetch(webhookUrl, {
       method: 'POST',

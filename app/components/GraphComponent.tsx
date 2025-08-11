@@ -1,9 +1,14 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import cytoscape, { NodeSingular, EdgeSingular, LayoutOptions } from 'cytoscape';
+import coseBilkent from 'cytoscape-cose-bilkent';
+try { cytoscape.use(coseBilkent as any); } catch {}
+
 import { useLanguage } from '../contexts/LanguageContext';
 import { translateGraphData } from '../services/graphTranslation';
-import SourceSwitcher from './SourceSwitcher';
+import { toJsonLd } from '../services/ontology';
+
 import GraphModeToggle from './GraphModeToggle';
+import SourceSwitcher from './SourceSwitcher';
 import ReactLazy = React.lazy;
 const ForceGraph3DView = React.lazy(() => import('./ForceGraph3DView'));
 
@@ -19,12 +24,48 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
   const containerRef = useRef<HTMLDivElement>(null);
   const cyRef = useRef<any>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => { setIsClient(true); }, []);
+
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const { language, t } = useLanguage();
   const [mode, setMode] = useState<'2d' | '3d'>('2d');
 
   // UI guardrails & controls
   const [initAttempts, setInitAttempts] = useState(0);
+  // Lenses and filters
+  const [storyLens, setStoryLens] = useState(false);
+  const [minDegree, setMinDegree] = useState(2);
+
+  // Canonicalization helpers for Cognee-derived content
+  const canonicalType = (n: any): string => {
+    const raw = String(n.type || n.category || '').toLowerCase();
+    const name = String(n.label || n.title || n.name || '').toLowerCase();
+    const clues = `${raw} ${name}`;
+    if (clues.includes('pedro')) return 'person';
+    if (clues.includes('person')) return 'person';
+    if (clues.includes('role') || clues.includes('position') || clues.includes('experience') || clues.includes('job')) return 'experience';
+    if (clues.includes('company') || clues.includes('org') || clues.includes('organization')) return 'company';
+    if (clues.includes('project') || clues.includes('product')) return 'project';
+    if (clues.includes('skill')) return 'skills';
+    if (clues.includes('tech') || clues.includes('framework') || clues.includes('library')) return 'technology';
+    if (clues.includes('education') || clues.includes('university') || clues.includes('degree')) return 'education';
+    if (clues.includes('cert')) return 'certification';
+    return raw || 'default';
+  };
+
+  const canonicalRelation = (e: any): string => {
+    const raw = String(e.relation || e.label || e.type || '').toLowerCase();
+    if (raw.includes('work') || raw.includes('employ')) return 'WORKED_AT';
+    if (raw.includes('role') || raw.includes('position')) return 'ROLE_AT';
+    if (raw.includes('skill') || raw.includes('use')) return 'USED_SKILL';
+    if (raw.includes('project') || raw.includes('built') || raw.includes('develop')) return 'BUILT';
+    if (raw.includes('study') || raw.includes('university') || raw.includes('education')) return 'STUDIED_AT';
+    if (raw.includes('cert')) return 'CERTIFIED';
+    if (raw.includes('contrib')) return 'CONTRIBUTED_TO';
+    return e.relation || e.label || '';
+  };
+
   const [autoPan, setAutoPan] = useState(false);
   const [containerSize, setContainerSize] = useState({ w: 0, h: 0 });
   const [counts, setCounts] = useState({ nodes: 0, edges: 0 });
@@ -68,63 +109,72 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
   // Transform any data structure to Cytoscape format
   const transformDataForCytoscape = (data: any) => {
     try {
-      // Handle different data structures flexibly
       if (!data) return { nodes: [], edges: [] };
 
-      // If already in good format, use as-is
+      // Remove engine internals/heavy fields from nodes/edges (deep)
+      const sanitize = (obj: any): any => {
+        if (obj === null || obj === undefined) return obj;
+        if (Array.isArray(obj)) return obj.map(sanitize);
+        if (typeof obj !== 'object') return obj;
+        const out: any = {};
+        for (const [k, v] of Object.entries(obj)) {
+          if (k.startsWith('__')) continue; // e.g., __threeObj, __lineObj, __indexColor
+          if (['fx','fy','fz','vx','vy','vz','x','y','z'].includes(k)) continue; // physics/pos
+          const sv = sanitize(v);
+          if (sv === undefined || sv === null) continue;
+          out[k] = sv;
+        }
+        return out;
+      };
+
+      // If already in good format, use as-is (after sanitize)
       if (data.nodes && Array.isArray(data.nodes)) {
-        // Create a set of valid node IDs for edge validation
         const validNodeIds = new Set();
 
         const transformedNodes = data.nodes.map((node: any, index: number) => {
-          const nodeId = String(node.id || node.name || `node_${index}`);
+          const n = sanitize(node) || {};
+          const nodeId = String(n.id || n.name || `node_${index}`);
           validNodeIds.add(nodeId);
+          const normType = canonicalType(n);
           return {
             id: nodeId,
-            label: node.label || node.name || node.id || `Node ${index}`,
-            type: node.type || 'Unknown',
-            ...node
+            label: n.label || n.name || n.id || `Node ${index}`,
+            type: normType || 'Unknown',
+            ...n,
+            _normalized: { type: normType }
           };
         });
 
-        // Filter edges to only include those with valid source/target
         const transformedEdges = (data.edges || []).filter((edge: any) => {
           const source = String(edge.source || edge.from || '');
           const target = String(edge.target || edge.to || '');
           const isValid = source && target && validNodeIds.has(source) && validNodeIds.has(target);
-
           if (!isValid && source && target) {
             console.warn(`🔗 Skipping edge: ${source} → ${target} (missing nodes)`);
           }
-
           return isValid;
-        }).map((edge: any, index: number) => ({
-          id: edge.id || `edge_${index}`,
-          source: String(edge.source || edge.from),
-          target: String(edge.target || edge.to),
-          relation: edge.relation || edge.label || edge.type || '',
-          ...edge
-        }));
+        }).map((edge: any, index: number) => {
+          const e = sanitize(edge) || {};
+          const rel = canonicalRelation(e);
+          return {
+            id: e.id || `edge_${index}`,
+            source: String(e.source || e.from),
+            target: String(e.target || e.to),
+            relation: rel,
+            weight: typeof e.weight === 'number' ? e.weight : 1,
+            ...e,
+            _normalized: { relation: rel }
+          };
+        });
 
-        console.log(`Transformed: ${transformedNodes.length} nodes, ${transformedEdges.length} edges`);
-
-        return {
-          nodes: transformedNodes,
-          edges: transformedEdges
-        };
+        return { nodes: transformedNodes, edges: transformedEdges };
       }
 
       // Fallback: create minimal structure
-      return {
-        nodes: [{ id: 'fallback', label: 'Data Available', type: 'Info' }],
-        edges: []
-      };
+      return { nodes: [{ id: 'fallback', label: 'Data Available', type: 'Info' }], edges: [] };
     } catch (error) {
       console.error('Transform error:', error);
-      return {
-        nodes: [{ id: 'error', label: 'Transform Error', type: 'Error' }],
-        edges: []
-      };
+      return { nodes: [{ id: 'error', label: 'Transform Error', type: 'Error' }], edges: [] };
     }
   };
 
@@ -210,7 +260,8 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
             id: String(node.id),
             label: String(node.label || node.id || 'Unknown'),
             type: String(node.type || 'Unknown'),
-            originalId: String(node.id), // Keep original ID for reference
+            degree: 0,
+            originalId: String(node.id),
             ...node
           },
           classes: String(node.type || 'default').toLowerCase().replace(/[^a-z0-9]/g, '') || 'default'
@@ -221,11 +272,44 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
             source: String(edge.source),
             target: String(edge.target),
             label: String(edge.relation || edge.label || ''),
-            originalRelation: String(edge.relation || edge.label || ''), // Keep original for reference
+            weight: Number(edge.weight ?? 1),
+            originalRelation: String(edge.relation || edge.label || ''),
             ...edge
           }
         }))
       };
+
+      // Apply story lens and min-degree filtering (post-init)
+      const applyLenses = () => {
+        if (!cyRef.current) return;
+        const cy = cyRef.current;
+
+        // compute degree on nodes for sizing/filters
+        cy.nodes().forEach((n: any) => n.data('degree', n.degree(true)));
+
+        // min-degree filter
+        cy.batch(() => {
+          cy.nodes().forEach((n: any) => {
+            const d = n.data('degree') || 0;
+            n.style('display', d < minDegree ? 'none' : 'element');
+          });
+        });
+
+        if (storyLens) {
+          const pedro = cy.nodes().filter((n: any) => /pedro/i.test(n.data('label')) || /pedro/i.test(n.id()));
+          if (pedro.length) {
+            const ego = pedro.closedNeighborhood().closedNeighborhood(); // ~2 hops
+            cy.batch(() => {
+              cy.nodes().difference(ego.nodes()).style('display', 'none');
+              cy.edges().difference(ego.edges()).style('display', 'none');
+            });
+            cy.layout({ name: 'breadthfirst', roots: pedro, spacingFactor: 1.2, fit: true, padding: 80 }).run();
+          }
+        }
+      };
+
+      requestAnimationFrame(applyLenses);
+
 
       setCounts({ nodes: cyElements.nodes.length, edges: cyElements.edges.length });
 
@@ -252,13 +336,15 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
               'shape': 'roundrectangle',
               'width': (node: NodeSingular) => {
                 const label = node.data('label') as string || '';
-                const baseWidth = Math.max(120, Math.min(label.length * 9, 280));
-                return baseWidth;
+                const deg = node.degree(true);
+                const baseWidth = Math.max(110, Math.min(label.length * 8.5, 260));
+                return baseWidth + Math.min(60, deg * 4);
               },
               'height': (node: NodeSingular) => {
                 const label = node.data('label') as string || '';
                 const lines = label.split('\n').length;
-                return Math.max(60, Math.min(lines * 25 + 20, 120));
+                const deg = node.degree(true);
+                return Math.max(56, Math.min(lines * 22 + 18, 110)) + Math.min(40, deg * 2);
               },
               'background-color': (node: NodeSingular) => {
                 const type = (node.data('type') || 'default').toLowerCase();
@@ -378,7 +464,10 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           {
             selector: 'edge',
             style: {
-              'width': '3px',
+              'width': (edge: EdgeSingular) => {
+                const w = Number(edge.data('weight') ?? 1);
+                return Math.max(2, Math.min(6, 2 + w));
+              },
               'line-color': '#7F8C8D',
               'target-arrow-color': '#7F8C8D',
               'target-arrow-shape': 'triangle-backcurve',
@@ -417,26 +506,27 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           }
         ],
         layout: {
-          name: 'cose',
+          name: 'cose-bilkent',
           animate: true,
-          animationDuration: 1500,
-          animationEasing: 'ease-out',
-          padding: 80,
-          nodeRepulsion: 8000,
-          idealEdgeLength: 150,
-          nodeOverlap: 20,
-          gravity: 0.8,
-          edgeElasticity: 200,
-          nestingFactor: 1.2,
-          numIter: 1000,
-          initialTemp: 200,
-          coolingFactor: 0.95,
-          minTemp: 1.0,
           randomize: false,
-          componentSpacing: 100,
-          refresh: 20,
           fit: true,
-          stop: function() {
+          padding: 80,
+          nodeRepulsion: 6000,
+          idealEdgeLength: 110,
+          edgeElasticity: 0.25,
+          nestingFactor: 0.9,
+          gravityRangeCompound: 1.5,
+          gravityCompound: 1.2,
+          gravity: 0.8,
+          numIter: 2500,
+          tile: true,
+          ready: () => {
+            if (autoPan && cyRef.current) {
+              cyRef.current.center();
+              cyRef.current.fit(undefined, 50);
+            }
+          },
+          stop: () => {
             if (cyRef.current) {
               cyRef.current.center();
               cyRef.current.fit(undefined, 50);
@@ -593,6 +683,12 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
       tooltip.innerHTML = createTooltipContent(data);
       tooltip.style.transform = 'scale(0.7) translateY(20px)';
       tooltip.style.opacity = '0';
+
+      // Add a visible close button for accessibility
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'modal-close-btn';
+      closeBtn.textContent = '×';
+      tooltip.appendChild(closeBtn);
 
       modalOverlay.appendChild(tooltip);
       document.body.appendChild(modalOverlay);
@@ -873,6 +969,12 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
       };
       document.addEventListener('keydown', handleEscape);
 
+      // Close btn event
+      const closeBtnEl = tooltip.querySelector('.modal-close-btn');
+      if (closeBtnEl) {
+        closeBtnEl.addEventListener('click', (e) => { e.stopPropagation(); closeModal(); });
+      }
+
       // Prevent download button clicks from closing the modal
       const downloadBtn = tooltip.querySelector('.download-resume-btn');
       if (downloadBtn) {
@@ -970,7 +1072,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
       if (autoPanId) cancelAnimationFrame(autoPanId);
       clearTimeout(initTimer);
     };
-  }, [graphData, language, initAttempts, autoPan]); // Re-render when language changes
+  }, [graphData, language, initAttempts, autoPan, storyLens, minDegree]); // re-run when lens/filter changes
 
   const resetView = () => {
     if (!cyRef.current) return;
@@ -1001,12 +1103,31 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
             >
               {autoPan ? 'Auto-rotate: On' : 'Auto-rotate: Off'}
             </button>
+            <button
+              onClick={() => setStoryLens(v => !v)}
+              className="px-2.5 py-1.5 rounded-md bg-white text-slate-900 border border-slate-300 shadow hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-900/40"
+              title="Focus around Pedro and 2-hop ego network"
+            >
+              {storyLens ? 'Story lens: On' : 'Story lens: Off'}
+            </button>
+            <label className="ml-2 text-sm text-slate-700">Min degree
+              <input
+                type="range"
+                min={0}
+                max={5}
+                value={minDegree}
+                onChange={(e) => setMinDegree(Number(e.target.value))}
+                className="ml-2 align-middle"
+              />
+              <span className="ml-1 text-xs">{minDegree}</span>
+            </label>
           </>
         )}
       </div>
 
-      {/* Top-right cluster: Refresh + Source (tri-state) */}
+      {/* Top-right: Source switcher + refresh + export JSON-LD */}
       <div style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 10001, display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <SourceSwitcher onGraphUpdate={onGraphUpdate || (() => {})} />
         <button
           onClick={refreshGraphData}
           disabled={isRefreshing}
@@ -1015,7 +1136,29 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
         >
           {isRefreshing ? `🔄 ${t('graph.loading')}` : `🔄 ${t('graph.refresh')}`}
         </button>
-        <SourceSwitcher onGraphUpdate={onGraphUpdate || (() => {})} />
+        <button
+          onClick={() => {
+            try {
+              const jsonld = toJsonLd(graphData);
+              const blob = new Blob([JSON.stringify(jsonld, null, 2)], { type: 'application/ld+json' });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'knowledge-graph.jsonld';
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+              URL.revokeObjectURL(url);
+            } catch (e) {
+              console.error('JSON-LD export failed', e);
+              alert('Failed to export JSON-LD');
+            }
+          }}
+          className="px-3 py-2 rounded-full bg-emerald-600 text-white shadow hover:bg-emerald-700"
+          title="Export JSON-LD (ontology-backed)"
+        >
+          ⤓ Export JSON-LD
+        </button>
       </div>
 
       {/* small debug overlay top-right, pushed inward slightly */}
@@ -1037,10 +1180,13 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           }}
         />
       )}
-      {mode === '3d' && (
+      {mode === '3d' && isClient && (
         <React.Suspense fallback={<div style={{position:'absolute',inset:0,display:'grid',placeItems:'center'}}>Loading 3D…</div>}>
           <ForceGraph3DView graphData={graphData} />
         </React.Suspense>
+      )}
+      {mode === '3d' && !isClient && (
+        <div style={{position:'absolute',inset:0,display:'grid',placeItems:'center'}}>Loading 3D…</div>
       )}
     </div>
   );
@@ -1100,6 +1246,25 @@ function createTooltipContent(data: any): string {
       .replace(/_/g, ' '); // Replace underscores with spaces
   };
 
+  // Helper: sanitize data to remove internal/engine keys (deep)
+  const shouldSkipKey = (key: string) => key.startsWith('__') || ['fx','fy','fz','vx','vy','vz','x','y','z','index','__indexColor'].includes(key);
+  const deepSanitize = (obj: any): any => {
+    if (obj === null || obj === undefined) return obj;
+    if (Array.isArray(obj)) return obj.map(deepSanitize);
+    if (typeof obj !== 'object') return obj;
+    const out: any = {};
+    for (const [k, v] of Object.entries(obj)) {
+      if (shouldSkipKey(k)) continue;
+      const sv = deepSanitize(v);
+      if (sv !== undefined) out[k] = sv;
+    }
+    return out;
+  };
+
+  // Ensure we don't display internal fields
+  data = deepSanitize(data);
+
+
   // Helper function to render different value types
   const renderValue = (key: string, value: any): string => {
     if (value === null || value === undefined) return '';
@@ -1120,7 +1285,7 @@ function createTooltipContent(data: any): string {
     // Handle objects
     if (typeof value === 'object') {
       const subFields = Object.entries(value)
-        .filter(([k, v]) => v !== null && v !== undefined)
+        .filter(([k, v]) => v !== null && v !== undefined && !shouldSkipKey(k))
         .map(([k, v]) => `<li><strong>${formatFieldName(k)}:</strong> ${v}</li>`)
         .join('');
 

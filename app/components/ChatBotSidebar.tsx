@@ -7,7 +7,7 @@ import {
   MessageInput
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid';
+
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface ChatBotSidebarProps {
@@ -58,7 +58,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
       direction: "incoming" | "outgoing";
     }[]>([getWelcomeMessage()]);
     const [isLoading, setIsLoading] = useState(false);
-    const [isCollapsed, setIsCollapsed] = useState(false);
+
 
     // Update welcome message when language changes
     React.useEffect(() => {
@@ -113,25 +113,8 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
     }
   };
   return (
-    <div className="h-screen flex flex-col transition-all duration-300 relative" style={{ width: isCollapsed ? '3rem' : '24rem' }}>
-      {/* Collapse Toggle Button */}
-      <button
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -left-4 top-4 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50 transition-colors"
-        aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-      >
-        {isCollapsed ? (
-          <ArrowLeftIcon className="h-4 w-4 text-gray-600" />
-        ) : (
-          <ArrowRightIcon className="h-4 w-4 text-gray-600" />
-        )}
-      </button>      
-      <div 
-        className={`
-          flex-1 overflow-hidden transition-all duration-300 flex flex-col
-          ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-full'}
-        `}
-      >
+    <div className="h-screen flex flex-col relative w-full">
+      <div className="flex-1 overflow-hidden flex flex-col">
         <MainContainer className="h-full sm:pb-0 pb-40">
           <ChatContainer className="h-full">
             <MessageList 
