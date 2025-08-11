@@ -267,15 +267,11 @@ export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
           className="px-3 py-2 rounded-lg bg-white text-slate-900 border border-slate-300 shadow hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-900/40"
           title="Reset camera"
         >Reset camera</button>
-        <button
-          onClick={() => setAutoRotate(v => !v)}
-          className="px-2.5 py-1.5 rounded-md bg-white text-slate-900 border border-slate-300 shadow hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-900/40"
-          title="Toggle auto-rotate"
-        >{autoRotate ? 'Auto-rotate: On' : 'Auto-rotate: Off'}</button>
+
       </div>
 
-      {/* small debug badge top-right, offset from chat/controls */}
-      <div style={{ position: 'absolute', top: 16, right: 240, zIndex: 10000, fontSize: 12, background: 'rgba(255,255,255,0.85)', padding: '6px 10px', borderRadius: 8, border: '1px solid #e5e7eb', color: '#111' }}>
+      {/* Container info centered at top */}
+      <div style={{ position: 'absolute', top: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 10000, fontSize: 12, background: 'rgba(255,255,255,0.85)', padding: '6px 10px', borderRadius: 8, border: '1px solid #e5e7eb', color: '#111' }}>
         container: {size.w}x{size.h} • nodes: {counts.nodes} • edges: {counts.links} {error ? ` • error: ${error}` : ''}
       </div>
 

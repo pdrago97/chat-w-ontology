@@ -1095,31 +1095,8 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
             >
               Reset camera
             </button>
-            <button
-              onClick={() => setAutoPan(v => !v)}
-              className="px-2.5 py-1.5 rounded-md bg-white text-slate-900 border border-slate-300 shadow hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-900/40"
-              title="Toggle gentle auto-rotate"
-            >
-              {autoPan ? 'Auto-rotate: On' : 'Auto-rotate: Off'}
-            </button>
-            <button
-              onClick={() => setStoryLens(v => !v)}
-              className="px-2.5 py-1.5 rounded-md bg-white text-slate-900 border border-slate-300 shadow hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-900/40"
-              title="Focus around Pedro and 2-hop ego network"
-            >
-              {storyLens ? 'Story lens: On' : 'Story lens: Off'}
-            </button>
-            <label className="ml-2 text-sm text-slate-700">Min degree
-              <input
-                type="range"
-                min={0}
-                max={5}
-                value={minDegree}
-                onChange={(e) => setMinDegree(Number(e.target.value))}
-                className="ml-2 align-middle"
-              />
-              <span className="ml-1 text-xs">{minDegree}</span>
-            </label>
+
+
           </>
         )}
       </div>
@@ -1137,8 +1114,8 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
         </button>
       </div>
 
-      {/* small debug overlay top-right, pushed inward slightly */}
-      <div style={{ position: 'absolute', top: '16px', right: '240px', zIndex: 10000, fontSize: '12px', color: '#111', background: 'rgba(255,255,255,0.85)', padding: '6px 10px', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+      {/* Container info centered at top */}
+      <div style={{ position: 'absolute', top: '16px', left: '50%', transform: 'translateX(-50%)', zIndex: 10000, fontSize: '12px', color: '#111', background: 'rgba(255,255,255,0.85)', padding: '6px 10px', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
         container: {containerSize.w}x{containerSize.h} • nodes: {counts.nodes} • edges: {counts.edges}
       </div>
 
