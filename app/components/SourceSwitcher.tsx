@@ -210,11 +210,6 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
         <span>{SOURCES[current].label}</span>
         <span className="ml-1 text-[10px] opacity-80">{counts(current)}</span>
       </button>
-      {isProduction && (
-        <span className="px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full border border-green-200">
-          PROD
-        </span>
-      )}
     </div>
   );
 };
