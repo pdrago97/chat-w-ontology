@@ -22,17 +22,27 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
 
 
   // Filter out dev-only sources in production
-  const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+  const isProduction = typeof window !== 'undefined' &&
+    !window.location.hostname.includes('localhost') &&
+    !window.location.hostname.includes('127.0.0.1') &&
+    !window.location.hostname.includes('.local');
+
   const availableSources = Object.entries(SOURCES).filter(([_, config]) =>
     !isProduction || !config.devOnly
   ).map(([key]) => key as keyof typeof SOURCES);
 
+  // Debug log for production filtering
+  React.useEffect(() => {
+    console.log(`🔧 SourceSwitcher: isProduction=${isProduction}, availableSources:`, availableSources);
+  }, [isProduction, availableSources]);
+
   const ORDER: (keyof typeof SOURCES)[] = ['curated', 'supabase', 'cognee', 'langextractDb', 'langextract', 'graphdb'].filter(
     key => availableSources.includes(key)
   );
-  const [current, setCurrent] = useState<keyof typeof SOURCES>(
-    availableSources.includes('langextractDb') ? 'langextractDb' : 'langextract'
-  );
+
+  // Default to first available source
+  const defaultSource = availableSources[0] || 'curated';
+  const [current, setCurrent] = useState<keyof typeof SOURCES>(defaultSource);
 
   async function parseJsonSafe(res: Response) {
     try {
@@ -152,14 +162,13 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   }
 
   // Keep buttons enabled; we validate live and show tooltips, but do not block selection
-  const disabled = useMemo(() => ({
-    curated: busy,
-    supabase: busy,
-    cognee: busy,
-    langextractDb: busy,
-    langextract: busy,
-    graphdb: busy,
-  }), [busy]);
+  const disabled = useMemo(() => {
+    const result: Record<string, boolean> = {};
+    availableSources.forEach(source => {
+      result[source] = busy;
+    });
+    return result;
+  }, [busy, availableSources]);
 
   const counts = (key: keyof typeof SOURCES) => {
     const h = health[key];
@@ -189,17 +198,24 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   const btnClass = colorClass(current, true);
 
   return (
-    <button
-      aria-label={`Source: ${SOURCES[current].label}`}
-      title={`Click to switch source — current: ${SOURCES[current].label}`}
-      className={btnClass}
-      disabled={disabled[current]}
-      onClick={handleClick}
-      style={{ zIndex: 10001, display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-    >
-      <span>{SOURCES[current].label}</span>
-      <span className="ml-1 text-[10px] opacity-80">{counts(current)}</span>
-    </button>
+    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+      <button
+        aria-label={`Source: ${SOURCES[current].label}`}
+        title={`Click to switch source — current: ${SOURCES[current].label}`}
+        className={btnClass}
+        disabled={disabled[current]}
+        onClick={handleClick}
+        style={{ zIndex: 10001, display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+      >
+        <span>{SOURCES[current].label}</span>
+        <span className="ml-1 text-[10px] opacity-80">{counts(current)}</span>
+      </button>
+      {isProduction && (
+        <span className="px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full border border-green-200">
+          PROD
+        </span>
+      )}
+    </div>
   );
 };
 
