@@ -4,6 +4,17 @@ const SERVICE_URL = process.env.COGNEE_SERVICE_URL || "http://127.0.0.1:8765";
 
 export const loader: LoaderFunction = async () => {
   try {
+    // In production, return empty graph if Cognee service isn't available
+    const isProduction = process.env.NODE_ENV === 'production';
+    if (isProduction) {
+      return json({
+        nodes: [],
+        edges: [],
+        lastUpdated: new Date().toISOString(),
+        _info: "Cognee service not available in production"
+      });
+    }
+
     const res = await fetch(`${SERVICE_URL}/graph/current`);
     if (!res.ok) {
       const text = await res.text();

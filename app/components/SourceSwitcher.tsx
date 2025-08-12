@@ -9,10 +9,10 @@ type Health = { ok: boolean; okStatus?: boolean; status?: number; json?: boolean
 const SOURCES = {
   curated: { label: 'Curated JSON', url: '/api/graph' },
   supabase: { label: 'Supabase (Raw)', url: '/api/graph/supabase/raw?limit=400' },
-  cognee: { label: 'Cognee (Refined)', url: '/api/graph/cognee?limit=2000' },
-  langextractDb: { label: 'LangExtract (DB)', url: '/api/graph/langextract/db' },
+  cognee: { label: 'Cognee (Refined)', url: '/api/graph/cognee?limit=2000', devOnly: true },
+  langextractDb: { label: 'LangExtract (DB)', url: '/api/graph/langextract/db', devOnly: true },
   langextract: { label: 'LangExtract (Curated)', url: '/api/graph/langextract/curated' },
-  graphdb: { label: 'GraphDB (SPARQL)', url: '/api/graph/graphdb?limit=2000' },
+  graphdb: { label: 'GraphDB (SPARQL)', url: '/api/graph/graphdb?limit=2000', devOnly: true },
 } as const;
 
 
@@ -21,8 +21,18 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   const [health, setHealth] = useState<Record<string, Health>>({});
 
 
-  const ORDER: (keyof typeof SOURCES)[] = ['curated', 'supabase', 'cognee', 'langextractDb', 'langextract', 'graphdb'];
-  const [current, setCurrent] = useState<keyof typeof SOURCES>('langextractDb');
+  // Filter out dev-only sources in production
+  const isProduction = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
+  const availableSources = Object.entries(SOURCES).filter(([_, config]) =>
+    !isProduction || !config.devOnly
+  ).map(([key]) => key as keyof typeof SOURCES);
+
+  const ORDER: (keyof typeof SOURCES)[] = ['curated', 'supabase', 'cognee', 'langextractDb', 'langextract', 'graphdb'].filter(
+    key => availableSources.includes(key)
+  );
+  const [current, setCurrent] = useState<keyof typeof SOURCES>(
+    availableSources.includes('langextractDb') ? 'langextractDb' : 'langextract'
+  );
 
   async function parseJsonSafe(res: Response) {
     try {
