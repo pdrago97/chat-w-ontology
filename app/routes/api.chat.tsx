@@ -30,12 +30,6 @@ export const action: ActionFunction = async ({ request }) => {
   try {
     const { message, language = 'en' }: ChatRequest = await request.json();
 
-    // Debug logs
-    console.log('N8N_WEBHOOK_URL:', N8N_WEBHOOK_URL);
-    console.log('N8N_AUTH_KEY:', N8N_AUTH_KEY ? 'SET' : 'NOT SET');
-    console.log('Environment N8N_WEBHOOK_URL:', process.env.N8N_WEBHOOK_URL ? 'SET' : 'NOT SET');
-    console.log('Environment N8N_AUTH_KEY:', process.env.N8N_AUTH_KEY ? 'SET' : 'NOT SET');
-
     // Call n8n webhook with the message
     const webhookResponse = await fetch(N8N_WEBHOOK_URL, {
       method: 'POST',
@@ -50,12 +44,18 @@ export const action: ActionFunction = async ({ request }) => {
     });
 
     if (!webhookResponse.ok) {
-      throw new Error(`N8N webhook failed: ${webhookResponse.status} ${webhookResponse.statusText}`);
+      const errorText = await webhookResponse.text();
+      console.error('N8N webhook error:', webhookResponse.status, errorText);
+      throw new Error(`N8N webhook failed: ${webhookResponse.status} - ${errorText}`);
     }
 
-    const response = await webhookResponse.text();
+    const responseText = await webhookResponse.text();
 
-    return json({ response });
+    return json({
+      message: responseText,
+      sender: "assistant" as const,
+      direction: "incoming" as const
+    });
 
   } catch (error) {
     console.error('Error in chat endpoint:', error);
