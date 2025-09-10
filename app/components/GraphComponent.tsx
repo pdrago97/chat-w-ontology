@@ -334,28 +334,78 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
               'border-style': 'solid',
               'shape': 'roundrectangle',
               'width': (node: NodeSingular) => {
-                const label = node.data('label') as string || '';
+                const nodeData = node.data();
+                const label = (nodeData.label as string) || '';
                 const deg = node.degree(true);
-                const baseWidth = Math.max(110, Math.min(label.length * 8.5, 260));
+                const category = nodeData.category || canonicalType(nodeData);
+                const priority = nodeData.priority || 1;
+                const isEnhanced = nodeData.enhanced || false;
+
+                // Base width calculation
+                let baseWidth = Math.max(110, Math.min(label.length * 8.5, 260));
+
+                // Priority scaling for important nodes
+                if (category === 'person' && priority >= 9) baseWidth *= 1.3;
+                else if (category === 'company' && priority >= 8) baseWidth *= 1.2;
+                else if (category === 'experience' && priority >= 7) baseWidth *= 1.15;
+                else if (isEnhanced) baseWidth *= 1.1;
+
                 return baseWidth + Math.min(60, deg * 4);
               },
               'height': (node: NodeSingular) => {
-                const label = node.data('label') as string || '';
+                const nodeData = node.data();
+                const label = (nodeData.label as string) || '';
                 const lines = label.split('\n').length;
                 const deg = node.degree(true);
-                return Math.max(56, Math.min(lines * 22 + 18, 110)) + Math.min(40, deg * 2);
+                const category = nodeData.category || canonicalType(nodeData);
+                const priority = nodeData.priority || 1;
+                const isEnhanced = nodeData.enhanced || false;
+
+                // Base height calculation
+                let baseHeight = Math.max(56, Math.min(lines * 22 + 18, 110));
+
+                // Priority scaling for important nodes
+                if (category === 'person' && priority >= 9) baseHeight *= 1.3;
+                else if (category === 'company' && priority >= 8) baseHeight *= 1.2;
+                else if (category === 'experience' && priority >= 7) baseHeight *= 1.15;
+                else if (isEnhanced) baseHeight *= 1.1;
+
+                return baseHeight + Math.min(40, deg * 2);
               },
               'background-color': (node: NodeSingular) => {
-                const type = (node.data('type') || 'default').toLowerCase();
+                const nodeData = node.data();
+                const category = nodeData.category || canonicalType(nodeData);
+                const type = (nodeData.type || 'default').toLowerCase();
+                const isEnhanced = nodeData.enhanced || false;
+
+                // Enhanced professional color scheme
+                if (category === 'person' || type === 'person') {
+                  return isEnhanced ? '#8B5CF6' : '#22c55e';  // Purple for enhanced, green for basic
+                }
+                if (category === 'company' || type === 'company') {
+                  return isEnhanced ? '#3B82F6' : '#06b6d4';  // Blue for enhanced, cyan for basic
+                }
+                if (category === 'experience' || type === 'experience') {
+                  return isEnhanced ? '#10B981' : '#a855f7';  // Green for enhanced, purple for basic
+                }
+                if (category === 'technology' || type === 'technology' || type === 'skills') {
+                  return isEnhanced ? '#EF4444' : '#f97316';  // Red for enhanced, orange for basic
+                }
+                if (category === 'project' || type === 'project') {
+                  return isEnhanced ? '#F59E0B' : '#f59e0b';  // Amber (consistent)
+                }
+                if (category === 'education' || type === 'education') {
+                  return isEnhanced ? '#14B8A6' : '#3b82f6';  // Teal for enhanced, blue for basic
+                }
+                if (category === 'concept' || type === 'concept') {
+                  return isEnhanced ? '#6B7280' : '#64748b';  // Gray (consistent)
+                }
+
+                // Fallback colors
                 switch (type) {
-                  case 'person': return '#22c55e';       // green-500
-                  case 'experience': return '#a855f7';   // purple-500
-                  case 'education': return '#3b82f6';    // blue-500
-                  case 'skills': return '#f97316';       // orange-500
-                  case 'project': return '#f59e0b';      // amber-500
                   case 'group': return '#06b6d4';        // cyan-500
                   case 'status': return '#ef4444';       // red-500
-                  default: return '#64748b';             // slate-500
+                  default: return isEnhanced ? '#6366F1' : '#64748b'; // Indigo for enhanced, slate for basic
                 }
               },
               'box-shadow-blur': '8px',
@@ -1188,7 +1238,7 @@ function getNodeLabel(node: any): string {
 }
 
 function createTooltipContent(data: any): string {
-  // Dynamic tooltip content generator that handles any object structure
+  // Enhanced professional tooltip content generator
   if (!data) return '<h3>No data available</h3>';
 
   // Helper function to format field names
@@ -1197,6 +1247,37 @@ function createTooltipContent(data: any): string {
       .replace(/([A-Z])/g, ' $1') // Add space before capital letters
       .replace(/^./, str => str.toUpperCase()) // Capitalize first letter
       .replace(/_/g, ' '); // Replace underscores with spaces
+  };
+
+  // Get professional context
+  const category = data.category || 'concept';
+  const isEnhanced = data.enhanced || false;
+
+  // Professional icons for categories
+  const getCategoryIcon = (cat: string) => {
+    switch (cat) {
+      case 'person': return '👤';
+      case 'company': return '🏢';
+      case 'experience': return '💼';
+      case 'project': return '🚀';
+      case 'technology': return '⚡';
+      case 'education': return '🎓';
+      case 'concept': return '💡';
+      default: return '📄';
+    }
+  };
+
+  const getCategoryColor = (cat: string) => {
+    switch (cat) {
+      case 'person': return '#8B5CF6';
+      case 'company': return '#3B82F6';
+      case 'experience': return '#10B981';
+      case 'project': return '#F59E0B';
+      case 'technology': return '#EF4444';
+      case 'education': return '#14B8A6';
+      case 'concept': return '#6B7280';
+      default: return '#6366F1';
+    }
   };
 
   // Helper: sanitize data to remove internal/engine keys (deep)
@@ -1272,16 +1353,71 @@ function createTooltipContent(data: any): string {
     return '';
   };
 
-  // Start building the tooltip content
+  // Start building the enhanced professional tooltip content
   let content = '';
 
-  // Title section - prioritize common title fields
-  const titleField = data.id || data.name || data.title || data.label || 'Unknown';
-  content += `<h3 class="tooltip-title">${titleField}</h3>`;
+  // Enhanced title section with professional context
+  const titleField = data.title || data.label || data.id || data.name || 'Unknown';
+  const categoryIcon = getCategoryIcon(category);
+  const categoryColor = getCategoryColor(category);
 
-  // Subtitle section - show type and other key info
-  if (data.type) {
-    content += `<div class="tooltip-subtitle">${data.type}</div>`;
+  content += `
+    <div class="tooltip-header" style="border-left: 4px solid ${categoryColor}; padding-left: 16px; margin-bottom: 16px;">
+      <h3 class="tooltip-title" style="display: flex; align-items: center; margin: 0 0 4px 0;">
+        <span style="margin-right: 8px; font-size: 20px;">${categoryIcon}</span>
+        ${titleField}
+      </h3>
+      ${data.type ? `<div class="tooltip-subtitle" style="color: ${categoryColor}; font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">${data.type}</div>` : ''}
+    </div>
+  `;
+
+  // Professional description section for enhanced nodes
+  if (data.description && isEnhanced) {
+    content += `
+      <div class="professional-description" style="background: #f8fafc; padding: 12px; border-radius: 8px; margin-bottom: 16px; border-left: 3px solid ${categoryColor};">
+        <p style="margin: 0; line-height: 1.5; color: #334155;">${data.description}</p>
+      </div>
+    `;
+  }
+
+  // Category-specific professional highlights
+  if (category === 'person' && (data.isPrimaryPerson || titleField.includes('Pedro'))) {
+    content += `
+      <div class="person-highlights" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px; border-radius: 12px; margin-bottom: 16px;">
+        <div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">🎯 Professional Focus</div>
+        <div style="font-size: 13px; line-height: 1.4; opacity: 0.95;">AI Engineering & Data Science Expert</div>
+        <div style="font-size: 13px; line-height: 1.4; opacity: 0.95;">📍 Santa Catarina, Brazil</div>
+        <div style="font-size: 13px; line-height: 1.4; opacity: 0.95;">💼 5+ years in AI/ML solutions</div>
+      </div>
+    `;
+  } else if (category === 'company') {
+    content += `
+      <div class="company-info" style="background: #eff6ff; padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 3px solid #3b82f6;">
+        <div style="font-size: 13px; color: #1e40af; font-weight: 600; margin-bottom: 4px;">🏢 Organization</div>
+        <div style="font-size: 12px; color: #475569;">Professional workplace and experience</div>
+      </div>
+    `;
+  } else if (category === 'technology') {
+    content += `
+      <div class="tech-info" style="background: #fef2f2; padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 3px solid #ef4444;">
+        <div style="font-size: 13px; color: #dc2626; font-weight: 600; margin-bottom: 4px;">⚡ Technical Expertise</div>
+        <div style="font-size: 12px; color: #475569;">Professional skill and technology proficiency</div>
+      </div>
+    `;
+  } else if (category === 'project') {
+    content += `
+      <div class="project-info" style="background: #fffbeb; padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 3px solid #f59e0b;">
+        <div style="font-size: 13px; color: #d97706; font-weight: 600; margin-bottom: 4px;">🚀 Professional Project</div>
+        <div style="font-size: 12px; color: #475569;">Development work and achievements</div>
+      </div>
+    `;
+  } else if (category === 'experience') {
+    content += `
+      <div class="experience-info" style="background: #f0fdf4; padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 3px solid #10b981;">
+        <div style="font-size: 13px; color: #059669; font-weight: 600; margin-bottom: 4px;">💼 Professional Experience</div>
+        <div style="font-size: 12px; color: #475569;">Career role and responsibilities</div>
+      </div>
+    `;
   }
 
   // Priority fields that should appear first
