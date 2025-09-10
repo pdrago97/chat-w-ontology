@@ -31,17 +31,27 @@ export const action: ActionFunction = async ({ request }) => {
     const { message, language = 'en' }: ChatRequest = await request.json();
 
     // Call n8n webhook with the message
+    // Create AbortController for timeout (Vercel Hobby plan has 10s limit - maximize it!)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 9800); // 9.8 seconds - maximum safe timeout for Vercel Hobby
+
     const webhookResponse = await fetch(N8N_WEBHOOK_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'RAG-Auth-Key': N8N_AUTH_KEY
+        'RAG-Auth-Key': N8N_AUTH_KEY,
+        'Connection': 'keep-alive',
+        'Accept-Encoding': 'gzip, deflate, br'
       },
       body: JSON.stringify({
         message,
         language
-      })
+      }),
+      signal: controller.signal,
+      keepalive: true
     });
+
+    clearTimeout(timeoutId);
 
     if (!webhookResponse.ok) {
       const errorText = await webhookResponse.text();
@@ -57,8 +67,14 @@ export const action: ActionFunction = async ({ request }) => {
       direction: "incoming" as const
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in chat endpoint:', error);
+
+    if (error.name === 'AbortError') {
+      return json({
+        error: "The request is taking longer than expected. The AI is processing your question - please try again in a moment."
+      }, { status: 408 });
+    }
 
     return json({
       error: "I apologize, but I encountered an error. Something is wrong with the application, please inform Pedro via LinkedIn https://www.linkedin.com/in/pedroreichow."

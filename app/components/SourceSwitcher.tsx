@@ -21,8 +21,8 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   const [health, setHealth] = useState<Record<string, Health>>({});
 
 
-  const ORDER: (keyof typeof SOURCES)[] = ['curated', 'supabase', 'cognee', 'langextractDb', 'langextract', 'graphdb'];
-  const [current, setCurrent] = useState<keyof typeof SOURCES>('langextractDb');
+  const ORDER: (keyof typeof SOURCES)[] = ['cognee', 'curated', 'supabase', 'langextractDb', 'langextract', 'graphdb'];
+  const [current, setCurrent] = useState<keyof typeof SOURCES>('cognee');
 
   async function parseJsonSafe(res: Response) {
     try {
