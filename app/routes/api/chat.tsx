@@ -103,11 +103,39 @@ export const action: ActionFunction = async ({ request }) => {
 
     // Read once, then try JSON parse, else use raw text
     const raw = await res.text();
-    let out: any;
-    try { out = JSON.parse(raw); } catch { out = { reply: raw }; }
+    console.log(`[N8N] Raw response:`, {
+      status: res.status,
+      statusText: res.statusText,
+      headers: Object.fromEntries(res.headers.entries()),
+      rawLength: raw.length,
+      rawPreview: raw.substring(0, 200) + (raw.length > 200 ? '...' : '')
+    });
 
-    const reply = out?.reply ?? out?.message ?? out?.text ?? out?.answer ?? (typeof out === 'string' ? out : raw);
-    console.log(`[N8N] Response received:`, { reply: reply?.substring(0, 100) + '...' });
+    let out: any;
+    try {
+      out = JSON.parse(raw);
+      console.log(`[N8N] Parsed JSON:`, out);
+    } catch (e) {
+      console.log(`[N8N] JSON parse failed, using raw text:`, e);
+      out = { reply: raw };
+    }
+
+    const reply = out?.reply ?? out?.message ?? out?.text ?? out?.answer ?? out?.response ?? (typeof out === 'string' ? out : raw);
+    console.log(`[N8N] Final reply:`, {
+      reply: reply?.substring(0, 100) + (reply?.length > 100 ? '...' : ''),
+      replyLength: reply?.length,
+      replyType: typeof reply
+    });
+
+    // Handle empty responses
+    if (!reply || reply.trim() === '') {
+      console.log(`[N8N] Empty response detected, returning fallback message`);
+      return json({
+        response: "I apologize, but I didn't receive a proper response from the AI system. Please try asking your question again, or contact Pedro directly via LinkedIn: https://www.linkedin.com/in/pedroreichow",
+        ok: false,
+        status: 500
+      });
+    }
 
     // Cache successful responses (only for simple queries without history)
     if (history.length === 0 && reply && res.ok) {
