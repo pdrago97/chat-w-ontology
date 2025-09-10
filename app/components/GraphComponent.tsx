@@ -28,7 +28,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
 
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const { language, t } = useLanguage();
-  const [mode, setMode] = useState<'2d' | '3d'>('2d');
+  const [mode, setMode] = useState<'2d' | '3d'>('3d');
 
   // UI guardrails & controls
   const [initAttempts, setInitAttempts] = useState(0);

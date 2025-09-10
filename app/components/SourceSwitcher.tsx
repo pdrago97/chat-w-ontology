@@ -107,6 +107,11 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   useEffect(() => {
     // Preload health information for quick glance counts
     refreshHealth();
+
+    // Auto-load Cognee data on mount if it's the default source
+    if (defaultSource === 'cognee') {
+      loadFrom('cognee');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
