@@ -3,6 +3,25 @@ import { json, type ActionFunction } from "@remix-run/node";
 // Chat API route for N8N webhook integration
 // This route handles chat requests and forwards them to the N8N webhook
 
+// Simple in-memory cache for common queries (helps with timeout issues)
+const responseCache = new Map<string, { response: string; timestamp: number }>();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+// Generate cache key from message
+const getCacheKey = (message: string, language: string) => {
+  return `${message.toLowerCase().trim()}_${language}`;
+};
+
+// Clean expired cache entries
+const cleanCache = () => {
+  const now = Date.now();
+  for (const [key, value] of responseCache.entries()) {
+    if (now - value.timestamp > CACHE_DURATION) {
+      responseCache.delete(key);
+    }
+  }
+};
+
 export const action: ActionFunction = async ({ request }) => {
   if (request.method !== "POST") return json({ error: "Method not allowed" }, { status: 405 });
   try {
@@ -11,6 +30,19 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (!message || typeof message !== 'string') {
       return json({ error: 'Missing message' }, { status: 400 });
+    }
+
+    // Clean expired cache entries
+    cleanCache();
+
+    // Check cache for quick responses (only for simple queries without history)
+    if (history.length === 0) {
+      const cacheKey = getCacheKey(message, language);
+      const cached = responseCache.get(cacheKey);
+      if (cached) {
+        console.log(`[N8N] Cache hit for: ${message.substring(0, 50)}...`);
+        return json({ response: cached.response, ok: true, status: 200 });
+      }
     }
 
     const webhookUrl = process.env.N8N_CHAT_WEBHOOK_URL ||
@@ -51,9 +83,8 @@ export const action: ActionFunction = async ({ request }) => {
       headers['Authorization'] = `Basic ${b64}`;
     }
 
-    // Create AbortController for timeout (Vercel Hobby plan has 10s limit - be conservative)
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8500); // 8.5 seconds - conservative timeout
+    // Remove timeout - let Vercel handle the 10s limit naturally
+    // This provides better error messages when the limit is hit
 
     console.log(`[N8N] Starting request to: ${webhookUrl}`);
 
@@ -65,11 +96,8 @@ export const action: ActionFunction = async ({ request }) => {
         'Accept-Encoding': 'gzip, deflate, br'
       },
       body: JSON.stringify({ message, language, history }),
-      signal: controller.signal,
       keepalive: true
     });
-
-    clearTimeout(timeoutId);
     const endTime = Date.now();
     console.log(`[N8N] Request completed in ${endTime - startTime}ms`);
 
@@ -80,14 +108,23 @@ export const action: ActionFunction = async ({ request }) => {
 
     const reply = out?.reply ?? out?.message ?? out?.text ?? out?.answer ?? (typeof out === 'string' ? out : raw);
     console.log(`[N8N] Response received:`, { reply: reply?.substring(0, 100) + '...' });
+
+    // Cache successful responses (only for simple queries without history)
+    if (history.length === 0 && reply && res.ok) {
+      const cacheKey = getCacheKey(message, language);
+      responseCache.set(cacheKey, { response: reply, timestamp: Date.now() });
+      console.log(`[N8N] Cached response for: ${message.substring(0, 50)}...`);
+    }
+
     return json({ response: reply, ok: res.ok, status: res.status });
   } catch (err: any) {
     const endTime = Date.now();
     console.error(`[N8N] Error after ${endTime - startTime}ms:`, err.name, err.message);
 
-    if (err.name === 'AbortError') {
+    // Handle Vercel timeout (when function execution exceeds 10s)
+    if (err.message?.includes('timeout') || err.message?.includes('FUNCTION_INVOCATION_TIMEOUT')) {
       return json({
-        response: "⏱️ The AI is taking longer than usual to process your question. This happens with complex queries that require deep analysis of Pedro's professional background. Please try asking again - the system will respond faster on retry, or try a more specific question.",
+        response: "⏱️ Your question requires deep analysis of Pedro's background. The AI is processing complex information to give you the most comprehensive answer. Please try asking again - simpler questions get faster responses, or try breaking your question into smaller parts.",
         ok: false,
         status: 408
       }, { status: 200 }); // Return 200 so frontend can display the message

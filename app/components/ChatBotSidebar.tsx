@@ -59,7 +59,6 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
     }[]>([getWelcomeMessage()]);
     const [isLoading, setIsLoading] = useState(false);
 
-
     // Update welcome message when language changes
     React.useEffect(() => {
       setMessages([getWelcomeMessage()]);
@@ -97,7 +96,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
       const data = await response.json();
 
       setMessages(prev => [...prev, {
-        message: data.response,
+        message: data.response || data.message,
         sender: "assistant",
         direction: "incoming"
       }]);
@@ -136,7 +135,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
               {isLoading && (
                 <Message
                   model={{
-                    message: "Processing question...",
+                    message: "🤖 Processing your question about Pedro...",
                     sender: "assistant",
                     direction: "incoming",
                     position: "single"

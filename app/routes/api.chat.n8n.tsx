@@ -1,7 +1,7 @@
 import { json, type ActionFunction } from "@remix-run/node";
 
-// Proxies chat requests to the provided n8n webhook. Minimal, adaptable.
-// Sends { message, language, history } and expects { reply } back.
+// Chat API route for N8N webhook integration
+// This route handles chat requests and forwards them to the N8N webhook
 
 export const action: ActionFunction = async ({ request }) => {
   if (request.method !== "POST") return json({ error: "Method not allowed" }, { status: 405 });
