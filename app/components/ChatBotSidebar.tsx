@@ -95,11 +95,77 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
 
       const data = await response.json();
 
-      setMessages(prev => [...prev, {
-        message: data.response || data.message,
-        sender: "assistant",
-        direction: "incoming"
-      }]);
+      // Handle async queue responses
+      if (data.isAsync && data.jobId && data.pollUrl) {
+        // Show initial processing message
+        setMessages(prev => [...prev, {
+          message: data.message,
+          sender: "assistant",
+          direction: "incoming"
+        }]);
+
+        // Start polling for the actual result
+        const pollForResult = async () => {
+          const maxAttempts = 60; // 60 attempts * 2 seconds = 2 minutes max
+          for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+
+            try {
+              const pollResponse = await fetch(data.pollUrl);
+              const pollData = await pollResponse.json();
+
+              if (pollData.status === 'completed') {
+                // Replace the processing message with the actual result
+                setMessages(prev => {
+                  const newMessages = [...prev];
+                  newMessages[newMessages.length - 1] = {
+                    message: pollData.message,
+                    sender: "assistant",
+                    direction: "incoming"
+                  };
+                  return newMessages;
+                });
+                return;
+              } else if (pollData.status === 'error') {
+                // Replace with error message
+                setMessages(prev => {
+                  const newMessages = [...prev];
+                  newMessages[newMessages.length - 1] = {
+                    message: pollData.message || "Processing failed. Please try again.",
+                    sender: "assistant",
+                    direction: "incoming"
+                  };
+                  return newMessages;
+                });
+                return;
+              }
+              // Continue polling if still processing
+            } catch (pollError) {
+              console.error('Polling error:', pollError);
+            }
+          }
+
+          // Timeout after max attempts
+          setMessages(prev => {
+            const newMessages = [...prev];
+            newMessages[newMessages.length - 1] = {
+              message: "The AI took longer than expected to process your question. Please try asking again with a simpler or more specific question.",
+              sender: "assistant",
+              direction: "incoming"
+            };
+            return newMessages;
+          });
+        };
+
+        pollForResult();
+      } else {
+        // Handle regular synchronous responses (fallback)
+        setMessages(prev => [...prev, {
+          message: data.response || data.message,
+          sender: "assistant",
+          direction: "incoming"
+        }]);
+      }
     } catch (error) {
       console.error('Error generating AI response:', error);
       setMessages(prev => [...prev, {
