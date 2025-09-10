@@ -11,8 +11,16 @@ interface ChatJob {
   createdAt: number;
 }
 
-// In-memory storage for async jobs
-const jobs = new Map<string, ChatJob>();
+// Use global variable to share jobs between routes (same as polling route)
+declare global {
+  var chatJobs: Map<string, ChatJob> | undefined;
+}
+
+if (!global.chatJobs) {
+  global.chatJobs = new Map();
+}
+
+const jobs = global.chatJobs;
 
 // Generate simple UUID
 const generateId = () => {
