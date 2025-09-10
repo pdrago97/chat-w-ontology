@@ -78,7 +78,7 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
     setMessages(prev => [...prev, userMessage]);
 
     try {
-      const response = await fetch('/api.chat.n8n', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
