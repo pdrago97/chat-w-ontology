@@ -150,9 +150,9 @@ export const action: ActionFunction = async ({ request }) => {
     console.error(`[N8N] Error after ${endTime - startTime}ms:`, err.name, err.message);
 
     // Handle Vercel timeout (when function execution exceeds 10s)
-    if (err.message?.includes('timeout') || err.message?.includes('FUNCTION_INVOCATION_TIMEOUT')) {
+    if (err.message?.includes('timeout') || err.message?.includes('FUNCTION_INVOCATION_TIMEOUT') || err.name === 'AbortError') {
       return json({
-        response: "⏱️ Your question requires deep analysis of Pedro's background. The AI is processing complex information to give you the most comprehensive answer. Please try asking again - simpler questions get faster responses, or try breaking your question into smaller parts.",
+        response: "⏱️ Your question requires deep analysis of Pedro's professional background. The AI system is processing complex information from his knowledge base to provide you with the most comprehensive answer possible.\n\n💡 **Tips for faster responses:**\n• Try simpler, more specific questions\n• Ask about one topic at a time\n• Questions about basic info (name, location, skills) are usually faster\n\n🔄 **Please try asking again** - the system often responds faster on retry as it learns from previous queries.",
         ok: false,
         status: 408
       }, { status: 200 }); // Return 200 so frontend can display the message
