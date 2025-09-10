@@ -8,6 +8,7 @@ import { translateGraphData } from '../services/graphTranslation';
 
 import GraphModeToggle from './GraphModeToggle';
 import SourceSwitcher from './SourceSwitcher';
+import GraphNavigationPanel from './GraphNavigationPanel';
 import ReactLazy = React.lazy;
 const ForceGraph3DView = React.lazy(() => import('./ForceGraph3DView'));
 
@@ -32,9 +33,13 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
 
   // UI guardrails & controls
   const [initAttempts, setInitAttempts] = useState(0);
-  // Lenses and filters
+  // Enhanced navigation and filtering
   const [storyLens, setStoryLens] = useState(false);
   const [minDegree, setMinDegree] = useState(2);
+  const [categoryFilter, setCategoryFilter] = useState<string>('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedNode, setSelectedNode] = useState<any>(null);
+  const [showNodeDetails, setShowNodeDetails] = useState(false);
 
   // Canonicalization helpers for Cognee-derived content
   const canonicalType = (n: any): string => {
@@ -346,16 +351,25 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
                 return Math.max(56, Math.min(lines * 22 + 18, 110)) + Math.min(40, deg * 2);
               },
               'background-color': (node: NodeSingular) => {
-                const type = (node.data('type') || 'default').toLowerCase();
+                const nodeData = node.data();
+                const category = nodeData.category || canonicalType(nodeData);
+                const type = (nodeData.type || 'default').toLowerCase();
+
+                // Enhanced professional color scheme
+                if (category === 'person' || type === 'person') return '#8B5CF6';     // Purple for Pedro
+                if (category === 'company' || type === 'company') return '#3B82F6';   // Blue for companies
+                if (category === 'experience' || category === 'role' || type === 'experience' || type === 'role') return '#10B981'; // Green for roles
+                if (category === 'project' || type === 'project') return '#F59E0B';   // Amber for projects
+                if (category === 'technology' || category === 'skill' || type === 'technology' || type === 'skills') return '#EF4444'; // Red for tech
+                if (category === 'education' || type === 'education') return '#14B8A6'; // Teal for education
+                if (category === 'certification' || type === 'certification') return '#F97316'; // Orange for certs
+                if (category === 'concept' || type === 'concept') return '#6B7280';   // Gray for concepts
+
+                // Fallback to original colors for compatibility
                 switch (type) {
-                  case 'person': return '#22c55e';       // green-500
-                  case 'experience': return '#a855f7';   // purple-500
-                  case 'education': return '#3b82f6';    // blue-500
-                  case 'skills': return '#f97316';       // orange-500
-                  case 'project': return '#f59e0b';      // amber-500
                   case 'group': return '#06b6d4';        // cyan-500
                   case 'status': return '#ef4444';       // red-500
-                  default: return '#64748b';             // slate-500
+                  default: return '#6366F1';             // indigo-500
                 }
               },
               'box-shadow-blur': '8px',
@@ -1081,8 +1095,95 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
     cyRef.current.zoom(0.8);
   };
 
+  // Handle navigation panel filters
+  const handleFilterChange = useCallback((filters: any) => {
+    setCategoryFilter(filters.category);
+    setSearchTerm(filters.searchTerm);
+    setMinDegree(filters.minConnections);
+
+    // Apply filters to the graph
+    if (cyRef.current) {
+      const cy = cyRef.current;
+
+      cy.batch(() => {
+        cy.nodes().forEach((node: any) => {
+          const nodeData = node.data();
+          let visible = true;
+
+          // Category filter
+          if (filters.category !== 'all') {
+            const nodeCategory = nodeData.category || canonicalType(nodeData);
+            visible = visible && nodeCategory === filters.category;
+          }
+
+          // Search filter
+          if (filters.searchTerm) {
+            const searchLower = filters.searchTerm.toLowerCase();
+            const label = (nodeData.label || '').toLowerCase();
+            const title = (nodeData.title || '').toLowerCase();
+            const description = (nodeData.description || '').toLowerCase();
+            visible = visible && (
+              label.includes(searchLower) ||
+              title.includes(searchLower) ||
+              description.includes(searchLower)
+            );
+          }
+
+          // Connection filter
+          if (filters.minConnections > 0) {
+            visible = visible && node.degree() >= filters.minConnections;
+          }
+
+          node.style('display', visible ? 'element' : 'none');
+        });
+      });
+    }
+  }, []);
+
+  const handleNodeFocus = useCallback((nodeId: string) => {
+    if (cyRef.current) {
+      const cy = cyRef.current;
+      const node = cy.getElementById(nodeId);
+      if (node.length > 0) {
+        cy.animate({
+          center: { eles: node },
+          zoom: 1.5
+        }, {
+          duration: 500
+        });
+
+        // Highlight the node
+        node.animate({
+          style: {
+            'border-width': '8px',
+            'border-color': '#FFD700'
+          }
+        }, {
+          duration: 300,
+          complete: () => {
+            setTimeout(() => {
+              node.animate({
+                style: {
+                  'border-width': '3px',
+                  'border-color': node.data('originalBorderColor') || '#4B5563'
+                }
+              }, { duration: 300 });
+            }, 1000);
+          }
+        });
+      }
+    }
+  }, []);
+
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
+      {/* Enhanced Navigation Panel */}
+      <GraphNavigationPanel
+        graphData={graphData}
+        onFilterChange={handleFilterChange}
+        onNodeFocus={handleNodeFocus}
+      />
+
       {/* Bottom-left control cluster (no overlap with canvas center) */}
       <div style={{ position: 'absolute', bottom: '16px', left: '16px', zIndex: 10002, display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
         <GraphModeToggle mode={mode} onChange={setMode} />
