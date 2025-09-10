@@ -66,24 +66,41 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose }) => {
         
         <div className="space-y-4 text-sm sm:text-base mt-14">
           <p className="text-gray-700 leading-relaxed">
-            This is an interactive way to explore my professional background through a knowledge graph and AI-powered chat interface. Built with RemixJS (an evolution of NextJS adopted by ChatGPT) for server-side rendering and routing, this app features Retrieval Augmented Generation (RAG) capabilities that combine a structured knowledge base with AI to provide accurate responses. It uses Portkey AI for LLM routing, gateway and guardrails to ensure high-quality interactions. The visualization is powered by Cytoscape.js for interactive graph exploration, while TailwindCSS provides responsive styling. The system leverages vector embeddings and semantic search to match user queries with relevant information from my professional background, enabling natural conversations grounded in factual data.
+            <strong>Advanced AI-Powered Knowledge Graph Platform</strong> featuring a sophisticated 3D visualization of my professional journey. This system demonstrates cutting-edge engineering with <strong>Cognee AI</strong> for automated knowledge extraction, generating 626+ interconnected entities and 1000+ relationships from unstructured resume data.
+          </p>
+
+          <div className="bg-blue-50 border-l-4 border-blue-400 p-3 my-4">
+            <h4 className="font-semibold text-blue-900 mb-2">🚀 Technical Architecture Highlights:</h4>
+            <ul className="text-sm text-blue-800 space-y-1">
+              <li><strong>AI Knowledge Extraction:</strong> Cognee AI processes documents into rich entity-relationship networks</li>
+              <li><strong>3D Force-Directed Visualization:</strong> Interactive graph with physics-based node positioning</li>
+              <li><strong>Supabase Integration:</strong> Cloud-native database with real-time data synchronization</li>
+              <li><strong>Remix Full-Stack:</strong> Server-side rendering with optimized data loading</li>
+              <li><strong>Multi-Source Architecture:</strong> Dynamic switching between curated, raw, and AI-generated data</li>
+            </ul>
+          </div>
+
+          <p className="text-gray-700 leading-relaxed text-sm">
+            The platform showcases modern data engineering principles with <strong>RAG capabilities</strong>, <strong>vector embeddings</strong>, and <strong>semantic search</strong> for intelligent conversations. Built with production-grade infrastructure including <strong>Vercel deployment</strong>, <strong>environment-based configurations</strong>, and <strong>TypeScript</strong> for type safety.
           </p>
           
           <div className="space-y-2">
-            <h3 className="font-semibold text-gray-900">How to use:</h3>
+            <h3 className="font-semibold text-gray-900">🎯 Interactive Features:</h3>
             <ul className="list-disc pl-5 space-y-2 text-gray-700">
-              <li>Explore the graph by clicking on different nodes</li>
-              <li>Use the chat interface to ask questions about my experience</li>
-              <li>Click over nodes to see detailed information</li>
+              <li><strong>3D Navigation:</strong> Pan, zoom, and rotate through the knowledge graph in real-time</li>
+              <li><strong>AI-Powered Chat:</strong> Ask questions and get contextual responses from the knowledge base</li>
+              <li><strong>Entity Exploration:</strong> Click nodes to discover relationships between companies, skills, and projects</li>
+              <li><strong>Source Switching:</strong> Toggle between Cognee AI, curated data, and raw Supabase views</li>
             </ul>
           </div>
           
           <div className="space-y-2">
-            <h3 className="font-semibold text-gray-900">Try asking questions like:</h3>
+            <h3 className="font-semibold text-gray-900">💬 Try Advanced Queries:</h3>
             <ul className="list-disc pl-5 space-y-2 text-gray-700">
-              <li>What are your main technical skills?</li>
-              <li>Tell me about your most recent work experience</li>
-              <li>What projects have you worked on?</li>
+              <li>"How did you implement microservices architecture at MoveUp AI?"</li>
+              <li>"What's your experience with AI/ML model deployment and LLMOps?"</li>
+              <li>"Explain your data engineering pipeline architecture using Spark and Airflow"</li>
+              <li>"How do you approach scalable cloud infrastructure design?"</li>
             </ul>
           </div>
         </div>
