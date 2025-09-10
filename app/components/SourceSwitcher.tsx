@@ -9,7 +9,7 @@ type Health = { ok: boolean; okStatus?: boolean; status?: number; json?: boolean
 const SOURCES = {
   curated: { label: 'Curated JSON', url: '/api/graph' },
   supabase: { label: 'Supabase (Raw)', url: '/api/graph/supabase/raw?limit=400' },
-  cognee: { label: 'Cognee (Refined)', url: '/api/graph/cognee?limit=2000', devOnly: true },
+  cognee: { label: 'Cognee (Refined)', url: '/api/graph/cognee?limit=2000' },
   langextractDb: { label: 'LangExtract (DB)', url: '/api/graph/langextract/db', devOnly: true },
   langextract: { label: 'LangExtract (Curated)', url: '/api/graph/langextract/curated' },
   graphdb: { label: 'GraphDB (SPARQL)', url: '/api/graph/graphdb?limit=2000', devOnly: true },
@@ -28,7 +28,7 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
     !window.location.hostname.includes('.local');
 
   const availableSources = Object.entries(SOURCES).filter(([_, config]) =>
-    !isProduction || !config.devOnly
+    !isProduction || !(config as any).devOnly
   ).map(([key]) => key as keyof typeof SOURCES);
 
   // Debug log for production filtering
