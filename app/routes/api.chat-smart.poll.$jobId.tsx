@@ -1,7 +1,7 @@
 import { json, type LoaderFunction } from "@remix-run/node";
 
 // This route handles polling for async job results
-// URL format: /api/chat-smart/poll/[jobId]
+// URL format: /api.chat-smart.poll.[jobId]
 
 interface ChatJob {
   id: string;
@@ -11,13 +11,11 @@ interface ChatJob {
   createdAt: number;
 }
 
-// Import the same jobs map from the main chat-smart route
-// In a real app, this would be in a shared module or database
+// Use global variable to share jobs between routes
 declare global {
   var chatJobs: Map<string, ChatJob> | undefined;
 }
 
-// Use global variable to share jobs between routes
 if (!global.chatJobs) {
   global.chatJobs = new Map();
 }

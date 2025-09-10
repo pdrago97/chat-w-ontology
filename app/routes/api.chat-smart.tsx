@@ -145,7 +145,7 @@ export const action: ActionFunction = async ({ request }) => {
           direction: 'incoming',
           isAsync: true,
           jobId: jobId,
-          pollUrl: `/api/chat-smart/poll/${jobId}`
+          pollUrl: `/api.chat-smart.poll.${jobId}`
         });
       } else {
         throw error; // Re-throw non-timeout errors
