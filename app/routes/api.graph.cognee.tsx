@@ -15,17 +15,6 @@ function supabaseHeaders() {
 
 export const loader: LoaderFunction = async ({ request }) => {
   try {
-    // In production, return empty graph if Cognee tables don't exist
-    const isProduction = process.env.NODE_ENV === 'production';
-    if (isProduction) {
-      return json({
-        nodes: [],
-        edges: [],
-        lastUpdated: new Date().toISOString(),
-        _info: "Cognee service not available in production"
-      });
-    }
-
     const { searchParams } = new URL(request.url);
     const limit = Math.max(1, Math.min(5000, Number(searchParams.get("limit") || 2000)));
 
