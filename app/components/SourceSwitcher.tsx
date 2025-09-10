@@ -7,6 +7,7 @@ interface Props {
 type Health = { ok: boolean; okStatus?: boolean; status?: number; json?: boolean; sample?: any; error?: string };
 
 const SOURCES = {
+  optimized: { label: 'Optimized Story', url: '/api/graph/optimized' },
   curated: { label: 'Curated JSON', url: '/api/graph' },
   supabase: { label: 'Supabase (Raw)', url: '/api/graph/supabase/raw?limit=400' },
   cognee: { label: 'Cognee (Refined)', url: '/api/graph/cognee?limit=2000' },
@@ -36,13 +37,15 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
     console.log(`🔧 SourceSwitcher: isProduction=${isProduction}, availableSources:`, availableSources);
   }, [isProduction, availableSources]);
 
-  // Prioritize Cognee first, then other sources
-  const ORDER: (keyof typeof SOURCES)[] = ['cognee', 'curated', 'supabase', 'langextractDb', 'langextract', 'graphdb'].filter(
+  // Prioritize Optimized first, then other sources
+  const ORDER: (keyof typeof SOURCES)[] = ['optimized', 'cognee', 'curated', 'supabase', 'langextractDb', 'langextract', 'graphdb'].filter(
     key => availableSources.includes(key)
   );
 
-  // Default to Cognee if available, otherwise first available source
-  const defaultSource = availableSources.includes('cognee') ? 'cognee' : (availableSources[0] || 'curated');
+  // Default to Optimized if available, otherwise Cognee, otherwise first available source
+  const defaultSource = availableSources.includes('optimized') ? 'optimized' :
+                        availableSources.includes('cognee') ? 'cognee' :
+                        (availableSources[0] || 'curated');
   const [current, setCurrent] = useState<keyof typeof SOURCES>(defaultSource);
 
   async function parseJsonSafe(res: Response) {
