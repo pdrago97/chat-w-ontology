@@ -4,6 +4,9 @@ node_modules
 /build
 .env
 
+/tools/venv
+tools/.venv
+
 .vercel
 .env*.local
 .venv

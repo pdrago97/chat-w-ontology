@@ -44,9 +44,17 @@ async function sparql(endpoint: string, query: string) {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
+  // In production, return empty graph if GraphDB isn't configured
+  const isProduction = process.env.NODE_ENV === 'production';
   const endpoint = process.env.GRAPHDB_ENDPOINT_URL;
-  if (!endpoint) {
-    return json({ error: "GRAPHDB_ENDPOINT_URL not configured" }, { status: 501 });
+
+  if (!endpoint || isProduction) {
+    return json({
+      nodes: [],
+      edges: [],
+      lastUpdated: new Date().toISOString(),
+      _info: "GraphDB service not available in production"
+    });
   }
 
   const { searchParams } = new URL(request.url);

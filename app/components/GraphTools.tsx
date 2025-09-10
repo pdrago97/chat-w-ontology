@@ -53,7 +53,7 @@ const GraphTools: React.FC<Props> = ({ onGraphUpdate }) => {
           <div className="flex gap-2 mb-3 flex-wrap">
             <button className="px-2 py-1 text-sm bg-gray-100 rounded hover:bg-gray-200" onClick={() => loadFrom("/api.graph")}>Curated JSON</button>
             <button className="px-2 py-1 text-sm bg-gray-100 rounded hover:bg-gray-200" onClick={() => loadFrom("/api.graph.supabase.raw?limit=400")}>Supabase (Raw)</button>
-            <button className="px-2 py-1 text-sm bg-gray-100 rounded hover:bg-gray-200" onClick={() => loadFrom("/api.graph.cognee")}>Cognee (Refined)</button>
+            <button className="px-2 py-1 text-sm bg-gray-100 rounded hover:bg-gray-200" onClick={() => loadFrom("/api.graph.langextract.curated")}>LangExtract (Curated)</button>
           </div>
 
           <div className="text-xs text-gray-500">Manual refresh only. Switch sources any time.</div>

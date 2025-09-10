@@ -9,10 +9,10 @@ type Health = { ok: boolean; okStatus?: boolean; status?: number; json?: boolean
 const SOURCES = {
   curated: { label: 'Curated JSON', url: '/api/graph' },
   supabase: { label: 'Supabase (Raw)', url: '/api/graph/supabase/raw?limit=400' },
-  cognee: { label: 'Cognee (Refined)', url: '/api/graph/cognee?limit=2000' },
-  langextractDb: { label: 'LangExtract (DB)', url: '/api/graph/langextract/db' },
+  cognee: { label: 'Cognee (Refined)', url: '/api/graph/cognee?limit=2000', devOnly: true },
+  langextractDb: { label: 'LangExtract (DB)', url: '/api/graph/langextract/db', devOnly: true },
   langextract: { label: 'LangExtract (Curated)', url: '/api/graph/langextract/curated' },
-  graphdb: { label: 'GraphDB (SPARQL)', url: '/api/graph/graphdb?limit=2000' },
+  graphdb: { label: 'GraphDB (SPARQL)', url: '/api/graph/graphdb?limit=2000', devOnly: true },
 } as const;
 
 
@@ -21,8 +21,29 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   const [health, setHealth] = useState<Record<string, Health>>({});
 
 
-  const ORDER: (keyof typeof SOURCES)[] = ['cognee', 'curated', 'supabase', 'langextractDb', 'langextract', 'graphdb'];
-  const [current, setCurrent] = useState<keyof typeof SOURCES>('cognee');
+  // Filter out dev-only sources in production
+  const isProduction = typeof window !== 'undefined' &&
+    !window.location.hostname.includes('localhost') &&
+    !window.location.hostname.includes('127.0.0.1') &&
+    !window.location.hostname.includes('.local');
+
+  const availableSources = Object.entries(SOURCES).filter(([_, config]) =>
+    !isProduction || !config.devOnly
+  ).map(([key]) => key as keyof typeof SOURCES);
+
+  // Debug log for production filtering
+  React.useEffect(() => {
+    console.log(`🔧 SourceSwitcher: isProduction=${isProduction}, availableSources:`, availableSources);
+  }, [isProduction, availableSources]);
+
+  // Prioritize Cognee first, then other sources
+  const ORDER: (keyof typeof SOURCES)[] = ['cognee', 'curated', 'supabase', 'langextractDb', 'langextract', 'graphdb'].filter(
+    key => availableSources.includes(key)
+  );
+
+  // Default to Cognee if available, otherwise first available source
+  const defaultSource = availableSources.includes('cognee') ? 'cognee' : (availableSources[0] || 'curated');
+  const [current, setCurrent] = useState<keyof typeof SOURCES>(defaultSource);
 
   async function parseJsonSafe(res: Response) {
     try {
@@ -142,14 +163,13 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   }
 
   // Keep buttons enabled; we validate live and show tooltips, but do not block selection
-  const disabled = useMemo(() => ({
-    curated: busy,
-    supabase: busy,
-    cognee: busy,
-    langextractDb: busy,
-    langextract: busy,
-    graphdb: busy,
-  }), [busy]);
+  const disabled = useMemo(() => {
+    const result: Record<string, boolean> = {};
+    availableSources.forEach(source => {
+      result[source] = busy;
+    });
+    return result;
+  }, [busy, availableSources]);
 
   const counts = (key: keyof typeof SOURCES) => {
     const h = health[key];
@@ -179,17 +199,19 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   const btnClass = colorClass(current, true);
 
   return (
-    <button
-      aria-label={`Source: ${SOURCES[current].label}`}
-      title={`Click to switch source — current: ${SOURCES[current].label}`}
-      className={btnClass}
-      disabled={disabled[current]}
-      onClick={handleClick}
-      style={{ zIndex: 10001, display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-    >
-      <span>{SOURCES[current].label}</span>
-      <span className="ml-1 text-[10px] opacity-80">{counts(current)}</span>
-    </button>
+    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+      <button
+        aria-label={`Source: ${SOURCES[current].label}`}
+        title={`Click to switch source — current: ${SOURCES[current].label}`}
+        className={btnClass}
+        disabled={disabled[current]}
+        onClick={handleClick}
+        style={{ zIndex: 10001, display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+      >
+        <span>{SOURCES[current].label}</span>
+        <span className="ml-1 text-[10px] opacity-80">{counts(current)}</span>
+      </button>
+    </div>
   );
 };
 

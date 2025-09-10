@@ -25,7 +25,8 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose }) => {
     <div 
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 p-4 overflow-y-auto"
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center p-4 overflow-y-auto"
+      style={{ zIndex: 99999 }}
       onClick={handleBackdropClick}
       onKeyDown={(e: React.KeyboardEvent) => {
         if (e.key === 'Escape') {
@@ -40,10 +41,12 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose }) => {
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
         tabIndex={0}
+        style={{ zIndex: 100000 }}
       >
-        <button 
+        <button
           onClick={handleCloseClick}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 p-2 z-10"
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 p-2"
+          style={{ zIndex: 100001 }}
         >
           ✕
         </button>
