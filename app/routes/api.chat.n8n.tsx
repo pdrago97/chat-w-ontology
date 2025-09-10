@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { json, type ActionFunction } from "@remix-run/node";
 
 // Proxies chat requests to the provided n8n webhook. Minimal, adaptable.
@@ -97,4 +96,9 @@ export const action: ActionFunction = async ({ request }) => {
     return json({ error: "Chat webhook failed" }, { status: 500 });
   }
 };
+
+// Default export required for Remix route recognition
+export default function ChatN8NRoute() {
+  return null;
+}
 
