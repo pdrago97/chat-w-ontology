@@ -20,7 +20,7 @@ export const action: ActionFunction = async ({ request }) => {
     console.log('Production Debug - API Key present:', !!process.env.N8N_API_KEY);
     console.log('Production Debug - API Key length:', process.env.N8N_API_KEY?.length || 0);
 
-
+    const startTime = Date.now();
 
     // Optional authentication headers for n8n webhook (single-env friendly)
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
@@ -51,12 +51,11 @@ export const action: ActionFunction = async ({ request }) => {
       headers['Authorization'] = `Basic ${b64}`;
     }
 
-    // Create AbortController for timeout (Vercel Hobby plan has 10s limit - maximize it!)
+    // Create AbortController for timeout (Vercel Hobby plan has 10s limit - be conservative)
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 9800); // 9.8 seconds - maximum safe timeout for Vercel Hobby
+    const timeoutId = setTimeout(() => controller.abort(), 8500); // 8.5 seconds - conservative timeout
 
     console.log(`[N8N] Starting request to: ${webhookUrl}`);
-    const startTime = Date.now();
 
     const res = await fetch(webhookUrl, {
       method: 'POST',
@@ -83,11 +82,12 @@ export const action: ActionFunction = async ({ request }) => {
     console.log(`[N8N] Response received:`, { reply: reply?.substring(0, 100) + '...' });
     return json({ response: reply, ok: res.ok, status: res.status });
   } catch (err: any) {
-    console.error("/api.chat.n8n error:", err);
+    const endTime = Date.now();
+    console.error(`[N8N] Error after ${endTime - startTime}ms:`, err.name, err.message);
 
     if (err.name === 'AbortError') {
       return json({
-        response: "I'm still processing your question about Pedro's experience. The AI system is analyzing the knowledge base to provide you with the most accurate and comprehensive answer. Please wait a moment and try asking again, or feel free to ask a different question in the meantime.",
+        response: "⏱️ The AI is taking longer than usual to process your question. This happens with complex queries that require deep analysis of Pedro's professional background. Please try asking again - the system will respond faster on retry, or try a more specific question.",
         ok: false,
         status: 408
       }, { status: 200 }); // Return 200 so frontend can display the message
