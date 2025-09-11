@@ -31,9 +31,12 @@ export const action: ActionFunction = async ({ request }) => {
     const { message, language = 'en' }: ChatRequest = await request.json();
 
     // Call n8n webhook with the message
-    // Create AbortController for timeout (Vercel Hobby plan has 10s limit - maximize it!)
+    // Create AbortController for timeout
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 9800); // 9.8 seconds - maximum safe timeout for Vercel Hobby
+    // Use longer timeout for local development, shorter for production (Vercel 10s limit)
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL;
+    const timeoutMs = isProduction ? 9800 : 55000; // 55s for local (N8N can take up to 60s), 9.8s for Vercel
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
     const webhookResponse = await fetch(N8N_WEBHOOK_URL, {
       method: 'POST',
