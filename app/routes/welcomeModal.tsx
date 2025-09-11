@@ -105,12 +105,13 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
         
-        <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 items-start">
           <a
             href="/assets/resume.pdf"
             download="Pedro Reichow - Resume.pdf"
-            className="flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors font-medium h-10 min-h-[2.5rem] flex-shrink-0"
+            className="inline-flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors font-medium text-sm leading-5 h-10 w-auto"
             onClick={(e) => e.stopPropagation()}
+            style={{ height: '40px', minHeight: '40px', maxHeight: '40px' }}
           >
             <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -119,7 +120,8 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose }) => {
           </a>
           <button
             onClick={handleCloseClick}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors h-10 min-h-[2.5rem] flex-shrink-0"
+            className="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm leading-5 h-10 w-auto"
+            style={{ height: '40px', minHeight: '40px', maxHeight: '40px' }}
           >
             Got it!
           </button>
