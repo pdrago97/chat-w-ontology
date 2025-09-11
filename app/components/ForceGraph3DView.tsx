@@ -192,7 +192,7 @@ export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
       fg
         .graphData(fgData)
         .nodeId('id')
-        .nodeLabel((n: any) => n.label || n.id)
+        .nodeLabel(() => '') // Disable default tooltip, we'll use custom HTML tooltip
         .nodeVal((n: any) => 2 + Math.max(1, (n?._degree || 0)))
         .nodeColor((n: any) => {
           const base = colorByType(n.type);
@@ -227,7 +227,7 @@ export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
         .linkDirectionalParticles(0)
         .linkWidth(0.8)
         .backgroundColor('#f8fafc') // slate-50
-        .onNodeHover((n: any) => {
+        .onNodeHover((n: any, prevNode: any) => {
           setHoverNodeId(n ? String(n.id) : null);
 
           // Clear existing timeout
@@ -236,18 +236,27 @@ export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
             setHoverTimeout(null);
           }
 
+          // Remove existing tooltip
+          const existingTooltip = document.querySelector('.custom-node-tooltip');
+          if (existingTooltip) {
+            existingTooltip.remove();
+          }
+
+          // Only update hover state, don't show modal on hover
           if (n) {
-            // Set a timeout to show the modal after hovering for 500ms
-            const timeout = setTimeout(() => {
-              setHoveredNode(n);
-              showInfoModal(n);
-            }, 500);
-            setHoverTimeout(timeout);
+            setHoveredNode(n);
+            // Show custom HTML tooltip
+            showCustomTooltip(n);
           } else {
             setHoveredNode(null);
           }
         })
         .onNodeClick((n: any) => {
+          // Show modal on click
+          if (n) {
+            showInfoModal(n);
+          }
+
           // Keep click functionality for camera movement
           const dist = 80;
           const pos = n.x && n.y && n.z ? { x: n.x, y: n.y, z: n.z } : { x: 0, y: 0, z: 0 };
@@ -355,6 +364,327 @@ export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
       <div ref={containerRef} style={{ position: 'absolute', inset: 0, background: '#f5f7fa' }} />
     </div>
   );
+}
+
+// Create rich tooltip content for hover
+function createRichTooltip(node: any): string {
+  if (!node) return 'Unknown Node';
+
+  const title = node.label || node.name || node.id || 'Unknown';
+  const type = node.type || '';
+
+  // Build tooltip lines based on node type and available data
+  const lines = [title];
+
+  // Add type if available
+  if (type && type !== 'Unknown') {
+    lines.push(`[${type}]`);
+  }
+
+  // Add type-specific information
+  switch (type) {
+    case 'Person':
+      if (node.title) lines.push(node.title);
+      if (node.location) lines.push(node.location);
+      break;
+
+    case 'Experience':
+      if (node.title) lines.push(node.title);
+      if (node.years) lines.push(node.years);
+      if (node.location) lines.push(node.location);
+      break;
+
+    case 'Education':
+      if (node.degree) lines.push(node.degree);
+      if (node.years) lines.push(node.years);
+      if (node.location) lines.push(node.location);
+      break;
+
+    case 'Skills':
+      if (node.category) lines.push(`Category: ${node.category}`);
+      if (node.proficiency) lines.push(`Level: ${node.proficiency}`);
+      if (node.items && Array.isArray(node.items)) {
+        lines.push(`Skills: ${node.items.slice(0, 3).join(', ')}${node.items.length > 3 ? '...' : ''}`);
+      }
+      break;
+
+    case 'Project':
+      if (node.company) lines.push(`at ${node.company}`);
+      if (node.year) lines.push(node.year);
+      if (node.technologies && Array.isArray(node.technologies)) {
+        lines.push(`Tech: ${node.technologies.slice(0, 2).join(', ')}${node.technologies.length > 2 ? '...' : ''}`);
+      }
+      break;
+
+    default:
+      // For other types, show common fields
+      if (node.description && node.description.length < 60) {
+        lines.push(node.description);
+      }
+      if (node.summary && node.summary.length < 60) {
+        lines.push(node.summary);
+      }
+      if (node.years) lines.push(node.years);
+      if (node.location) lines.push(node.location);
+      break;
+  }
+
+  // Limit to 4 lines to avoid overcrowding
+  return lines.slice(0, 4);
+}
+
+// Show custom HTML tooltip with ALL node data
+function showCustomTooltip(node: any) {
+  // Remove any existing tooltip
+  const existingTooltip = document.querySelector('.custom-node-tooltip');
+  if (existingTooltip) {
+    existingTooltip.remove();
+  }
+
+  // Create tooltip element
+  const tooltip = document.createElement('div');
+  tooltip.className = 'custom-node-tooltip';
+
+  // Create comprehensive HTML content showing all data
+  const title = node.label || node.name || node.id || 'Unknown';
+  const type = node.type || '';
+
+  // Helper function to format field names
+  const formatFieldName = (key: string): string => {
+    return key
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/^./, str => str.toUpperCase())
+      .replace(/_/g, ' ');
+  };
+
+  // Helper function to format values
+  const formatValue = (value: any): string => {
+    if (Array.isArray(value)) {
+      return value.join(', ');
+    }
+    if (typeof value === 'object' && value !== null) {
+      return JSON.stringify(value, null, 2);
+    }
+    return String(value);
+  };
+
+  // Fields to skip (internal/positioning data)
+  const skipFields = new Set([
+    'id', 'label', 'name', 'type', 'x', 'y', 'z', 'vx', 'vy', 'vz',
+    'fx', 'fy', 'fz', 'index', '__indexColor', '__threeObj', '__lineObj',
+    '_degree'
+  ]);
+
+  // Get all available fields
+  const allFields = Object.entries(node)
+    .filter(([key, value]) => !skipFields.has(key) && value !== null && value !== undefined && value !== '')
+    .map(([key, value]) => ({
+      key,
+      value,
+      formatted: formatValue(value)
+    }));
+
+  // Build HTML content
+  let content = `
+    <div class="tooltip-header">
+      <div class="tooltip-title">${title}</div>
+      ${type ? `<div class="tooltip-subtitle">[${type}]</div>` : ''}
+    </div>
+  `;
+
+  if (allFields.length > 0) {
+    content += `<div class="tooltip-details">`;
+
+    allFields.forEach(({ key, value, formatted }) => {
+      const fieldName = formatFieldName(key);
+
+      // Handle long text fields differently
+      if (typeof value === 'string' && value.length > 100) {
+        content += `
+          <div class="tooltip-field">
+            <div class="tooltip-field-name">${fieldName}:</div>
+            <div class="tooltip-field-value tooltip-long-text">${formatted}</div>
+          </div>
+        `;
+      } else if (Array.isArray(value) && value.length > 3) {
+        // Handle long arrays
+        content += `
+          <div class="tooltip-field">
+            <div class="tooltip-field-name">${fieldName}:</div>
+            <div class="tooltip-field-value tooltip-array">${formatted}</div>
+          </div>
+        `;
+      } else {
+        content += `
+          <div class="tooltip-field">
+            <span class="tooltip-field-name">${fieldName}:</span>
+            <span class="tooltip-field-value">${formatted}</span>
+          </div>
+        `;
+      }
+    });
+
+    content += `</div>`;
+  }
+
+  tooltip.innerHTML = content;
+
+  // Add styles
+  const style = document.createElement('style');
+  style.textContent = `
+    .custom-node-tooltip {
+      position: fixed;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #1f2937;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+      max-width: 350px;
+      max-height: 400px;
+      overflow-y: auto;
+      pointer-events: none;
+      transform: translateY(-100%) translateY(-8px);
+    }
+
+    .tooltip-header {
+      margin-bottom: 10px;
+    }
+
+    .tooltip-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: #111827;
+      margin-bottom: 2px;
+      word-wrap: break-word;
+    }
+
+    .tooltip-subtitle {
+      font-size: 11px;
+      color: #6b7280;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tooltip-details {
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      padding-top: 10px;
+    }
+
+    .tooltip-field {
+      margin-bottom: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .tooltip-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .tooltip-field-name {
+      font-weight: 500;
+      font-size: 11px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .tooltip-field-value {
+      color: #374151;
+      font-size: 12px;
+      word-wrap: break-word;
+      line-height: 1.3;
+    }
+
+    .tooltip-long-text {
+      max-height: 60px;
+      overflow-y: auto;
+      padding: 4px 8px;
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: 4px;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .tooltip-array {
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    /* Custom scrollbar for tooltip */
+    .custom-node-tooltip::-webkit-scrollbar,
+    .tooltip-long-text::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .custom-node-tooltip::-webkit-scrollbar-track,
+    .tooltip-long-text::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 2px;
+    }
+
+    .custom-node-tooltip::-webkit-scrollbar-thumb,
+    .tooltip-long-text::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
+    }
+
+    .custom-node-tooltip::-webkit-scrollbar-thumb:hover,
+    .tooltip-long-text::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(tooltip);
+
+  // Position tooltip near mouse cursor
+  const updateTooltipPosition = (e: MouseEvent) => {
+    const x = e.clientX;
+    const y = e.clientY;
+
+    // Position tooltip above and slightly to the right of cursor
+    tooltip.style.left = `${x + 10}px`;
+    tooltip.style.top = `${y - 10}px`;
+  };
+
+  // Add mouse move listener to update position
+  const mouseMoveHandler = (e: MouseEvent) => updateTooltipPosition(e);
+  document.addEventListener('mousemove', mouseMoveHandler);
+
+  // Add click listener to remove tooltip when clicking anywhere
+  const clickHandler = (e: MouseEvent) => {
+    // Remove tooltip on any click to avoid interfering with UI
+    tooltip.remove();
+  };
+  document.addEventListener('click', clickHandler, { once: true });
+
+  // Clean up on tooltip removal
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.removedNodes.forEach((node) => {
+        if (node === tooltip) {
+          document.removeEventListener('mousemove', mouseMoveHandler);
+          document.removeEventListener('click', clickHandler);
+          style.remove();
+          observer.disconnect();
+        }
+      });
+    });
+  });
+  observer.observe(document.body, { childList: true });
+
+  // Set initial position (use current mouse position if available)
+  const rect = document.body.getBoundingClientRect();
+  tooltip.style.left = `${rect.width / 2}px`;
+  tooltip.style.top = `${rect.height / 2}px`;
 }
 
 // Minimal modal for node details
