@@ -7,19 +7,21 @@ interface Props {
 type Health = { ok: boolean; okStatus?: boolean; status?: number; json?: boolean; sample?: any; error?: string };
 
 const SOURCES = {
-  optimized: { label: 'Optimized Story', url: '/api/graph/optimized' },
-  curated: { label: 'Curated JSON', url: '/api/graph' },
-  supabase: { label: 'Supabase (Raw)', url: '/api/graph/supabase/raw?limit=400' },
-  cognee: { label: 'Cognee (Refined)', url: '/api/graph/cognee?limit=2000' },
-  langextractDb: { label: 'LangExtract (DB)', url: '/api/graph/langextract/db', devOnly: true },
-  langextract: { label: 'LangExtract (Curated)', url: '/api/graph/langextract/curated' },
-  graphdb: { label: 'GraphDB (SPARQL)', url: '/api/graph/graphdb?limit=2000', devOnly: true },
+  optimized: { label: 'Knowledge Graph (Optimized)', url: '/api/graph/optimized' },
+  adminGraph: { label: 'Admin Graph', url: '/api/graph' },
+  curated: { label: 'knowledge-graph.json', url: '/api/graph' },
+  supabase: { label: 'Supabase Raw Data', url: '/api/graph/supabase/raw?limit=400' },
+  cognee: { label: 'Cognee Processed', url: '/api/graph/cognee?limit=2000' },
+  langextractDb: { label: 'LangExtract DB', url: '/api/graph/langextract/db', devOnly: true },
+  langextract: { label: 'LangExtract Curated', url: '/api/graph/langextract/curated' },
+  graphdb: { label: 'GraphDB SPARQL', url: '/api/graph/graphdb?limit=2000', devOnly: true },
 } as const;
 
 
 const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   const [busy, setBusy] = useState(false);
   const [health, setHealth] = useState<Record<string, Health>>({});
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
 
   // Filter out dev-only sources in production
@@ -38,7 +40,7 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   }, [isProduction, availableSources]);
 
   // Prioritize Optimized first, then other sources
-  const ORDER: (keyof typeof SOURCES)[] = ['optimized', 'cognee', 'curated', 'supabase', 'langextractDb', 'langextract', 'graphdb'].filter(
+  const ORDER: (keyof typeof SOURCES)[] = ['optimized', 'adminGraph', 'cognee', 'curated', 'supabase', 'langextractDb', 'langextract', 'graphdb'].filter(
     key => availableSources.includes(key)
   );
 
@@ -162,13 +164,7 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
     }
   }
 
-  async function handleClick() {
-    const original = current;
-    const target = nextKey(current);
-    setCurrent(target); // optimistic label change
-    const ok = await loadFrom(target);
-    if (!ok) setCurrent(original);
-  }
+
 
   // Keep buttons enabled; we validate live and show tooltips, but do not block selection
   const disabled = useMemo(() => {
@@ -199,26 +195,62 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
     return `${common} bg-white text-slate-900 border-slate-300 hover:bg-slate-50`;
   };
 
-  const nextKey = (k: keyof typeof SOURCES): keyof typeof SOURCES => {
-    const idx = ORDER.indexOf(k);
-    return ORDER[(idx + 1) % ORDER.length];
-  };
+
 
   const btnClass = colorClass(current, true);
 
   return (
-    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+    <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
       <button
         aria-label={`Source: ${SOURCES[current].label}`}
-        title={`Click to switch source — current: ${SOURCES[current].label}`}
-        className={btnClass}
-        disabled={disabled[current]}
-        onClick={handleClick}
+        title={`Click to select source — current: ${SOURCES[current].label}`}
+        className={`${btnClass} relative`}
+        disabled={busy}
+        onClick={() => setDropdownOpen(!dropdownOpen)}
         style={{ zIndex: 10001, display: 'inline-flex', alignItems: 'center', gap: '6px' }}
       >
         <span>{SOURCES[current].label}</span>
         <span className="ml-1 text-[10px] opacity-80">{counts(current)}</span>
+        <svg className="ml-1 w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+        </svg>
       </button>
+
+      {dropdownOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-10000"
+            onClick={() => setDropdownOpen(false)}
+          />
+          <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-slate-300 rounded-md shadow-lg z-10002 max-h-64 overflow-y-auto">
+            {availableSources.map((key) => {
+              const source = SOURCES[key];
+              const isSelected = key === current;
+              const h = health[key];
+              const counts = h?.sample?.counts ? `${h.sample.counts.nodes || '?'}•${h.sample.counts.edges || '?'}` : '';
+
+              return (
+                <div
+                  key={key}
+                  className={`px-3 py-1.5 text-sm cursor-pointer hover:bg-slate-50 border-b border-slate-100 last:border-b-0 ${
+                    isSelected ? 'bg-slate-100 font-medium text-slate-900' : 'text-slate-700'
+                  }`}
+                  onClick={async () => {
+                    setDropdownOpen(false);
+                    if (key !== current) {
+                      setCurrent(key);
+                      const ok = await loadFrom(key);
+                      if (!ok) setCurrent(current);
+                    }
+                  }}
+                >
+                  {source.label} {counts && <span className="text-xs text-slate-500 float-right">{counts}</span>}
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 };

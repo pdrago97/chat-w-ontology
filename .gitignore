@@ -6,7 +6,8 @@ node_modules
 
 /tools/venv
 tools/.venv
-
+venv
+.venv
 .vercel
 .env*.local
 .venv

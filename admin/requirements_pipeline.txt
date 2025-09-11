@@ -1,0 +1,29 @@
+# Unified Graph Curation Pipeline Requirements
+# Install with: pip install -r requirements_pipeline.txt
+
+# Core Streamlit framework
+streamlit>=1.28.0
+
+# Document processing
+PyPDF2>=3.0.0
+python-docx>=0.8.11
+
+# AI/ML libraries
+openai>=1.0.0
+langextract>=0.1.0
+
+# Data processing
+pandas>=1.5.0
+numpy>=1.24.0
+
+# Text processing
+difflib2>=0.1.0
+
+# Optional: Enhanced PDF processing
+pdfplumber>=0.9.0
+
+# Optional: Advanced NLP
+spacy>=3.6.0
+
+# Development/debugging
+python-dotenv>=1.0.0

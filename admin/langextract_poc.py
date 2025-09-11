@@ -254,7 +254,7 @@ st.caption("Upload resume PDF(s), extract entities/relations with LangExtract, p
 
 # Sidebar controls
 model = st.sidebar.text_input("Model ID", value=os.environ.get("LANGEXTRACT_MODEL_ID", "gpt-4o-mini"))
-openai_key_ui = st.sidebar.text_input("OpenAI API Key (optional)", type="password", value(os.environ.get("OPENAI_API_KEY", "")))
+openai_key_ui = st.sidebar.text_input("OpenAI API Key (optional)", type="password", value=os.environ.get("OPENAI_API_KEY", ""))
 service_url_ui = st.sidebar.text_input("Service URL", value=os.environ.get("LANGEXTRACT_SERVICE_URL", "http://127.0.0.1:8788"))
 show_jsonld = st.sidebar.checkbox("Show JSON‑LD preview", value=True)
 

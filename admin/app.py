@@ -32,17 +32,60 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 # Create tabs
-tab1, tab2, tab3, tab4 = st.tabs(["💬 Chat Curation v2", "📄 PDF Generation", "📝 Manual Editor", "🛠️ Flexible Editor"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["🚀 Unified Pipeline", "💬 Chat Curation v2", "📄 PDF Generation", "📝 Manual Editor", "🛠️ Flexible Editor"])
 
 current_graph = load_current_graph()
 
 with tab1:
+    st.header("🚀 Unified Graph Curation Pipeline")
+    st.write("**Complete workflow**: Document Upload → AI Extraction → Conversational Curation → Conflict Resolution → Preview & Apply")
+
+    st.info("🎯 **New Streamlined Experience**: This pipeline consolidates all graph curation tools into one guided workflow.")
+
+    col1, col2 = st.columns([2, 1])
+    with col1:
+        st.write("**Features:**")
+        st.write("• 📄 Multi-format document upload (PDF, DOCX, TXT)")
+        st.write("• 🤖 AI-powered entity extraction with LangExtract")
+        st.write("• 💬 Conversational refinement with intelligent agent")
+        st.write("• 🔧 Automatic conflict detection and resolution")
+        st.write("• 👁️ Preview changes before applying")
+        st.write("• ✅ Validation and backup system")
+
+    with col2:
+        if st.button("🚀 Launch Pipeline", type="primary", use_container_width=True):
+            # Launch the unified pipeline in a new process or redirect
+            st.info("💡 Run the pipeline with: `streamlit run admin/unified_graph_pipeline.py --server.port 8511`")
+            st.code("cd admin && streamlit run unified_graph_pipeline.py --server.port 8511", language="bash")
+
+    st.divider()
+
+    st.subheader("📊 Current Graph Overview")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("Total Nodes", len(current_graph.get("nodes", [])))
+    with col2:
+        st.metric("Total Edges", len(current_graph.get("edges", [])))
+    with col3:
+        node_types = {}
+        for node in current_graph.get("nodes", []):
+            node_type = node.get("type", "Unknown")
+            node_types[node_type] = node_types.get(node_type, 0) + 1
+        st.metric("Node Types", len(node_types))
+
+    # Show node type breakdown
+    if node_types:
+        st.write("**Node Type Distribution:**")
+        for node_type, count in sorted(node_types.items(), key=lambda x: x[1], reverse=True):
+            st.write(f"• **{node_type}**: {count}")
+
+with tab2:
     from chat_curation_v2 import render_chat_curation_v2
     render_chat_curation_v2()
 
 
 
-with tab2:
+with tab3:
     st.header("📄 PDF-based Graph Generation")
     st.write("Upload multiple PDF files and generate comprehensive knowledge graph")
 
@@ -139,11 +182,11 @@ with tab2:
 
     st.info("💡 Upload multiple PDF files for comprehensive graph generation, or use the fallback option to process existing PDF content.")
 
-with tab3:
+with tab4:
     st.header("📝 Manual Graph Editor")
     render_graph_editor(current_graph)
 
-with tab4:
+with tab5:
     from flexible_graph_editor import render_flexible_graph_editor
     render_flexible_graph_editor()
 

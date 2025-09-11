@@ -65,6 +65,8 @@ export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
   const [error, setError] = useState<string | null>(null);
   const [size, setSize] = useState<{w:number;h:number}>({ w: 0, h: 0 });
   const [counts, setCounts] = useState<{nodes:number;links:number}>({ nodes: 0, links: 0 });
+  const [hoveredNode, setHoveredNode] = useState<any>(null);
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const { language } = useLanguage();
 
   // Prepare data with flexible mapping
@@ -156,6 +158,36 @@ export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
       fgRef.current = fg;
       setCounts({ nodes: fgData.nodes.length, links: fgData.links.length });
 
+      // Create text sprite for node labels
+      const createTextSprite = (text: string, color: string = '#000000') => {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d')!;
+        const fontSize = 48;
+        context.font = `${fontSize}px Arial, sans-serif`;
+        context.fillStyle = color;
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+
+        // Measure text and set canvas size
+        const metrics = context.measureText(text);
+        canvas.width = Math.max(metrics.width + 20, 100);
+        canvas.height = fontSize + 20;
+
+        // Redraw text after canvas resize
+        context.font = `${fontSize}px Arial, sans-serif`;
+        context.fillStyle = color;
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText(text, canvas.width / 2, canvas.height / 2);
+
+        const texture = new THREE.CanvasTexture(canvas);
+        const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
+        const sprite = new THREE.Sprite(spriteMaterial);
+        sprite.scale.set(canvas.width / 10, canvas.height / 10, 1);
+
+        return sprite;
+      };
+
       // node visuals
       fg
         .graphData(fgData)
@@ -169,18 +201,59 @@ export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
           }
           return base;
         })
+        .nodeThreeObject((n: any) => {
+          // Create a group to hold both the sphere and text
+          const group = new THREE.Group();
+
+          // Create the sphere (node)
+          const sphereGeometry = new THREE.SphereGeometry(2 + Math.max(1, (n?._degree || 0)));
+          const sphereMaterial = new THREE.MeshLambertMaterial({
+            color: colorByType(n.type),
+            transparent: true,
+            opacity: 0.8
+          });
+          const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+          group.add(sphere);
+
+          // Create text sprite for the label
+          const label = n.label || n.name || n.id || 'Node';
+          const textSprite = createTextSprite(label, '#333333');
+          textSprite.position.set(0, 8, 0); // Position above the node
+          group.add(textSprite);
+
+          return group;
+        })
         .linkColor(() => 'rgba(71, 85, 105, 0.65)') // slate-600
         .linkDirectionalParticles(0)
         .linkWidth(0.8)
         .backgroundColor('#f8fafc') // slate-50
-        .onNodeHover((n: any) => setHoverNodeId(n ? String(n.id) : null))
+        .onNodeHover((n: any) => {
+          setHoverNodeId(n ? String(n.id) : null);
+
+          // Clear existing timeout
+          if (hoverTimeout) {
+            clearTimeout(hoverTimeout);
+            setHoverTimeout(null);
+          }
+
+          if (n) {
+            // Set a timeout to show the modal after hovering for 500ms
+            const timeout = setTimeout(() => {
+              setHoveredNode(n);
+              showInfoModal(n);
+            }, 500);
+            setHoverTimeout(timeout);
+          } else {
+            setHoveredNode(null);
+          }
+        })
         .onNodeClick((n: any) => {
+          // Keep click functionality for camera movement
           const dist = 80;
           const pos = n.x && n.y && n.z ? { x: n.x, y: n.y, z: n.z } : { x: 0, y: 0, z: 0 };
           const length = Math.hypot(pos.x, pos.y, pos.z) || 1;
           const newPos = { x: pos.x * (1 + dist / length), y: pos.y * (1 + dist / length), z: pos.z * (1 + dist / length) };
           fg.cameraPosition(newPos, pos, 800);
-          showInfoModal(n);
         });
 
       // Add bloom post-processing like the example
@@ -236,6 +309,10 @@ export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
     return () => {
       cancelled = true;
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (hoverTimeout) {
+        clearTimeout(hoverTimeout);
+        setHoverTimeout(null);
+      }
       if ((fgRef.current as any)?._destructor) {
         (fgRef.current as any)._destructor();
       }
@@ -337,6 +414,30 @@ function renderNodeHtml(data: any) {
     .filter(([k, v]) => !shouldSkip(k) && v !== null && v !== undefined)
     .map(([k, v]) => `<div style="margin:6px 0"><strong>${k}:</strong> ${typeof v === 'object' ? JSON.stringify(v) : v}</div>`)
     .join('');
-  return `<h3 style="margin:0 0 8px 0">${title}</h3>${type}${kv || '<div>No fields</div>'}`;
+
+  // Add download button for Person type nodes
+  const downloadButton = data.type && data.type.toLowerCase() === 'person' ?
+    `<div style="margin-top:16px;padding-top:16px;border-top:1px solid #e5e7eb;">
+      <button
+        onclick="downloadResume()"
+        style="background:#22c55e;color:white;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,0.1);"
+        onmouseover="this.style.background='#16a34a'"
+        onmouseout="this.style.background='#22c55e'"
+      >
+        📄 Download Resume PDF
+      </button>
+    </div>` : '';
+
+  return `<h3 style="margin:0 0 8px 0">${title}</h3>${type}${kv || '<div>No fields</div>'}${downloadButton}`;
 }
+
+// Global function for downloading resume
+(window as any).downloadResume = function() {
+  const link = document.createElement('a');
+  link.href = '/Pedro Reichow - Resume.pdf';
+  link.download = 'Pedro Reichow - Resume.pdf';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
