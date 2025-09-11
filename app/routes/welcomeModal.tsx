@@ -41,7 +41,7 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose }) => {
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
         tabIndex={0}
-        style={{ zIndex: 100000 }}
+        style={{ zIndex: 100000, height: 'fit-content' }}
       >
         <button
           onClick={handleCloseClick}
@@ -64,7 +64,7 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose }) => {
           </h2>
         </div>
         
-        <div className="space-y-4 text-sm sm:text-base mt-14">
+        <div className="space-y-4 text-sm sm:text-base mt-6">
           <p className="text-gray-700 leading-relaxed">
             <strong>Advanced AI-Powered Knowledge Graph Platform</strong> featuring a sophisticated 3D visualization of my professional journey. This system demonstrates cutting-edge engineering with <strong>Cognee AI</strong> for automated knowledge extraction, generating 626+ interconnected entities and 1000+ relationships from unstructured resume data.
           </p>
@@ -105,7 +105,7 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
         
-        <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 items-start">
+        <div className="mt-4 flex flex-col sm:flex-row gap-3 sm:gap-4 items-start">
           <a
             href="/assets/resume.pdf"
             download="Pedro Reichow - Resume.pdf"
