@@ -39,6 +39,13 @@ export const action: ActionFunction = async ({ request }) => {
 
     console.log(`[N8N] Processing request: ${message.substring(0, 50)}...`);
 
+    // Create AbortController for timeout
+    const controller = new AbortController();
+    // Use longer timeout for local development, shorter for production (Vercel 10s limit)
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL;
+    const timeoutMs = isProduction ? 9800 : 55000; // 55s for local (N8N can take up to 60s), 9.8s for Vercel
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
     const res = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
@@ -46,8 +53,11 @@ export const action: ActionFunction = async ({ request }) => {
         'User-Agent': 'Remix-Chat-Improved/1.0'
       },
       body: JSON.stringify({ message, language, history }),
+      signal: controller.signal,
       keepalive: true
     });
+
+    clearTimeout(timeoutId);
 
     const endTime = Date.now();
     console.log(`[N8N] Request completed in ${endTime - startTime}ms`);
