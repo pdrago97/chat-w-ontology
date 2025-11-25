@@ -15,3 +15,11 @@ tools/.env.langextract.local
 workers/langextract-proxy/.dev.vars
 
 .venv312
+
+# Python / Backend
+__pycache__/
+*.pyc
+backend/.cognee_system/
+backend/.cognee_cache/
+.pytest_cache/
+

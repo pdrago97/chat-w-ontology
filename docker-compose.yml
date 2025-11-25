@@ -1,0 +1,35 @@
+services:
+  backend:
+    build: ./backend
+    container_name: cognee-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - COGNEE_ENV=local
+    volumes:
+      - ./backend:/app
+      - ./.env:/app/.env
+      - ./public:/app/public
+      - cognee_system:/usr/local/lib/python3.11/site-packages/cognee/.cognee_system
+      - cognee_cache:/usr/local/lib/python3.11/site-packages/cognee/.cognee_cache
+    restart: unless-stopped
+
+  frontend:
+    build: .
+    container_name: ontology-chat-frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - BACKEND_URL=http://backend:8000
+      - NODE_ENV=production
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  cognee_system:
+  cognee_cache:
