@@ -1,0 +1,620 @@
+{
+  "nodes": [
+    {
+      "id": "Pedro Reichow",
+      "type": "Person",
+      "title": "Senior AI Engineer • Data Specialist • Technology Entrepreneur",
+      "location": "Santa Catarina, Brazil",
+      "contact": {
+        "email": "pedro_reichow@hotmail.com",
+        "linkedin": "https://www.linkedin.com/in/pedroreichow",
+        "portfolio": "https://talk-to-my-resume.vercel.app/"
+      },
+      "summary": "Experienced AI Engineer and Data Specialist with 5+ years building production-ready artificial intelligence solutions and scalable data systems. Expert in computer vision, large language model integration, and high-performance data pipelines processing 500GB+ daily."
+    },
+    {
+      "id": "Capgemini Brasil",
+      "type": "Experience",
+      "title": "Senior Solutions Consultant (Solutions Consultant IV)",
+      "years": "Jan 2025 - Present",
+      "duration": "8+ months",
+      "location": "Brazil",
+      "description": "Lead enterprise-level AI and data engineering solutions for large-scale clients, specializing in knowledge graphs, fraud detection, and generative AI implementations",
+      "responsibilities": [
+        "Architected microservices in Python for serving agentic AI systems with RAG capabilities",
+        "Built sophisticated ontologies using Protégé and RDF/OWL, integrated with Anzo Analytics",
+        "Developed advanced graph navigation interfaces using TypeScript and Cytoscape.js for fraud detection",
+        "Collaborate with 50+ engineers and consultants on enterprise-scale data engineering optimizations"
+      ],
+      "achievements": [
+        "Led enterprise AI implementations for large-scale clients",
+        "Delivered complex business intelligence and fraud risk analysis solutions",
+        "Managed teams of 50+ engineers and consultants"
+      ],
+      "technologies": [
+        "Python",
+        "RAG",
+        "Protégé",
+        "RDF/OWL",
+        "Anzo Analytics",
+        "TypeScript",
+        "Cytoscape.js",
+        "Microservices",
+        "Fraud Detection",
+        "Knowledge Graphs"
+      ]
+    },
+    {
+      "id": "MoveUp AI",
+      "type": "Experience",
+      "title": "Founding Engineer & Technical Co-founder",
+      "years": "Jan 2025 - Present",
+      "duration": "8+ months",
+      "location": "San Francisco, CA - Remote",
+      "description": "Co-founding AI-powered workforce intelligence platform serving 15+ enterprise teams with integrated Slack workflows, knowledge graphs, and team analytics",
+      "responsibilities": [
+        "Architected TypeScript MCP (Model Context Protocol) servers enabling seamless AI agent communication",
+        "Built sophisticated Python agents using Agno, LangChain, and LangGraph for intelligent team insights",
+        "Implemented Zep memory systems and Supabase vector databases integrated with commercial LLMs",
+        "Developed comprehensive Slack integrations and N8N automation workflows"
+      ],
+      "achievements": [
+        "Serving 15+ enterprise teams with AI-powered workforce intelligence",
+        "Built unified AI agent interface accessing 6+ enterprise tools",
+        "50%+ reduction in information gathering time through natural language queries"
+      ],
+      "technologies": [
+        "TypeScript",
+        "MCP Protocol",
+        "Python",
+        "Agno",
+        "LangChain",
+        "LangGraph",
+        "Zep",
+        "Supabase",
+        "OpenAI",
+        "Anthropic",
+        "Slack API",
+        "N8N",
+        "Vector Databases"
+      ]
+    },
+    {
+      "id": "Trinnix AI Lab",
+      "type": "Experience",
+      "title": "AI Engineer & Computer Vision Specialist",
+      "years": "Feb 2024 - Nov 2024",
+      "duration": "10 months",
+      "location": "Brazil",
+      "description": "Led development of AI solutions focusing on computer vision and LLM integration for agricultural technology and precision farming applications",
+      "responsibilities": [
+        "Developed and deployed agricultural monitoring systems using YoloX and Roboflow",
+        "Built ontological knowledge graphs using Neo4j for agricultural data analysis",
+        "Integrated multiple LLMs (GPT-4o, Claude 3.5, Gemini 1.5) with advanced prompt engineering",
+        "Built scalable TypeScript platforms with tRPC and Node.js for geospatial analysis"
+      ],
+      "achievements": [
+        "Achieved >95% accuracy in plant disease detection and livestock behavior analysis",
+        "Successfully integrated multiple LLMs for automated reporting and intelligent alerting"
+      ],
+      "technologies": [
+        "YoloX",
+        "Roboflow",
+        "Neo4j",
+        "GPT-4o",
+        "Claude 3.5",
+        "Gemini 1.5",
+        "TypeScript",
+        "tRPC",
+        "Node.js",
+        "Computer Vision",
+        "Prompt Engineering"
+      ]
+    },
+    {
+      "id": "Simulated Reality",
+      "type": "Experience",
+      "title": "Senior Full Stack Engineer & VR Developer",
+      "years": "Feb 2023 - Feb 2024",
+      "duration": "1 year",
+      "location": "Westlake Village, California, USA",
+      "description": "Led development of virtual reality applications for healthcare training and wellness, ensuring HIPAA and FedRAMP compliance",
+      "responsibilities": [
+        "Built VR training platforms using Node.js and React with 3D physics simulations",
+        "Created comprehensive analytics dashboards with Chart.js for training effectiveness measurement",
+        "Implemented scalable Azure App Service architecture with Red Hat OpenShift containers",
+        "Built asynchronous processing pipelines using Redis and RabbitMQ"
+      ],
+      "achievements": [
+        "Successfully implemented HIPAA and FedRAMP compliance protocols",
+        "Processed large 3D video files and Unity/Unreal game updates through queue system"
+      ],
+      "technologies": [
+        "Node.js",
+        "React",
+        "VR Development",
+        "Chart.js",
+        "Azure App Service",
+        "Red Hat OpenShift",
+        "Redis",
+        "RabbitMQ",
+        "Unity",
+        "Unreal",
+        "HIPAA",
+        "FedRAMP"
+      ]
+    },
+    {
+      "id": "QI Tech",
+      "type": "Experience",
+      "title": "Senior Data Engineer",
+      "years": "Mar 2022 - Feb 2023",
+      "duration": "1 year",
+      "location": "São Paulo, Brazil",
+      "description": "Led development of large-scale financial data processing systems and machine learning models for banking-as-a-service platform",
+      "responsibilities": [
+        "Architected PySpark pipelines processing 500GB+ daily financial transactions on Google Cloud Dataproc",
+        "Implemented Spark Structured Streaming for live transaction analysis with windowed aggregations",
+        "Designed Delta Lake implementation on GCS with ACID transactions and time travel capabilities",
+        "Built high-performance gRPC microservices processing 100,000+ daily requests"
+      ],
+      "achievements": [
+        "Achieved 40% performance improvement in data processing",
+        "Processed 500GB+ daily financial transactions",
+        "Built microservices with 150ms average latency handling 100,000+ daily requests"
+      ],
+      "technologies": [
+        "PySpark",
+        "Google Cloud Dataproc",
+        "Spark Structured Streaming",
+        "Delta Lake",
+        "GCS",
+        "gRPC",
+        "Microservices",
+        "Apache Airflow",
+        "BigQuery"
+      ]
+    },
+    {
+      "id": "PecSmart",
+      "type": "Experience",
+      "title": "Backend Developer & IoT Specialist",
+      "years": "Dec 2021 - Feb 2022",
+      "duration": "3 months",
+      "location": "Florianópolis, Santa Catarina, Brazil",
+      "description": "Developed IoT systems for precision livestock monitoring using embedded devices and machine learning",
+      "responsibilities": [
+        "Built sensor integration systems on Raspberry Pi for livestock monitoring",
+        "Created end-to-end processing pipelines for real-time livestock health prediction",
+        "Implemented distributed solutions using BalenaCLI for remote device management"
+      ],
+      "technologies": [
+        "Raspberry Pi",
+        "IoT",
+        "BalenaCLI",
+        "Python",
+        "Django",
+        "Edge Computing",
+        "Sensor Integration"
+      ]
+    },
+    {
+      "id": "Fontes Promotora",
+      "type": "Experience",
+      "title": "Backend Developer",
+      "years": "May 2021 - Oct 2021",
+      "duration": "6 months",
+      "location": "Florianópolis, Santa Catarina, Brazil",
+      "description": "Developed web scraping, automation, and data processing solutions for enterprise clients",
+      "responsibilities": [
+        "Built robust data extraction systems using Scrapy and Requests for enterprise data collection",
+        "Created scalable APIs using FastAPI, Flask, and Django REST Framework",
+        "Implemented advanced data processing pipelines with Pandas for business intelligence",
+        "Delivered complete applications using ReactJS frontend with cloud deployment on AWS"
+      ],
+      "technologies": [
+        "Scrapy",
+        "Requests",
+        "FastAPI",
+        "Flask",
+        "Django REST",
+        "Pandas",
+        "ReactJS",
+        "AWS",
+        "Docker"
+      ]
+    },
+    {
+      "id": "Estácio University",
+      "type": "Education",
+      "degree": "Bachelor of Science in Systems Analysis and Development",
+      "years": "2021 - 2023",
+      "location": "Brazil"
+    },
+    {
+      "id": "UFSC",
+      "type": "Education",
+      "degree": "Bachelor of Science in Electrical Engineering",
+      "years": "2017 - 2023",
+      "location": "Federal University of Santa Catarina (UFSC)"
+    },
+    {
+      "id": "IFSC",
+      "type": "Education",
+      "degree": "Technical Diploma in Electrotechnics",
+      "years": "2012 - 2016",
+      "location": "Federal Institute of Santa Catarina (IFSC)"
+    },
+    {
+      "id": "AI & Machine Learning Skills",
+      "type": "Skills",
+      "category": "Artificial Intelligence & Machine Learning",
+      "items": [
+        "Computer Vision (YoloX, OpenCV)",
+        "Large Language Models (GPT-4o, Claude, Gemini)",
+        "Natural Language Processing",
+        "Prompt Engineering",
+        "Neural Networks",
+        "Deep Learning Frameworks",
+        "RAG (Retrieval Augmented Generation)",
+        "Agentic AI Systems"
+      ],
+      "proficiency": "Expert"
+    },
+    {
+      "id": "Data Engineering Skills",
+      "type": "Skills",
+      "category": "Data Engineering & Big Data",
+      "items": [
+        "Apache Spark (PySpark, Spark SQL, Streaming)",
+        "Apache Airflow",
+        "Delta Lake",
+        "Data Lake/Warehouse Architecture",
+        "ETL/ELT Pipelines",
+        "Data Modeling",
+        "Performance Optimization",
+        "Real-time Processing",
+        "Distributed Computing"
+      ],
+      "proficiency": "Expert"
+    },
+    {
+      "id": "Programming Skills",
+      "type": "Skills",
+      "category": "Programming & Development",
+      "items": [
+        "Python",
+        "TypeScript",
+        "JavaScript",
+        "SQL",
+        "Node.js",
+        "React",
+        "Django",
+        "FastAPI",
+        "Flask",
+        "GraphQL",
+        "gRPC",
+        "Microservices Architecture"
+      ],
+      "proficiency": "Expert"
+    },
+    {
+      "id": "Cloud & Infrastructure Skills",
+      "type": "Skills",
+      "category": "Cloud & Infrastructure",
+      "items": [
+        "AWS (S3, Redshift, Glue, Lambda, EMR)",
+        "Google Cloud Platform (BigQuery, Dataproc, Composer)",
+        "Azure (App Service, Blob Storage)",
+        "Docker",
+        "Kubernetes",
+        "Infrastructure-as-Code",
+        "CI/CD",
+        "Red Hat OpenShift"
+      ],
+      "proficiency": "Expert"
+    },
+    {
+      "id": "Specialized Technologies Skills",
+      "type": "Skills",
+      "category": "Specialized Technologies",
+      "items": [
+        "Knowledge Graphs (Neo4j, Protégé, RDF/OWL)",
+        "IoT Systems (Raspberry Pi)",
+        "Virtual Reality Development",
+        "Geospatial Analysis",
+        "Real-time Systems",
+        "Edge Computing",
+        "Fraud Detection Systems"
+      ],
+      "proficiency": "Advanced"
+    },
+    {
+      "id": "Agricultural AI Project",
+      "type": "Project",
+      "name": "Agricultural Monitoring Systems",
+      "description": "Computer vision models for agricultural map analysis with >95% accuracy in disease detection",
+      "technologies": [
+        "YoloX",
+        "Roboflow",
+        "Computer Vision",
+        "Neo4j",
+        "LLMs"
+      ],
+      "company": "Trinnix AI Lab",
+      "impact": "95%+ accuracy in plant disease detection and livestock behavior analysis"
+    },
+    {
+      "id": "Financial Data Platform Project",
+      "type": "Project",
+      "name": "Banking-as-a-Service Platform",
+      "description": "Large-scale financial data processing systems with machine learning models",
+      "technologies": [
+        "PySpark",
+        "Google Cloud",
+        "Delta Lake",
+        "gRPC",
+        "Microservices"
+      ],
+      "company": "QI Tech",
+      "impact": "500GB+ daily processing with 40% performance improvement, 100,000+ daily requests with 150ms latency"
+    },
+    {
+      "id": "VR Healthcare Project",
+      "type": "Project",
+      "name": "Healthcare VR Training Platform",
+      "description": "Virtual reality applications for healthcare training and wellness with compliance standards",
+      "technologies": [
+        "Node.js",
+        "React",
+        "VR",
+        "Azure",
+        "Redis",
+        "RabbitMQ"
+      ],
+      "company": "Simulated Reality",
+      "impact": "HIPAA and FedRAMP compliant VR training solutions"
+    },
+    {
+      "id": "Workforce Intelligence Project",
+      "type": "Project",
+      "name": "AI-Powered Workforce Intelligence Platform",
+      "description": "Enterprise AI platform with integrated Slack workflows and team analytics",
+      "technologies": [
+        "TypeScript",
+        "MCP Protocol",
+        "Python",
+        "LangChain",
+        "Supabase",
+        "Vector Databases"
+      ],
+      "company": "MoveUp AI",
+      "impact": "Serving 15+ enterprise teams, 50%+ reduction in information gathering time"
+    },
+    {
+      "id": "Enterprise AI Solutions Project",
+      "type": "Project",
+      "name": "Enterprise Knowledge Graphs & Fraud Detection",
+      "description": "Sophisticated ontologies and graph navigation interfaces for business intelligence",
+      "technologies": [
+        "Protégé",
+        "RDF/OWL",
+        "Anzo Analytics",
+        "Cytoscape.js",
+        "TypeScript"
+      ],
+      "company": "Capgemini Brasil",
+      "impact": "Complex business intelligence and fraud risk analysis for large-scale clients"
+    }
+  ],
+  "edges": [
+    {
+      "source": "Pedro Reichow",
+      "target": "Capgemini Brasil",
+      "relation": "WORKS_AT",
+      "current": true
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "MoveUp AI",
+      "relation": "FOUNDED",
+      "current": true,
+      "role": "Technical Co-founder"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Trinnix AI Lab",
+      "relation": "WORKED_AT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Simulated Reality",
+      "relation": "WORKED_AT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "QI Tech",
+      "relation": "WORKED_AT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "PecSmart",
+      "relation": "WORKED_AT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Fontes Promotora",
+      "relation": "WORKED_AT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Estácio University",
+      "relation": "GRADUATED_FROM"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "UFSC",
+      "relation": "STUDIED_AT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "IFSC",
+      "relation": "GRADUATED_FROM"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "AI & Machine Learning Skills",
+      "relation": "HAS_EXPERTISE",
+      "level": "Expert"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Data Engineering Skills",
+      "relation": "HAS_EXPERTISE",
+      "level": "Expert"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Programming Skills",
+      "relation": "HAS_EXPERTISE",
+      "level": "Expert"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Cloud & Infrastructure Skills",
+      "relation": "HAS_EXPERTISE",
+      "level": "Expert"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Specialized Technologies Skills",
+      "relation": "HAS_EXPERTISE",
+      "level": "Advanced"
+    },
+    {
+      "source": "Trinnix AI Lab",
+      "target": "Agricultural AI Project",
+      "relation": "HOSTED_PROJECT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Agricultural AI Project",
+      "relation": "LED_PROJECT"
+    },
+    {
+      "source": "QI Tech",
+      "target": "Financial Data Platform Project",
+      "relation": "HOSTED_PROJECT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Financial Data Platform Project",
+      "relation": "ARCHITECTED"
+    },
+    {
+      "source": "Simulated Reality",
+      "target": "VR Healthcare Project",
+      "relation": "HOSTED_PROJECT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "VR Healthcare Project",
+      "relation": "LED_DEVELOPMENT"
+    },
+    {
+      "source": "MoveUp AI",
+      "target": "Workforce Intelligence Project",
+      "relation": "HOSTED_PROJECT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Workforce Intelligence Project",
+      "relation": "CO_FOUNDED"
+    },
+    {
+      "source": "Capgemini Brasil",
+      "target": "Enterprise AI Solutions Project",
+      "relation": "HOSTED_PROJECT"
+    },
+    {
+      "source": "Pedro Reichow",
+      "target": "Enterprise AI Solutions Project",
+      "relation": "LEADS"
+    },
+    {
+      "source": "Agricultural AI Project",
+      "target": "AI & Machine Learning Skills",
+      "relation": "UTILIZED_SKILLS"
+    },
+    {
+      "source": "Financial Data Platform Project",
+      "target": "Data Engineering Skills",
+      "relation": "UTILIZED_SKILLS"
+    },
+    {
+      "source": "VR Healthcare Project",
+      "target": "Programming Skills",
+      "relation": "UTILIZED_SKILLS"
+    },
+    {
+      "source": "VR Healthcare Project",
+      "target": "Cloud & Infrastructure Skills",
+      "relation": "UTILIZED_SKILLS"
+    },
+    {
+      "source": "Workforce Intelligence Project",
+      "target": "AI & Machine Learning Skills",
+      "relation": "UTILIZED_SKILLS"
+    },
+    {
+      "source": "Workforce Intelligence Project",
+      "target": "Programming Skills",
+      "relation": "UTILIZED_SKILLS"
+    },
+    {
+      "source": "Enterprise AI Solutions Project",
+      "target": "Specialized Technologies Skills",
+      "relation": "UTILIZED_SKILLS"
+    },
+    {
+      "source": "Enterprise AI Solutions Project",
+      "target": "AI & Machine Learning Skills",
+      "relation": "UTILIZED_SKILLS"
+    },
+    {
+      "source": "Capgemini Brasil",
+      "target": "AI & Machine Learning Skills",
+      "relation": "REQUIRES_SKILLS"
+    },
+    {
+      "source": "Capgemini Brasil",
+      "target": "Specialized Technologies Skills",
+      "relation": "REQUIRES_SKILLS"
+    },
+    {
+      "source": "MoveUp AI",
+      "target": "AI & Machine Learning Skills",
+      "relation": "REQUIRES_SKILLS"
+    },
+    {
+      "source": "Trinnix AI Lab",
+      "target": "AI & Machine Learning Skills",
+      "relation": "REQUIRES_SKILLS"
+    },
+    {
+      "source": "QI Tech",
+      "target": "Data Engineering Skills",
+      "relation": "REQUIRES_SKILLS"
+    },
+    {
+      "source": "Simulated Reality",
+      "target": "Programming Skills",
+      "relation": "REQUIRES_SKILLS"
+    },
+    {
+      "source": "Simulated Reality",
+      "target": "Cloud & Infrastructure Skills",
+      "relation": "REQUIRES_SKILLS"
+    }
+  ]
+}

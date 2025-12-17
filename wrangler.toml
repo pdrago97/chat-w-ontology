@@ -1,0 +1,26 @@
+name = "chat-w-ontology"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "./build/client"
+
+[vars]
+NODE_ENV = "production"
+GRAPH_SOURCE = "lx-curated"
+
+# Environment variables will be set via wrangler secret put
+# N8N_WEBHOOK_URL
+# N8N_AUTH_KEY
+# OPENAI_API_KEY
+# ANTHROPIC_API_KEY
+# N8N_CHAT_WEBHOOK_URL
+# N8N_GRAPH_BUILDER_WEBHOOK_URL
+# LX_CF_BASE_URL
+# COGNEE_SERVICE_URL
+# SUPABASE_URL
+# SUPABASE_ANON_KEY
+
+[observability]
+enabled = true
+
+# Custom domain will be configured via Cloudflare Pages dashboard
+# after initial deployment

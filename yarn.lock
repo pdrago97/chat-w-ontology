@@ -766,14 +766,27 @@
     vite-node "^1.6.0"
     ws "^7.5.10"
 
-"@remix-run/express@2.15.0":
-  version "2.15.0"
-  resolved "https://registry.npmjs.org/@remix-run/express/-/express-2.15.0.tgz"
-  integrity sha512-MyCXVmbrxeo06zJECuaOUQ01x13zEkmMUkFzaHESWMBxnTPGbtKF4Gb0iF6TrMFiSeaKptUU4JBvLeHooPOryA==
+"@remix-run/express@2.17.2":
+  version "2.17.2"
+  resolved "https://registry.npmjs.org/@remix-run/express/-/express-2.17.2.tgz"
+  integrity sha512-N3Rp4xuXWlUUboQxc8ATqvYiFX2DoX0cavWIsQ0pMKPyG1WOSO+MfuOFgHa7kf/ksRteSfDtzgJSgTH6Fv96AA==
   dependencies:
-    "@remix-run/node" "2.15.0"
+    "@remix-run/node" "2.17.2"
 
-"@remix-run/node@^2.15.0", "@remix-run/node@2.15.0":
+"@remix-run/node@^2.17.2", "@remix-run/node@2.17.2":
+  version "2.17.2"
+  resolved "https://registry.npmjs.org/@remix-run/node/-/node-2.17.2.tgz"
+  integrity sha512-NHBIQI1Fap3ZmyHMPVsMcma6mvi2oUunvTzOcuWHHkkx1LrvWRzQTlaWqEnqCp/ff5PfX5r0eBEPrSkC8zrHRQ==
+  dependencies:
+    "@remix-run/server-runtime" "2.17.2"
+    "@remix-run/web-fetch" "^4.4.2"
+    "@web3-storage/multipart-parser" "^1.0.0"
+    cookie-signature "^1.1.0"
+    source-map-support "^0.5.21"
+    stream-slice "^0.1.2"
+    undici "^6.21.2"
+
+"@remix-run/node@2.15.0":
   version "2.15.0"
   resolved "https://registry.npmjs.org/@remix-run/node/-/node-2.15.0.tgz"
   integrity sha512-tWbR7pQ6gwj+MkGf6WVIYnjgfGfpdU8EOIa6xsCIRlrm0p3BtMz4jA3GvBWEpOuEnN5MV7CarVzhduaRzkZ0SQ==
@@ -802,18 +815,23 @@
   resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.21.0.tgz"
   integrity sha512-xfSkCAchbdG5PnbrKqFWwia4Bi61nH+wm8wLEqfHDyp7Y3dZzgqS2itV8i4gAq9pC2HsTpwyBC6Ds8VHZ96JlA==
 
-"@remix-run/serve@^2.15.0":
-  version "2.15.0"
-  resolved "https://registry.npmjs.org/@remix-run/serve/-/serve-2.15.0.tgz"
-  integrity sha512-Me78FMVKtBRUi6i2PKfP6t7coHHEjDl5IIV7loMm3HCMzc1iP35bRjv3F7nKcTknaiK/Zhsic1lrKt9jevAb/A==
+"@remix-run/router@1.23.0":
+  version "1.23.0"
+  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.23.0.tgz"
+  integrity sha512-O3rHJzAQKamUz1fvE0Qaw0xSFqsA/yafi2iqeE0pvdFtCO1viYx8QL6f3Ln/aCCTLxs68SLf0KPM9eSeM8yBnA==
+
+"@remix-run/serve@^2.17.2":
+  version "2.17.2"
+  resolved "https://registry.npmjs.org/@remix-run/serve/-/serve-2.17.2.tgz"
+  integrity sha512-awbabibbFnfRMkW6UryRB5BF1G23pZvL8kT5ibWyI9rXnHwcOsKsHGm7ctdTKRDza7PSIH47uqMBCaCWPWNUsg==
   dependencies:
-    "@remix-run/express" "2.15.0"
-    "@remix-run/node" "2.15.0"
+    "@remix-run/express" "2.17.2"
+    "@remix-run/node" "2.17.2"
     chokidar "^3.5.3"
-    compression "^1.7.4"
+    compression "^1.8.1"
     express "^4.20.0"
     get-port "5.1.1"
-    morgan "^1.10.0"
+    morgan "^1.10.1"
     source-map-support "^0.5.21"
 
 "@remix-run/server-runtime@2.15.0":
@@ -828,6 +846,19 @@
     set-cookie-parser "^2.4.8"
     source-map "^0.7.3"
     turbo-stream "2.4.0"
+
+"@remix-run/server-runtime@2.17.2":
+  version "2.17.2"
+  resolved "https://registry.npmjs.org/@remix-run/server-runtime/-/server-runtime-2.17.2.tgz"
+  integrity sha512-dTrAG1SgOLgz1DFBDsLHN0V34YqLsHEReVHYOI4UV/p+ALbn/BRQMw1MaUuqGXmX21ZTuCzzPegtTLNEOc8ixA==
+  dependencies:
+    "@remix-run/router" "1.23.0"
+    "@types/cookie" "^0.6.0"
+    "@web3-storage/multipart-parser" "^1.0.0"
+    cookie "^0.7.2"
+    set-cookie-parser "^2.4.8"
+    source-map "^0.7.3"
+    turbo-stream "2.4.1"
 
 "@remix-run/web-blob@^3.1.0":
   version "3.1.0"
@@ -1733,16 +1764,16 @@ compressible@~2.0.18:
   dependencies:
     mime-db ">= 1.43.0 < 2"
 
-compression@^1.7.4:
-  version "1.7.5"
-  resolved "https://registry.npmjs.org/compression/-/compression-1.7.5.tgz"
-  integrity sha512-bQJ0YRck5ak3LgtnpKkiabX5pNF7tMUh1BSy2ZBOTh0Dim0BUu6aPPwByIns6/A5Prh8PufSPerMDUklpzes2Q==
+compression@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.npmjs.org/compression/-/compression-1.8.1.tgz"
+  integrity sha512-9mAqGPHLakhCLeNyxPkK4xVo746zQ/czLH1Ky+vkitMnWfWZps8r0qXuwhwizagCRttsL4lfG4pIOvaWLpAP0w==
   dependencies:
     bytes "3.1.2"
     compressible "~2.0.18"
     debug "2.6.9"
     negotiator "~0.6.4"
-    on-headers "~1.0.2"
+    on-headers "~1.1.0"
     safe-buffer "5.2.1"
     vary "~1.1.2"
 
@@ -1794,6 +1825,11 @@ cookie@^0.6.0:
   version "0.6.0"
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.6.0.tgz"
   integrity sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==
+
+cookie@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.npmjs.org/cookie/-/cookie-0.7.2.tgz"
+  integrity sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==
 
 cookie@0.7.1:
   version "0.7.1"
@@ -4380,9 +4416,9 @@ micromatch@^4.0.4, micromatch@^4.0.8:
     picomatch "^2.3.1"
 
 "mime-db@>= 1.43.0 < 2":
-  version "1.53.0"
-  resolved "https://registry.npmjs.org/mime-db/-/mime-db-1.53.0.tgz"
-  integrity sha512-oHlN/w+3MQ3rba9rqFr6V/ypF10LSkdwUysQL7GkXoTgIWeV+tcXGA852TBxH+gsh8UWoyhR1hKcoMJTuWflpg==
+  version "1.54.0"
+  resolved "https://registry.npmjs.org/mime-db/-/mime-db-1.54.0.tgz"
+  integrity sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ==
 
 mime-db@1.52.0:
   version "1.52.0"
@@ -4517,16 +4553,16 @@ modern-ahocorasick@^1.0.0:
   resolved "https://registry.npmjs.org/modern-ahocorasick/-/modern-ahocorasick-1.1.0.tgz"
   integrity sha512-sEKPVl2rM+MNVkGQt3ChdmD8YsigmXdn5NifZn6jiwn9LRJpWm8F3guhaqrJT/JOat6pwpbXEk6kv+b9DMIjsQ==
 
-morgan@^1.10.0:
-  version "1.10.0"
-  resolved "https://registry.npmjs.org/morgan/-/morgan-1.10.0.tgz"
-  integrity sha512-AbegBVI4sh6El+1gNwvD5YIck7nSA36weD7xvIxG4in80j/UoK8AEGaWnnz8v1GxonMCltmlNs5ZKbGvl9b1XQ==
+morgan@^1.10.1:
+  version "1.10.1"
+  resolved "https://registry.npmjs.org/morgan/-/morgan-1.10.1.tgz"
+  integrity sha512-223dMRJtI/l25dJKWpgij2cMtywuG/WiUKXdvwfbhGKBhy1puASqXwFzmWZ7+K73vUPoR7SS2Qz2cI/g9MKw0A==
   dependencies:
     basic-auth "~2.0.1"
     debug "2.6.9"
     depd "~2.0.0"
     on-finished "~2.3.0"
-    on-headers "~1.0.2"
+    on-headers "~1.1.0"
 
 mri@^1.1.0:
   version "1.2.0"
@@ -4799,10 +4835,10 @@ on-finished@2.4.1:
   dependencies:
     ee-first "1.1.1"
 
-on-headers@~1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/on-headers/-/on-headers-1.0.2.tgz"
-  integrity sha512-pZAE+FJLoyITytdqK0U5s+FIpjN0JP3OzFi/u8Rx+EV5/W+JTWGXG8xFzevE7AjBfDqHv/8vL8qQsIhHnqRkrA==
+on-headers@~1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/on-headers/-/on-headers-1.1.0.tgz"
+  integrity sha512-737ZY3yNnXy37FHkQxPzt4UZ2UWPWiCZWLvFZ4fu5cueciegX0zGPnrlY6bwRg4FdQOe9YU8MkmJwGhoMybl8A==
 
 once@^1.3.0, once@^1.3.1, once@^1.4.0:
   version "1.4.0"
@@ -6278,6 +6314,11 @@ turbo-stream@2.4.0:
   resolved "https://registry.npmjs.org/turbo-stream/-/turbo-stream-2.4.0.tgz"
   integrity sha512-FHncC10WpBd2eOmGwpmQsWLDoK4cqsA/UT/GqNoaKOQnT8uzhtCbg3EoUDMvqpOSAI0S26mr0rkjzbOO6S3v1g==
 
+turbo-stream@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.npmjs.org/turbo-stream/-/turbo-stream-2.4.1.tgz"
+  integrity sha512-v8kOJXpG3WoTN/+at8vK7erSzo6nW6CIaeOvNOkHQVDajfz1ZVeSxCbc6tOH4hrGZW7VUCV0TOXd8CPzYnYkrw==
+
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
   resolved "https://registry.npmjs.org/type-check/-/type-check-0.4.0.tgz"
@@ -6373,10 +6414,10 @@ undici-types@~6.20.0:
   resolved "https://registry.npmjs.org/undici-types/-/undici-types-6.20.0.tgz"
   integrity sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==
 
-undici@^6.11.1:
-  version "6.21.0"
-  resolved "https://registry.npmjs.org/undici/-/undici-6.21.0.tgz"
-  integrity sha512-BUgJXc752Kou3oOIuU1i+yZZypyZRqNPW0vqoMPl8VaoalSfeR0D8/t4iAS3yirs79SSMTxTag+ZC86uswv+Cw==
+undici@^6.11.1, undici@^6.21.2:
+  version "6.22.0"
+  resolved "https://registry.npmjs.org/undici/-/undici-6.22.0.tgz"
+  integrity sha512-hU/10obOIu62MGYjdskASR3CUAiYaFTtC9Pa6vHyf//mAipSvSQg6od2CnJswq7fvzNS3zJhxoRkgNVaHurWKw==
 
 unified@^10.0.0:
   version "10.1.2"

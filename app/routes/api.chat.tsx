@@ -1,25 +1,193 @@
 import { json } from "@remix-run/node";
 import type { ActionFunction } from "@remix-run/node";
+import { generateContextualResponse } from "../data/knowledge-graph";
 
-// Using n8n webhook for RAG processing
+// Direct OpenAI integration for chat responses with Cognified Graph context
 
-// N8N webhook configuration
-const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || "https://n8n-moveup-u53084.vm.elestio.app/webhook/9ba11544-5c4e-4f91-818a-08a4ecb596c5";
-const N8N_AUTH_KEY = process.env.N8N_AUTH_KEY || "7f9e2a8b-4c1d-4e6f-9a3b-8d5c2e7f1a9c";
-
-
-interface Message {
-  message: string;
-  sender: "user" | "assistant";
-  direction: "incoming" | "outgoing";
-}
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 interface ChatRequest {
   message: string;
-  systemPrompt: string;
-  graphData: any;
-  conversationHistory: Message[];
   language?: 'en' | 'pt';
+  history?: Array<{ role: string; content: string }>;
+}
+
+// Cache for the cognified graph data
+let cachedCognifiedGraph: any = null;
+let cacheTimestamp: number = 0;
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+// Fetch the cognified graph data for rich context
+async function getCognifiedGraphContext(): Promise<any> {
+  const now = Date.now();
+
+  // Return cached data if still valid
+  if (cachedCognifiedGraph && (now - cacheTimestamp) < CACHE_TTL) {
+    return cachedCognifiedGraph;
+  }
+
+  try {
+    // Import the cognify function directly to avoid HTTP call
+    const [{ default: fs }, { default: path }] = await Promise.all([
+      import("fs/promises"),
+      import("path"),
+    ]);
+
+    const filePath = path.join(process.cwd(), "public", "knowledge-graph.json");
+    const fileContents = await fs.readFile(filePath, "utf-8");
+    const graphData = JSON.parse(fileContents);
+
+    // Process the graph to extract rich context
+    const context = processGraphForContext(graphData);
+    cachedCognifiedGraph = context;
+    cacheTimestamp = now;
+    return context;
+  } catch (error) {
+    console.error("Error loading cognified graph:", error);
+    return null;
+  }
+}
+
+// Process graph data into a rich context format for the LLM
+function processGraphForContext(graphData: any): any {
+  const nodes = graphData.nodes || [];
+  const edges = graphData.edges || [];
+
+  // Extract person info
+  const person = nodes.find((n: any) => n.type === 'Person' || n.id === 'Pedro Reichow');
+
+  // Extract experiences
+  const experiences = nodes.filter((n: any) => n.type === 'Experience');
+
+  // Extract education
+  const education = nodes.filter((n: any) => n.type === 'Education');
+
+  // Extract skills
+  const skills = nodes.filter((n: any) => n.type === 'Skills');
+
+  // Extract projects
+  const projects = nodes.filter((n: any) => n.type === 'Project');
+
+  // Extract technologies from all nodes
+  const technologies = new Set<string>();
+  nodes.forEach((n: any) => {
+    if (n.technologies) {
+      n.technologies.forEach((t: string) => technologies.add(t));
+    }
+  });
+
+  // Extract concepts and relationships
+  const relationships = edges.map((e: any) => ({
+    from: e.source,
+    to: e.target,
+    type: e.relation || 'RELATED_TO'
+  }));
+
+  return {
+    person,
+    experiences: experiences.map((e: any) => ({
+      company: e.id,
+      title: e.title,
+      years: e.years,
+      duration: e.duration,
+      location: e.location,
+      description: e.description,
+      responsibilities: e.responsibilities,
+      achievements: e.achievements,
+      technologies: e.technologies
+    })),
+    education: education.map((e: any) => ({
+      institution: e.id,
+      degree: e.degree,
+      field: e.field,
+      years: e.years,
+      description: e.description
+    })),
+    skills: skills.map((s: any) => ({
+      category: s.category || s.id,
+      items: s.items,
+      proficiency: s.proficiency
+    })),
+    projects: projects.map((p: any) => ({
+      name: p.id,
+      title: p.title,
+      description: p.description,
+      technologies: p.technologies,
+      impact: p.impact
+    })),
+    allTechnologies: Array.from(technologies),
+    relationships: relationships.slice(0, 50) // Limit to avoid token overflow
+  };
+}
+
+// Build the system prompt with cognified graph context
+function buildSystemPrompt(language: string, graphContext: any): string {
+  const contextJson = graphContext ? JSON.stringify(graphContext, null, 2) : 'No context available';
+
+  return `You are Pedro Reichow's professional AI assistant. You help recruiters and potential collaborators learn about Pedro's background, skills, and experience.
+
+IMPORTANT: Reply in ${language === 'pt' ? 'Portuguese (Brazil)' : 'English'}.
+
+Here is Pedro's professional information from his cognified knowledge graph:
+${contextJson}
+
+Guidelines:
+- Be friendly, professional, and enthusiastic about Pedro's qualifications
+- Only discuss Pedro's professional background, skills, projects, and experience
+- If asked about topics outside Pedro's professional scope, politely redirect to professional topics
+- Highlight Pedro's achievements and unique value proposition
+- Use the relationships in the graph to provide connected insights
+- Mention specific technologies and their usage context when relevant
+- Encourage the user to reach out to Pedro for opportunities
+- Keep responses concise but informative`;
+}
+
+// Call OpenAI API with cognified graph context
+async function callOpenAI(
+  message: string,
+  language: string,
+  history: Array<{ role: string; content: string }> = [],
+  graphContext: any
+): Promise<string> {
+  if (!OPENAI_API_KEY) {
+    console.warn('OpenAI API key not configured, using static fallback');
+    return generateContextualResponse(message);
+  }
+
+  const systemPrompt = buildSystemPrompt(language, graphContext);
+
+  // Build messages array with history (limit to last 10 for token management)
+  const messages = [
+    { role: 'system', content: systemPrompt },
+    ...history.slice(-10).map(h => ({
+      role: h.role as 'user' | 'assistant',
+      content: h.content
+    })),
+    { role: 'user', content: message }
+  ];
+
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${OPENAI_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o-mini',
+      messages,
+      temperature: 0.7,
+      max_tokens: 1000
+    })
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('OpenAI API error:', response.status, errorText);
+    throw new Error(`OpenAI API error: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.choices?.[0]?.message?.content || generateContextualResponse(message);
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -27,42 +195,28 @@ export const action: ActionFunction = async ({ request }) => {
     return json({ error: "Method not allowed" }, { status: 405 });
   }
 
+  // Parse the request body first so we can use it in fallback
+  let message = '';
+  let language = 'en';
+  let history: Array<{ role: string; content: string }> = [];
+
   try {
-    const { message, language = 'en' }: ChatRequest = await request.json();
+    const body: ChatRequest = await request.json();
+    message = body.message || '';
+    language = body.language || 'en';
+    history = body.history || [];
+  } catch (parseError) {
+    console.error('Error parsing request body:', parseError);
+    return json({
+      error: "Invalid request body"
+    }, { status: 400 });
+  }
 
-    // Call n8n webhook with the message
-    // Create AbortController for timeout
-    const controller = new AbortController();
-    // Use longer timeout for local development, shorter for production (Vercel 10s limit)
-    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL;
-    const timeoutMs = isProduction ? 9800 : 55000; // 55s for local (N8N can take up to 60s), 9.8s for Vercel
-    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    // Fetch the cognified graph context for rich AI responses
+    const graphContext = await getCognifiedGraphContext();
 
-    const webhookResponse = await fetch(N8N_WEBHOOK_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'RAG-Auth-Key': N8N_AUTH_KEY,
-        'Connection': 'keep-alive',
-        'Accept-Encoding': 'gzip, deflate, br'
-      },
-      body: JSON.stringify({
-        message,
-        language
-      }),
-      signal: controller.signal,
-      keepalive: true
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!webhookResponse.ok) {
-      const errorText = await webhookResponse.text();
-      console.error('N8N webhook error:', webhookResponse.status, errorText);
-      throw new Error(`N8N webhook failed: ${webhookResponse.status} - ${errorText}`);
-    }
-
-    const responseText = await webhookResponse.text();
+    const responseText = await callOpenAI(message, language, history, graphContext);
 
     return json({
       message: responseText,
@@ -73,15 +227,13 @@ export const action: ActionFunction = async ({ request }) => {
   } catch (error: any) {
     console.error('Error in chat endpoint:', error);
 
-    if (error.name === 'AbortError') {
-      return json({
-        error: "The request is taking longer than expected. The AI is processing your question - please try again in a moment."
-      }, { status: 408 });
-    }
-
+    // Fallback to static contextual response using the already-parsed message
+    const fallbackResponse = generateContextualResponse(message);
     return json({
-      error: "I apologize, but I encountered an error. Something is wrong with the application, please inform Pedro via LinkedIn https://www.linkedin.com/in/pedroreichow."
-    }, { status: 500 });
+      message: fallbackResponse,
+      sender: "assistant" as const,
+      direction: "incoming" as const
+    });
   }
 };
 

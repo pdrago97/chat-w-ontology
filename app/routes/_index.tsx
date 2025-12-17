@@ -8,27 +8,33 @@ import LanguageToggle from "../components/LanguageToggle";
 import { LanguageProvider } from "../contexts/LanguageContext";
 import WelcomeModal from "./welcomeModal";
 
+// Graph API endpoints
+const COGNEE_GRAPH_API = "/api/graph/cognee";
+const LANGEXTRACT_GRAPH_API = "/api/graph/langextract.db";
 
 export const loader: LoaderFunction = async ({ request }) => {
   try {
     const origin = new URL(request.url).origin;
-    const graphSource = process.env.GRAPH_SOURCE || "file"; // server-only
+    // Default to "cognee" for the enriched cognified graph
+    const graphSource = process.env.GRAPH_SOURCE || "cognee";
 
-    if (graphSource === "cognee-live") {
-      const res = await fetch(origin + COGNEE_PROXY_LIVE);
-      if (!res.ok) throw new Error(`Cognee live error ${res.status}`);
+    // Use cognified graph (default) - enriched with technologies and concepts
+    if (graphSource === "cognee") {
+      const res = await fetch(origin + COGNEE_GRAPH_API);
+      if (!res.ok) throw new Error(`Cognee graph error ${res.status}`);
       const graphData = await res.json();
       return json(graphData);
     }
 
-    if (graphSource === "cognee-db") {
-      const res = await fetch(origin + COGNEE_PROXY_DB);
-      if (!res.ok) throw new Error(`Cognee db error ${res.status}`);
+    // Use langextract database graph
+    if (graphSource === "langextract") {
+      const res = await fetch(origin + LANGEXTRACT_GRAPH_API);
+      if (!res.ok) throw new Error(`Langextract graph error ${res.status}`);
       const graphData = await res.json();
       return json(graphData);
     }
 
-    // Always return file graph from server to avoid remote fetch during SSR.
+    // Fallback to static file graph
     const [{ default: fs }, { default: path }] = await Promise.all([
       import("fs/promises"),
       import("path"),
