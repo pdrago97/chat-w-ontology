@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume - Pedro Reichow</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a2a6c;
+            --text: #2d3436;
+            --grey: #636e72;
+            --line: #000;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.4;
+            color: var(--text);
+            background-color: #f5f6fa;
+            margin: 0;
+            padding: 40px 0;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 40px 50px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 26pt;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #000;
+        }
+
+        .tagline {
+            font-weight: 600;
+            font-size: 11pt;
+            margin: 5px 0;
+            color: var(--text);
+        }
+
+        .contact {
+            font-size: 9pt;
+            color: var(--grey);
+        }
+
+        .contact span {
+            margin: 0 8px;
+        }
+
+        section {
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 11pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #000;
+            margin: 0 0 4px 0;
+            letter-spacing: 0.5px;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1.5px solid var(--line);
+            margin-bottom: 10px;
+        }
+
+        .job {
+            margin-bottom: 12px;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .job-title {
+            font-weight: 700;
+            font-size: 10.5pt;
+            color: #000;
+        }
+
+        .job-date {
+            font-weight: 600;
+            font-size: 9pt;
+            color: var(--grey);
+        }
+
+        .company-name {
+            font-weight: 700;
+            font-size: 10pt;
+            color: var(--primary);
+            margin-bottom: 2px;
+            display: block;
+        }
+
+        ul {
+            margin: 4px 0;
+            padding-left: 18px;
+        }
+
+        li {
+            font-size: 9pt;
+            margin-bottom: 2px;
+            text-align: justify;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-item {
+            margin-bottom: 8px;
+        }
+
+        .grid-item strong {
+            display: block;
+            font-size: 9.5pt;
+            margin-bottom: 2px;
+            text-decoration: underline;
+        }
+
+        .grid-item p {
+            font-size: 8.5pt;
+            margin: 0;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .edu-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 9pt;
+        }
+
+        .edu-info strong {
+            font-size: 9.5pt;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+
+            .page {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+            }
+
+            @page {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+        <header>
+            <h1>Pedro Reichow</h1>
+            <div class="tagline">AI Platform Engineer • RAG & Agentic Systems • Technology Entrepreneur</div>
+            <div class="contact">
+                Santa Catarina, Brazil <span>•</span>
+                <a href="mailto:pedro_reichow@hotmail.com"
+                    style="color: inherit; text-decoration: none;">pedro_reichow@hotmail.com</a> <span>•</span>
+                <a href="https://linkedin.com/in/pedroreichow" target="_blank"
+                    style="color: inherit; text-decoration: none;">linkedin.com/in/pedroreichow</a> <span>•</span>
+                <a href="https://pedroreichow.com.br" target="_blank"
+                    style="color: var(--primary); text-decoration: none; font-weight: 700;">Talk to My Resume</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>Professional Summary</h2>
+            <hr>
+            <p style="font-size: 9.5pt; margin: 0; text-align: justify;">
+                <strong>AI Platform Engineer</strong> specializing in production-grade LLM systems, <strong>RAG
+                    pipelines</strong>,
+                and <strong>agentic architectures</strong>. 7+ years bridging business problems to practical AI
+                solutions
+                through solid software engineering foundations. Expert in <strong>Knowledge Graphs</strong> (RDF/OWL)
+                combined
+                with modern LLM integration. Proven track record delivering enterprise AI systems that transform manual
+                processes from <strong>weeks to minutes</strong>, multiplying revenue through intelligent automation.
+                Fluent in English, intermediate Spanish.
+            </p>
+        </section>
+
+        <section>
+            <h2>Professional Experience</h2>
+            <hr>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Senior Software & Data Engineer | Observability & AI</span>
+                    <span class="job-date">Aug 2024 – Present</span>
+                </div>
+                <span class="company-name">CVS Health</span>
+                <ul>
+                    <li>Technical leadership in developing in-house <strong>observability and telemetry
+                            platforms</strong>
+                        for critical healthcare infrastructure with real-time monitoring.</li>
+                    <li>Full-stack development of enterprise applications integrated with AI for workflow automation and
+                        predictive analysis.</li>
+                    <li>Implementation of secure data pipelines in compliance with <strong>HIPAA and FedRAMP</strong>
+                        for global monitoring.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Cloud AI Solutions Architect</span>
+                    <span class="job-date">Jan 2024 – Jul 2024</span>
+                </div>
+                <span class="company-name">Santodigital (Google Partner)</span>
+                <ul>
+                    <li>Architected <strong>RAG pipeline with BigQuery</strong> for government bidding document
+                        processing,
+                        reducing analysis time from <strong>weeks to minutes</strong> and multiplying client revenue.
+                    </li>
+                    <li>Developed production <strong>AI Agents</strong> using Google ADK for enterprise clients:
+                        compliance automation,
+                        contract expiration alerts, auto-service with <strong>Zendesk handoff</strong>, and scheduled
+                        reporting.</li>
+                    <li>Built conversational agents, email automation, and document intelligence systems
+                        for major enterprise clients in banking and services sectors.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Senior Solutions Consultant (Solutions Consultant IV)</span>
+                    <span class="job-date">Jan 2022 – Dec 2023</span>
+                </div>
+                <span class="company-name">Capgemini Brasil</span>
+                <ul>
+                    <li>Architecture of <strong>Knowledge Graph</strong> solutions and data engineering for fraud
+                        detection and risk analysis in financial sector.</li>
+                    <li>Development of sophisticated ontologies using <strong>Protégé and RDF/OWL</strong> for complex
+                        business
+                        intelligence and semantic search.</li>
+                    <li>Technical collaboration with teams of <strong>50+ engineers</strong> on enterprise data
+                        engineering optimizations.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Full Stack Engineer | VR & Real-Time Systems</span>
+                    <span class="job-date">Jan 2021 – Dec 2021</span>
+                </div>
+                <span class="company-name">Simulated Reality</span>
+                <ul>
+                    <li>Developed VR solutions in <strong>Node.js and React</strong> for training and wellness
+                        applications
+                        with 3D object interaction and physics simulations.</li>
+                    <li>Built scalable APIs with queues for asynchronous processing and <strong>pub/sub for real-time
+                            communication</strong> between system components.</li>
+                    <li>Engineered pipelines for processing large 3D video files and game updates compiled in
+                        <strong>Unity and Unreal Engine</strong>.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Senior Data Engineer</span>
+                    <span class="job-date">Jan 2019 – Dec 2020</span>
+                </div>
+                <span class="company-name">QI Tech (Fintech)</span>
+                <ul>
+                    <li>Architecture of <strong>PySpark pipelines processing 500GB+ daily</strong> on Google Cloud
+                        Dataproc with 40% performance improvement.</li>
+                    <li>Implementation of Spark Structured Streaming for real-time financial transaction analysis
+                        with watermarking.</li>
+                    <li>Delta Lake architecture design on GCS with ACID transactions for audit compliance and
+                        data versioning.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Backend Developer & IoT Specialist</span>
+                    <span class="job-date">Nov 2017 – Dec 2018</span>
+                </div>
+                <span class="company-name">PecSmart (IoT & AgTech)</span>
+                <ul>
+                    <li>Development of <strong>IoT systems for livestock monitoring</strong> using
+                        Raspberry Pi and multi-modal sensor processing.</li>
+                    <li>Creation of ML pipelines for animal health prediction and real-time behavioral analysis.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Backend Developer</span>
+                    <span class="job-date">Jan 2017 – Oct 2017</span>
+                </div>
+                <span class="company-name">Fontes Promotora</span>
+                <ul>
+                    <li>Development of <strong>web scraping and automation</strong> solutions using Scrapy for
+                        large-scale data collection.</li>
+                    <li>Built scalable APIs using <strong>FastAPI, Flask, and Django REST Framework</strong>.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Entrepreneurial Experience</h2>
+            <hr>
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Founding Engineer & Technical Co-founder</span>
+                    <span class="job-date">MoveUp AI (San Francisco - Remote)</span>
+                </div>
+                <ul>
+                    <li>Architected <strong>MCP (Model Context Protocol)</strong> servers enabling Slack-based agents to
+                        act on behalf of users across <strong>Gmail, Drive, Jira, and GitHub</strong>.</li>
+                    <li>Built multi-tool orchestration with authorization flows and <strong>long-term memory</strong>
+                        using Mem0 and Cognee for career development insights.</li>
+                    <li>Developed intelligent agents using LangChain and LangGraph with advanced tool calling
+                        and multi-step reasoning.</li>
+                </ul>
+            </div>
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">AI Engineer & Computer Vision Specialist</span>
+                    <span class="job-date">Trinnix AI Lab</span>
+                </div>
+                <ul>
+                    <li>Development of agricultural monitoring systems using <strong>YoloX and
+                            Roboflow</strong> with >95% accuracy.</li>
+                    <li>Integration of LLMs (GPT-4o, Claude, Gemini) with advanced prompt engineering for
+                        intelligent alerts.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Technical Expertise</h2>
+            <hr>
+            <div class="grid">
+                <div class="grid-item">
+                    <strong>AI & LLM Systems</strong>
+                    <p>RAG Pipelines, LangChain, LangGraph, Agentic AI, Prompt Engineering, Tool Calling,
+                        LLMs (OpenAI, Anthropic, Google).</p>
+                </div>
+                <div class="grid-item">
+                    <strong>Vector & Knowledge Systems</strong>
+                    <p>Vector Databases, Embeddings, Knowledge Graphs, RDF/OWL, Semantic Search, Hybrid Retrieval.</p>
+                </div>
+                <div class="grid-item">
+                    <strong>Programming & Development</strong>
+                    <p>Python (FastAPI), TypeScript, Node.js, React, SQL, gRPC, Microservices, REST APIs.</p>
+                </div>
+                <div class="grid-item">
+                    <strong>Cloud & Infrastructure</strong>
+                    <p>AWS, GCP (BigQuery, Vertex AI), Azure, OpenShift, Docker, Kubernetes, CI/CD.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Portfolio</h2>
+            <hr>
+            <p style="font-size: 9pt; margin: 0;">
+                <strong>chat-w-ontology</strong> — Interactive Knowledge Graph + RAG system with multi-LLM integration.
+                Live at <a href="https://pedroreichow.com.br" target="_blank"
+                    style="color: var(--primary);">pedroreichow.com.br</a>
+            </p>
+        </section>
+
+        <section>
+            <h2>Education</h2>
+            <hr>
+            <div class="edu-item">
+                <div class="edu-info"><strong>B.S. in Electrical Engineering</strong> | Federal University of Santa
+                    Catarina (UFSC)</div>
+                <span class="edu-date">2017 - 2023</span>
+            </div>
+            <div class="edu-item">
+                <div class="edu-info"><strong>B.S. in Systems Analysis and Development</strong> | Estácio University
+                </div>
+                <span class="edu-date">2021 - 2023</span>
+            </div>
+            <div class="edu-item">
+                <div class="edu-info"><strong>Technical Diploma in Electrotechnics</strong> | IFSC</div>
+                <span class="edu-date">2012 - 2016</span>
+            </div>
+        </section>
+    </div>
+
+</body>
+
+</html>
