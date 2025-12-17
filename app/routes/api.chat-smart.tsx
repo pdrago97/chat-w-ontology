@@ -1,4 +1,4 @@
-import { json, type ActionFunction } from "@remix-run/node";
+import { json, type ActionFunction } from "@remix-run/cloudflare";
 
 // Smart Chat API - Tries fast response first, falls back to async if needed
 // This provides the best user experience without changing the frontend

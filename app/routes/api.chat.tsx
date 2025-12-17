@@ -1,10 +1,8 @@
-import { json } from "@remix-run/node";
-import type { ActionFunction } from "@remix-run/node";
-import { generateContextualResponse } from "../data/knowledge-graph";
+import { json } from "@remix-run/cloudflare";
+import type { ActionFunction } from "@remix-run/cloudflare";
+import { generateContextualResponse, knowledgeGraphData } from "../data/knowledge-graph";
 
 // Direct OpenAI integration for chat responses with Cognified Graph context
-
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 interface ChatRequest {
   message: string;
@@ -17,8 +15,8 @@ let cachedCognifiedGraph: any = null;
 let cacheTimestamp: number = 0;
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
-// Fetch the cognified graph data for rich context
-async function getCognifiedGraphContext(): Promise<any> {
+// Fetch the cognified graph data for rich context (Cloudflare compatible)
+async function getCognifiedGraphContext(env?: Record<string, string>): Promise<any> {
   const now = Date.now();
 
   // Return cached data if still valid
@@ -27,15 +25,8 @@ async function getCognifiedGraphContext(): Promise<any> {
   }
 
   try {
-    // Import the cognify function directly to avoid HTTP call
-    const [{ default: fs }, { default: path }] = await Promise.all([
-      import("fs/promises"),
-      import("path"),
-    ]);
-
-    const filePath = path.join(process.cwd(), "public", "knowledge-graph.json");
-    const fileContents = await fs.readFile(filePath, "utf-8");
-    const graphData = JSON.parse(fileContents);
+    // Use embedded knowledge graph data (Cloudflare compatible)
+    const graphData = { nodes: knowledgeGraphData.nodes, skills: knowledgeGraphData.skills, edges: [] };
 
     // Process the graph to extract rich context
     const context = processGraphForContext(graphData);
@@ -147,9 +138,10 @@ async function callOpenAI(
   message: string,
   language: string,
   history: Array<{ role: string; content: string }> = [],
-  graphContext: any
+  graphContext: any,
+  apiKey?: string
 ): Promise<string> {
-  if (!OPENAI_API_KEY) {
+  if (!apiKey) {
     console.warn('OpenAI API key not configured, using static fallback');
     return generateContextualResponse(message);
   }
@@ -170,7 +162,7 @@ async function callOpenAI(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${OPENAI_API_KEY}`
+      'Authorization': `Bearer ${apiKey}`
     },
     body: JSON.stringify({
       model: 'gpt-4o-mini',
@@ -190,10 +182,14 @@ async function callOpenAI(
   return data.choices?.[0]?.message?.content || generateContextualResponse(message);
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
   if (request.method !== "POST") {
     return json({ error: "Method not allowed" }, { status: 405 });
   }
+
+  // Get OpenAI API key from Cloudflare environment
+  const env = context?.env as Record<string, string> | undefined;
+  const openaiApiKey = env?.OPENAI_API_KEY;
 
   // Parse the request body first so we can use it in fallback
   let message = '';
@@ -214,9 +210,9 @@ export const action: ActionFunction = async ({ request }) => {
 
   try {
     // Fetch the cognified graph context for rich AI responses
-    const graphContext = await getCognifiedGraphContext();
+    const graphContext = await getCognifiedGraphContext(env);
 
-    const responseText = await callOpenAI(message, language, history, graphContext);
+    const responseText = await callOpenAI(message, language, history, graphContext, openaiApiKey);
 
     return json({
       message: responseText,

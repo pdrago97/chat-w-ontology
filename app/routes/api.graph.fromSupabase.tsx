@@ -1,4 +1,4 @@
-import { json, type LoaderFunction } from "@remix-run/node";
+import { json, type LoaderFunction } from "@remix-run/cloudflare";
 
 // Minimal proxy loader that calls the local FastAPI Cognee service
 // Default service URL can be overridden with COGNEE_SERVICE_URL env var

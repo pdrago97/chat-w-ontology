@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { json, type LoaderFunction } from "@remix-run/node";
+import { json, type LoaderFunction } from "@remix-run/cloudflare";
 
 // GET endpoint that fetches text rows from Supabase and runs LangExtract via the Python service
 // Mirrors the style of other Supabase integrations in this repo.

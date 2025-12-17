@@ -1,4 +1,4 @@
-import { json, type ActionFunction } from "@remix-run/node";
+import { json, type ActionFunction } from "@remix-run/cloudflare";
 
 // Simple test endpoint to verify queue system is working
 export const action: ActionFunction = async ({ request }) => {

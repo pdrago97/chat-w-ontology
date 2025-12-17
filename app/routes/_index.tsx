@@ -1,4 +1,4 @@
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 import GraphComponent from "../components/GraphComponent";
@@ -7,45 +7,65 @@ import GraphBuilderChat from "../components/GraphBuilderChat";
 import LanguageToggle from "../components/LanguageToggle";
 import { LanguageProvider } from "../contexts/LanguageContext";
 import WelcomeModal from "./welcomeModal";
+import { knowledgeGraphData } from "../data/knowledge-graph";
 
 // Graph API endpoints
 const COGNEE_GRAPH_API = "/api/graph/cognee";
 const LANGEXTRACT_GRAPH_API = "/api/graph/langextract.db";
+const LANGEXTRACT_CURATED_API = "/api/graph/langextract.curated";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   try {
     const origin = new URL(request.url).origin;
-    // Default to "cognee" for the enriched cognified graph
-    const graphSource = process.env.GRAPH_SOURCE || "cognee";
+    // Get GRAPH_SOURCE from Cloudflare environment or default to "cognee"
+    const env = context?.env as Record<string, string> | undefined;
+    const graphSource = env?.GRAPH_SOURCE || "cognee";
+
+    // Use langextract curated graph
+    if (graphSource === "lx-curated") {
+      try {
+        const res = await fetch(origin + LANGEXTRACT_CURATED_API);
+        if (res.ok) {
+          const graphData = await res.json();
+          return json(graphData);
+        }
+      } catch (e) {
+        console.warn("Failed to fetch lx-curated graph, using fallback");
+      }
+    }
 
     // Use cognified graph (default) - enriched with technologies and concepts
     if (graphSource === "cognee") {
-      const res = await fetch(origin + COGNEE_GRAPH_API);
-      if (!res.ok) throw new Error(`Cognee graph error ${res.status}`);
-      const graphData = await res.json();
-      return json(graphData);
+      try {
+        const res = await fetch(origin + COGNEE_GRAPH_API);
+        if (res.ok) {
+          const graphData = await res.json();
+          return json(graphData);
+        }
+      } catch (e) {
+        console.warn("Failed to fetch cognee graph, using fallback");
+      }
     }
 
     // Use langextract database graph
     if (graphSource === "langextract") {
-      const res = await fetch(origin + LANGEXTRACT_GRAPH_API);
-      if (!res.ok) throw new Error(`Langextract graph error ${res.status}`);
-      const graphData = await res.json();
-      return json(graphData);
+      try {
+        const res = await fetch(origin + LANGEXTRACT_GRAPH_API);
+        if (res.ok) {
+          const graphData = await res.json();
+          return json(graphData);
+        }
+      } catch (e) {
+        console.warn("Failed to fetch langextract graph, using fallback");
+      }
     }
 
-    // Fallback to static file graph
-    const [{ default: fs }, { default: path }] = await Promise.all([
-      import("fs/promises"),
-      import("path"),
-    ]);
-    const filePath = path.join(process.cwd(), "public", "knowledge-graph.json");
-    const fileContents = await fs.readFile(filePath, "utf-8");
-    const graphData = JSON.parse(fileContents);
-    return json(graphData);
+    // Fallback to embedded knowledge graph data (Cloudflare compatible)
+    return json({ nodes: knowledgeGraphData.nodes, edges: [], skills: knowledgeGraphData.skills });
   } catch (error) {
     console.error("Error loading graph data:", error);
-    throw new Response("Error loading graph data", { status: 500 });
+    // Return embedded data on error instead of throwing
+    return json({ nodes: knowledgeGraphData.nodes, edges: [], skills: knowledgeGraphData.skills });
   }
 };
 

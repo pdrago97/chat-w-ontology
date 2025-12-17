@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { json, type LoaderFunction } from "@remix-run/node";
+import { json, type LoaderFunction } from "@remix-run/cloudflare";
 
 // Builds a lightweight graph from the public.documents table (doc-level nodes only)
 // Safe-by-default: no client credentials; server reads from Supabase REST using service key

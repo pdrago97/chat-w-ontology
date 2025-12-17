@@ -1,33 +1,20 @@
-import 'dotenv/config';
-import { json, type LoaderFunction } from "@remix-run/node";
+import { json, type LoaderFunction } from "@remix-run/cloudflare";
 import { knowledgeGraphData } from "../data/knowledge-graph";
 
 // Returns the Cognee refined graph - AI-enriched knowledge graph
 // When Supabase is unavailable, uses OpenAI to "cognify" the static graph
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-
-function supabaseHeaders() {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_KEY;
+function supabaseHeaders(env?: Record<string, string>) {
+  const url = env?.SUPABASE_URL;
+  const key = env?.SUPABASE_SERVICE_KEY;
   if (!url || !key) return null;
   return { url, headers: { apikey: key, Authorization: `Bearer ${key}` } } as const;
 }
 
-// Load and parse the full knowledge graph JSON
-async function loadKnowledgeGraphJson() {
-  try {
-    const [{ default: fs }, { default: path }] = await Promise.all([
-      import("fs/promises"),
-      import("path"),
-    ]);
-    const filePath = path.join(process.cwd(), "public", "knowledge-graph.json");
-    const fileContents = await fs.readFile(filePath, "utf-8");
-    return JSON.parse(fileContents);
-  } catch (error) {
-    console.error("Failed to load knowledge-graph.json:", error);
-    return { nodes: knowledgeGraphData.nodes, edges: [] };
-  }
+// Load and parse the knowledge graph (Cloudflare compatible)
+function loadKnowledgeGraphJson() {
+  // Use embedded knowledge graph data (Cloudflare compatible - no file system access)
+  return { nodes: knowledgeGraphData.nodes, skills: knowledgeGraphData.skills, edges: [] };
 }
 
 // Extract technologies from text descriptions
@@ -511,12 +498,14 @@ function enhanceRelationship(kind: string, props: any) {
   };
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   try {
     const { searchParams } = new URL(request.url);
     const limit = Math.max(1, Math.min(5000, Number(searchParams.get("limit") || 2000)));
 
-    const supabase = supabaseHeaders();
+    // Get Supabase config from Cloudflare environment
+    const env = context?.env as Record<string, string> | undefined;
+    const supabase = supabaseHeaders(env);
 
     // If Supabase is not configured, return cognified fallback
     if (!supabase) {

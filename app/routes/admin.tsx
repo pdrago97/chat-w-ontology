@@ -1,21 +1,15 @@
-import { json, type LoaderFunction } from "@remix-run/node";
+import { json, type LoaderFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import fs from "fs/promises";
-import path from "path";
-import { fileURLToPath } from "url";
 
 import GraphComponent from "../components/GraphComponent";
 import GraphBuilderChat from "../components/GraphBuilderChat";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { knowledgeGraphData } from "../data/knowledge-graph";
 
 export const loader: LoaderFunction = async () => {
   try {
-    const filePath = path.join(__dirname, "..", "..", "public", "knowledge-graph.json");
-    const raw = await fs.readFile(filePath, "utf-8");
-    return json(JSON.parse(raw));
+    // Use embedded data instead of file system for Cloudflare compatibility
+    return json(knowledgeGraphData);
   } catch (e) {
     console.error("/admin loader error", e);
     return json({ nodes: [], edges: [] });

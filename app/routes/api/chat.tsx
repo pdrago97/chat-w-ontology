@@ -1,4 +1,4 @@
-import { json, type ActionFunction } from "@remix-run/node";
+import { json, type ActionFunction } from "@remix-run/cloudflare";
 
 // Improved Chat API with better timeout handling
 // Provides immediate feedback and helpful guidance when timeouts occur

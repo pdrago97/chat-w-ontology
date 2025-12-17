@@ -1,4 +1,4 @@
-import { json, type LoaderFunction } from "@remix-run/node";
+import { json, type LoaderFunction } from "@remix-run/cloudflare";
 
 // This route handles polling for async job results
 // URL format: /api.chat-smart.poll.[jobId]

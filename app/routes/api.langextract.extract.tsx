@@ -1,4 +1,4 @@
-import { json, type ActionFunction } from "@remix-run/node";
+import { json, type ActionFunction } from "@remix-run/cloudflare";
 
 // Proxy to local LangExtract service for browser-friendly calls.
 // Requires LANGEXTRACT_SERVICE_URL (e.g., http://127.0.0.1:8788)

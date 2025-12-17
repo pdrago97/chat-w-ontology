@@ -1,4 +1,4 @@
-import { json, type LoaderFunction } from "@remix-run/node";
+import { json, type LoaderFunction } from "@remix-run/cloudflare";
 
 const SERVICE_URL = process.env.COGNEE_SERVICE_URL || "http://127.0.0.1:8765";
 

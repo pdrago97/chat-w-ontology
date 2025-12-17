@@ -1,5 +1,5 @@
-import { json } from "@remix-run/node";
-import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/cloudflare";
+import type { LoaderFunction } from "@remix-run/cloudflare";
 import fs from "fs/promises";
 import path from "path";
 

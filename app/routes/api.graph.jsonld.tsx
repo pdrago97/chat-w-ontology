@@ -1,4 +1,4 @@
-import { LoaderFunction } from "@remix-run/node";
+import { LoaderFunction } from "@remix-run/cloudflare";
 import fs from "fs/promises";
 import path from "path";
 import { toJsonLd } from "~/services/ontology";

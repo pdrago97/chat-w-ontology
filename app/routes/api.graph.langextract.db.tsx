@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { json, type LoaderFunction } from "@remix-run/node";
+import { json, type LoaderFunction } from "@remix-run/cloudflare";
 
 // Returns the latest LangExtract-curated graph from Supabase tables where we store the graph JSON
 // Table: public.langextract_graphs(id bigint pk, created_at timestamptz default now(), graph jsonb)
