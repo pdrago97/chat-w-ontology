@@ -204,14 +204,13 @@
             <h2>Professional Summary</h2>
             <hr>
             <p style="font-size: 9.5pt; margin: 0; text-align: justify;">
-                <strong>AI Platform Engineer</strong> specializing in production-grade LLM systems, <strong>RAG
-                    pipelines</strong>,
-                and <strong>agentic architectures</strong>. 7+ years bridging business problems to practical AI
-                solutions
-                through solid software engineering foundations. Expert in <strong>Knowledge Graphs</strong> (RDF/OWL)
-                combined
-                with modern LLM integration. Proven track record delivering enterprise AI systems that transform manual
-                processes from <strong>weeks to minutes</strong>, multiplying revenue through intelligent automation.
+                <strong>AI Platform Engineer</strong> combining production-grade LLM systems with robust software
+                engineering.
+                Expert in <strong>Hybrid Retrieval</strong> (Vector + Knowledge Graphs via Cognee), <strong>RAG
+                    Evaluation Harnesses</strong>,
+                and multi-tool agent orchestration. 7+ years building scalable AI platforms with focus on
+                <strong>observability (SLOs, p50/p95 latency)</strong>, security, and cost optimization.
+                Proven track record delivering enterprise systems that transform manual processes from weeks to minutes.
                 Fluent in English, intermediate Spanish.
             </p>
         </section>
@@ -222,18 +221,19 @@
 
             <div class="job">
                 <div class="job-header">
-                    <span class="job-title">Senior Software & Data Engineer | Observability & AI</span>
+                    <span class="job-title">Senior Software & Data Engineer | AI Observability</span>
                     <span class="job-date">Aug 2024 – Present</span>
                 </div>
                 <span class="company-name">CVS Health</span>
                 <ul>
-                    <li>Technical leadership in developing in-house <strong>observability and telemetry
-                            platforms</strong>
-                        for critical healthcare infrastructure with real-time monitoring.</li>
-                    <li>Full-stack development of enterprise applications integrated with AI for workflow automation and
-                        predictive analysis.</li>
-                    <li>Implementation of secure data pipelines in compliance with <strong>HIPAA and FedRAMP</strong>
-                        for global monitoring.</li>
+                    <li>Architected <strong>SLOs for AI pipeline latency (p50/p95)</strong> and cost-per-token
+                        monitoring
+                        using Datadog/Grafana for healthcare AI systems in <strong>HIPAA/FedRAMP</strong> compliance.
+                    </li>
+                    <li>Built observability dashboards tracking <strong>faithfulness and relevance metrics</strong> for
+                        LLM outputs, enabling prompt version A/B testing and continuous improvement.</li>
+                    <li>Full-stack development of enterprise AI applications with predictive analysis and workflow
+                        automation.</li>
                 </ul>
             </div>
 
@@ -244,16 +244,16 @@
                 </div>
                 <span class="company-name">Santodigital (Google Partner)</span>
                 <ul>
-                    <li>Architected <strong>RAG pipeline with BigQuery</strong> for government bidding document
-                        processing,
-                        reducing analysis time from <strong>weeks to minutes</strong> and multiplying client revenue.
+                    <li>Architected <strong>production-grade RAG with BigQuery + Vertex AI</strong>, reducing document
+                        analysis
+                        from weeks to minutes with offline evaluation suites for retrieval quality.</li>
+                    <li>Implemented <strong>reinforcement loops via ADK</strong>: observability logs feeding prompt
+                        fine-tuning,
+                        reducing hallucinations and improving faithfulness scores in production.</li>
+                    <li>Built AI Agents for enterprise clients: compliance automation, contract alerts, auto-service
+                        with
+                        <strong>Zendesk handoff</strong> and human-in-the-loop for critical actions.
                     </li>
-                    <li>Developed production <strong>AI Agents</strong> using Google ADK for enterprise clients:
-                        compliance automation,
-                        contract expiration alerts, auto-service with <strong>Zendesk handoff</strong>, and scheduled
-                        reporting.</li>
-                    <li>Built conversational agents, email automation, and document intelligence systems
-                        for major enterprise clients in banking and services sectors.</li>
                 </ul>
             </div>
 
@@ -299,12 +299,10 @@
                 </div>
                 <span class="company-name">QI Tech (Fintech)</span>
                 <ul>
-                    <li>Architecture of <strong>PySpark pipelines processing 500GB+ daily</strong> on Google Cloud
-                        Dataproc with 40% performance improvement.</li>
-                    <li>Implementation of Spark Structured Streaming for real-time financial transaction analysis
-                        with watermarking.</li>
-                    <li>Delta Lake architecture design on GCS with ACID transactions for audit compliance and
-                        data versioning.</li>
+                    <li>Processed <strong>500GB+ daily</strong> with PySpark on Dataproc, optimizing gRPC latency and
+                        cloud cost efficiency—infrastructure patterns now applied to AI workloads.</li>
+                    <li>Designed Delta Lake on GCS with ACID transactions for audit compliance, enabling data versioning
+                        critical for ML reproducibility.</li>
                 </ul>
             </div>
 
@@ -315,9 +313,8 @@
                 </div>
                 <span class="company-name">PecSmart (IoT & AgTech)</span>
                 <ul>
-                    <li>Development of <strong>IoT systems for livestock monitoring</strong> using
-                        Raspberry Pi and multi-modal sensor processing.</li>
-                    <li>Creation of ML pipelines for animal health prediction and real-time behavioral analysis.</li>
+                    <li>Built <strong>IoT + ML pipelines</strong> for livestock monitoring with Raspberry Pi and
+                        real-time behavioral analysis.</li>
                 </ul>
             </div>
 
@@ -328,9 +325,8 @@
                 </div>
                 <span class="company-name">Fontes Promotora</span>
                 <ul>
-                    <li>Development of <strong>web scraping and automation</strong> solutions using Scrapy for
-                        large-scale data collection.</li>
-                    <li>Built scalable APIs using <strong>FastAPI, Flask, and Django REST Framework</strong>.</li>
+                    <li>Built scalable APIs using <strong>FastAPI, Flask, Django REST</strong> and web scraping at
+                        scale.</li>
                 </ul>
             </div>
         </section>
@@ -344,24 +340,26 @@
                     <span class="job-date">MoveUp AI (San Francisco - Remote)</span>
                 </div>
                 <ul>
-                    <li>Architected <strong>MCP (Model Context Protocol)</strong> servers enabling Slack-based agents to
-                        act on behalf of users across <strong>Gmail, Drive, Jira, and GitHub</strong>.</li>
-                    <li>Built multi-tool orchestration with authorization flows and <strong>long-term memory</strong>
-                        using Mem0 and Cognee for career development insights.</li>
-                    <li>Developed intelligent agents using LangChain and LangGraph with advanced tool calling
-                        and multi-step reasoning.</li>
+                    <li>Architected <strong>Hybrid RAG with Cognee</strong>: unified vector search (dense) + graph
+                        search
+                        (symbolic) for complex query routing and entity extraction across unstructured data.</li>
+                    <li>Built <strong>MCP servers</strong> for multi-tool orchestration across Gmail, Drive, Jira,
+                        GitHub with
+                        <strong>OAuth 2.0 Gateway</strong> and human-in-the-loop for critical agent actions.
+                    </li>
+                    <li>Developed agents with LangChain/LangGraph, <strong>Mem0 long-term memory</strong>, and
+                        model-as-a-judge
+                        evaluation for output quality assurance.</li>
                 </ul>
             </div>
             <div class="job">
                 <div class="job-header">
-                    <span class="job-title">AI Engineer & Computer Vision Specialist</span>
+                    <span class="job-title">AI Engineer & Computer Vision</span>
                     <span class="job-date">Trinnix AI Lab</span>
                 </div>
                 <ul>
-                    <li>Development of agricultural monitoring systems using <strong>YoloX and
-                            Roboflow</strong> with >95% accuracy.</li>
-                    <li>Integration of LLMs (GPT-4o, Claude, Gemini) with advanced prompt engineering for
-                        intelligent alerts.</li>
+                    <li>Agricultural CV systems with <strong>YoloX/Roboflow</strong> (>95% accuracy) + LLM integration
+                        (GPT-4o, Claude, Gemini) for intelligent alerts.</li>
                 </ul>
             </div>
         </section>
@@ -371,51 +369,38 @@
             <hr>
             <div class="grid">
                 <div class="grid-item">
-                    <strong>AI & LLM Systems</strong>
-                    <p>RAG Pipelines, LangChain, LangGraph, Agentic AI, Prompt Engineering, Tool Calling,
-                        LLMs (OpenAI, Anthropic, Google).</p>
+                    <strong>AI Platform & LLMs</strong>
+                    <p>LangChain, LangGraph, Vertex AI, RAG Evaluation, Prompt Engineering, Tool Calling,
+                        Model-as-a-judge, Multi-tool Orchestration.</p>
                 </div>
                 <div class="grid-item">
-                    <strong>Vector & Knowledge Systems</strong>
-                    <p>Vector Databases, Embeddings, Knowledge Graphs, RDF/OWL, Semantic Search, Hybrid Retrieval.</p>
+                    <strong>Retrieval & Knowledge</strong>
+                    <p>Hybrid Retrieval (Vector + Graph), Cognee, Semantic Search, Knowledge Graphs, RDF/OWL,
+                        Embeddings, Faithfulness/Relevance metrics.</p>
                 </div>
                 <div class="grid-item">
-                    <strong>Programming & Development</strong>
-                    <p>Python (FastAPI), TypeScript, Node.js, React, SQL, gRPC, Microservices, REST APIs.</p>
+                    <strong>Programming & APIs</strong>
+                    <p>Python, TypeScript, Node.js, FastAPI, gRPC, React, SQL, Microservices, REST.</p>
                 </div>
                 <div class="grid-item">
-                    <strong>Cloud & Infrastructure</strong>
-                    <p>AWS, GCP (BigQuery, Vertex AI), Azure, OpenShift, Docker, Kubernetes, CI/CD.</p>
+                    <strong>Cloud & Observability</strong>
+                    <p>GCP (BigQuery, Vertex AI), AWS, Docker, Kubernetes, Datadog/Grafana, SLOs, CI/CD.</p>
                 </div>
             </div>
         </section>
 
         <section>
-            <h2>Portfolio</h2>
+            <h2>Portfolio & Education</h2>
             <hr>
-            <p style="font-size: 9pt; margin: 0;">
-                <strong>chat-w-ontology</strong> — Interactive Knowledge Graph + RAG system with multi-LLM integration.
-                Live at <a href="https://pedroreichow.com.br" target="_blank"
-                    style="color: var(--primary);">pedroreichow.com.br</a>
+            <p style="font-size: 9pt; margin: 0 0 6px 0;">
+                <strong>🔗 <a href="https://pedroreichow.com.br" target="_blank"
+                        style="color: var(--primary);">pedroreichow.com.br</a></strong> — Interactive Knowledge Graph +
+                Hybrid RAG demo with multi-LLM integration.
             </p>
-        </section>
-
-        <section>
-            <h2>Education</h2>
-            <hr>
             <div class="edu-item">
-                <div class="edu-info"><strong>B.S. in Electrical Engineering</strong> | Federal University of Santa
-                    Catarina (UFSC)</div>
-                <span class="edu-date">2017 - 2023</span>
-            </div>
-            <div class="edu-item">
-                <div class="edu-info"><strong>B.S. in Systems Analysis and Development</strong> | Estácio University
+                <div class="edu-info"><strong>B.S. Electrical Engineering</strong> | UFSC &nbsp;&nbsp;•&nbsp;&nbsp;
+                    <strong>B.S. Systems Analysis</strong> | Estácio
                 </div>
-                <span class="edu-date">2021 - 2023</span>
-            </div>
-            <div class="edu-item">
-                <div class="edu-info"><strong>Technical Diploma in Electrotechnics</strong> | IFSC</div>
-                <span class="edu-date">2012 - 2016</span>
             </div>
         </section>
     </div>
