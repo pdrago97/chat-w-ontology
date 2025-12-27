@@ -1,8 +1,9 @@
 import { json } from "@remix-run/cloudflare";
 import type { ActionFunction } from "@remix-run/cloudflare";
-import { generateContextualResponse, knowledgeGraphData } from "../data/knowledge-graph";
+import { cogneeGraphData } from "../data/cognee-graph";
+import { generateContextualResponse } from "../data/knowledge-graph";
 
-// Direct OpenAI integration for chat responses with Cognified Graph context
+// Direct OpenAI integration for chat responses with Rich Graph context (309 nodes, 554 edges)
 
 interface ChatRequest {
   message: string;
@@ -10,127 +11,146 @@ interface ChatRequest {
   history?: Array<{ role: string; content: string }>;
 }
 
-// Cache for the cognified graph data
-let cachedCognifiedGraph: any = null;
-let cacheTimestamp: number = 0;
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
-
-// Fetch the cognified graph data for rich context (Cloudflare compatible)
-async function getCognifiedGraphContext(env?: Record<string, string>): Promise<any> {
-  const now = Date.now();
-
-  // Return cached data if still valid
-  if (cachedCognifiedGraph && (now - cacheTimestamp) < CACHE_TTL) {
-    return cachedCognifiedGraph;
-  }
-
-  try {
-    // Use embedded knowledge graph data (Cloudflare compatible)
-    const graphData = { nodes: knowledgeGraphData.nodes, skills: knowledgeGraphData.skills, edges: [] };
-
-    // Process the graph to extract rich context
-    const context = processGraphForContext(graphData);
-    cachedCognifiedGraph = context;
-    cacheTimestamp = now;
-    return context;
-  } catch (error) {
-    console.error("Error loading cognified graph:", error);
-    return null;
-  }
+// Use the rich cognee graph directly - no caching needed, it's embedded
+function getRichGraphContext(): any {
+  return processGraphForContext({
+    nodes: cogneeGraphData.nodes,
+    edges: cogneeGraphData.edges
+  });
 }
 
-// Process graph data into a rich context format for the LLM
+// Process the rich graph (309 nodes) into structured context for the LLM
 function processGraphForContext(graphData: any): any {
   const nodes = graphData.nodes || [];
   const edges = graphData.edges || [];
 
-  // Extract person info
-  const person = nodes.find((n: any) => n.type === 'Person' || n.id === 'Pedro Reichow');
+  // Create a map of node IDs to labels for relationship context
+  const nodeMap = new Map<string, string>();
+  nodes.forEach((n: any) => nodeMap.set(n.id, n.label));
 
-  // Extract experiences
-  const experiences = nodes.filter((n: any) => n.type === 'Experience');
-
-  // Extract education
-  const education = nodes.filter((n: any) => n.type === 'Education');
-
-  // Extract skills
-  const skills = nodes.filter((n: any) => n.type === 'Skills');
-
-  // Extract projects
-  const projects = nodes.filter((n: any) => n.type === 'Project');
-
-  // Extract technologies from all nodes
-  const technologies = new Set<string>();
+  // Group nodes by type for structured context
+  const nodesByType: Record<string, any[]> = {};
   nodes.forEach((n: any) => {
-    if (n.technologies) {
-      n.technologies.forEach((t: string) => technologies.add(t));
-    }
+    const type = n.type || 'Other';
+    if (!nodesByType[type]) nodesByType[type] = [];
+    nodesByType[type].push({ label: n.label, description: n.description, category: n.category });
   });
 
-  // Extract concepts and relationships
-  const relationships = edges.map((e: any) => ({
-    from: e.source,
-    to: e.target,
-    type: e.relation || 'RELATED_TO'
-  }));
+  // Extract key entities
+  const companies = nodesByType['Company'] || [];
+  const roles = nodesByType['Role'] || [];
+  const technologies = nodesByType['Technology'] || [];
+  const projects = nodesByType['Project'] || [];
+  const concepts = nodesByType['Concept'] || [];
+  const achievements = nodesByType['Achievement'] || [];
+  const skillCategories = nodesByType['SkillCategory'] || [];
+  const education = [...(nodesByType['Degree'] || []), ...(nodesByType['University'] || [])];
+  const industries = nodesByType['Industry'] || [];
+  const methodologies = nodesByType['Methodology'] || [];
+  const features = nodesByType['Feature'] || [];
+
+  // Build meaningful relationships with labels
+  const meaningfulRelationships = edges
+    .filter((e: any) => ['worked_at', 'works_at', 'held_role', 'has_expertise', 'proficient_in', 'built', 'achieved', 'has_degree', 'uses'].includes(e.label))
+    .slice(0, 100)
+    .map((e: any) => ({
+      subject: nodeMap.get(e.source) || e.source,
+      relation: e.label,
+      object: nodeMap.get(e.target) || e.target
+    }));
 
   return {
-    person,
-    experiences: experiences.map((e: any) => ({
-      company: e.id,
-      title: e.title,
-      years: e.years,
-      duration: e.duration,
-      location: e.location,
-      description: e.description,
-      responsibilities: e.responsibilities,
-      achievements: e.achievements,
-      technologies: e.technologies
-    })),
-    education: education.map((e: any) => ({
-      institution: e.id,
-      degree: e.degree,
-      field: e.field,
-      years: e.years,
-      description: e.description
-    })),
-    skills: skills.map((s: any) => ({
-      category: s.category || s.id,
-      items: s.items,
-      proficiency: s.proficiency
-    })),
-    projects: projects.map((p: any) => ({
-      name: p.id,
-      title: p.title,
-      description: p.description,
-      technologies: p.technologies,
-      impact: p.impact
-    })),
-    allTechnologies: Array.from(technologies),
-    relationships: relationships.slice(0, 50) // Limit to avoid token overflow
+    person: {
+      name: "Pedro Reichow",
+      title: "AI Platform Engineer",
+      tagline: "RAG & Agentic Systems, Technology Entrepreneur",
+      location: "Santa Catarina, Brazil",
+      contact: "pedro_reichow@hotmail.com",
+      linkedin: "linkedin.com/in/pedroreichow",
+      portfolio: "pedroreichow.com.br"
+    },
+    companies: companies.map((c: any) => c.label + (c.description ? ` - ${c.description}` : '')),
+    roles: roles.map((r: any) => r.label + (r.description ? ` (${r.description})` : '')),
+    technologies: technologies.map((t: any) => t.label),
+    skillCategories: skillCategories.map((s: any) => s.label),
+    projects: projects.map((p: any) => p.label + (p.description ? ` - ${p.description}` : '')),
+    achievements: achievements.map((a: any) => a.label + (a.description ? ` - ${a.description}` : '')),
+    concepts: concepts.slice(0, 30).map((c: any) => c.label),
+    industries: industries.map((i: any) => i.label),
+    methodologies: methodologies.map((m: any) => m.label),
+    features: features.slice(0, 15).map((f: any) => f.label),
+    education: education.map((e: any) => e.label + (e.description ? ` - ${e.description}` : '')),
+    keyRelationships: meaningfulRelationships,
+    stats: {
+      totalNodes: nodes.length,
+      totalEdges: edges.length,
+      companiesWorked: companies.length,
+      technologiesKnown: technologies.length,
+      projectsBuilt: projects.length
+    }
   };
 }
 
-// Build the system prompt with cognified graph context
-function buildSystemPrompt(language: string, graphContext: any): string {
-  const contextJson = graphContext ? JSON.stringify(graphContext, null, 2) : 'No context available';
+// Build the system prompt with rich graph context (309 nodes, 554 edges)
+function buildSystemPrompt(language: string, ctx: any): string {
+  const lang = language === 'pt' ? 'Portuguese (Brazil)' : 'English';
 
-  return `You are Pedro Reichow's professional AI assistant. You help recruiters and potential collaborators learn about Pedro's background, skills, and experience.
+  return `You are Pedro Reichow's professional AI assistant. Help recruiters and collaborators learn about Pedro.
 
-IMPORTANT: Reply in ${language === 'pt' ? 'Portuguese (Brazil)' : 'English'}.
+LANGUAGE: Reply in ${lang}.
 
-Here is Pedro's professional information from his cognified knowledge graph:
-${contextJson}
+=== PEDRO'S PROFILE ===
+Name: ${ctx.person?.name || 'Pedro Reichow'}
+Title: ${ctx.person?.title || 'AI Platform Engineer'}
+Focus: ${ctx.person?.tagline || 'RAG & Agentic Systems'}
+Location: ${ctx.person?.location || 'Brazil'}
+Contact: ${ctx.person?.contact || 'pedro_reichow@hotmail.com'}
+LinkedIn: ${ctx.person?.linkedin || 'linkedin.com/in/pedroreichow'}
+Portfolio: ${ctx.person?.portfolio || 'pedroreichow.com.br'}
 
-Guidelines:
+=== COMPANIES WORKED (${ctx.companies?.length || 0}) ===
+${ctx.companies?.join('\n') || 'Various companies'}
+
+=== ROLES HELD (${ctx.roles?.length || 0}) ===
+${ctx.roles?.join('\n') || 'Various roles'}
+
+=== TECHNOLOGIES (${ctx.technologies?.length || 0}) ===
+${ctx.technologies?.join(', ') || 'Various technologies'}
+
+=== SKILL CATEGORIES ===
+${ctx.skillCategories?.join(', ') || 'Various skills'}
+
+=== KEY ACHIEVEMENTS ===
+${ctx.achievements?.join('\n') || 'Multiple achievements'}
+
+=== PROJECTS BUILT (${ctx.projects?.length || 0}) ===
+${ctx.projects?.slice(0, 10).join('\n') || 'Multiple projects'}
+
+=== EDUCATION ===
+${ctx.education?.join('\n') || 'Various degrees'}
+
+=== INDUSTRIES ===
+${ctx.industries?.join(', ') || 'Various industries'}
+
+=== METHODOLOGIES ===
+${ctx.methodologies?.join(', ') || 'Various methodologies'}
+
+=== KEY RELATIONSHIPS ===
+${ctx.keyRelationships?.slice(0, 20).map((r: any) => `${r.subject} ${r.relation} ${r.object}`).join('\n') || ''}
+
+=== GRAPH STATS ===
+Total entities: ${ctx.stats?.totalNodes || 0} nodes, ${ctx.stats?.totalEdges || 0} relationships
+Companies: ${ctx.stats?.companiesWorked || 0} | Technologies: ${ctx.stats?.technologiesKnown || 0} | Projects: ${ctx.stats?.projectsBuilt || 0}
+
+=== GUIDELINES ===
 - Be friendly, professional, and enthusiastic about Pedro's qualifications
-- Only discuss Pedro's professional background, skills, projects, and experience
-- If asked about topics outside Pedro's professional scope, politely redirect to professional topics
-- Highlight Pedro's achievements and unique value proposition
-- Use the relationships in the graph to provide connected insights
-- Mention specific technologies and their usage context when relevant
-- Encourage the user to reach out to Pedro for opportunities
-- Keep responses concise but informative`;
+- Use the SPECIFIC information above to answer questions
+- When asked about a company (e.g., CVS Health), find it in COMPANIES and ROLES
+- When asked about technologies, use the TECHNOLOGIES list
+- Highlight achievements and unique value
+- If topic is outside scope, redirect professionally
+- Keep responses concise but informative
+- Encourage reaching out for opportunities`;
 }
 
 // Call OpenAI API with cognified graph context
@@ -209,8 +229,8 @@ export const action: ActionFunction = async ({ request, context }) => {
   }
 
   try {
-    // Fetch the cognified graph context for rich AI responses
-    const graphContext = await getCognifiedGraphContext(env);
+    // Get the rich graph context (309 nodes, 554 edges) for AI responses
+    const graphContext = getRichGraphContext();
 
     const responseText = await callOpenAI(message, language, history, graphContext, openaiApiKey);
 

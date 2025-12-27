@@ -5,7 +5,7 @@ pages_build_output_dir = "./build/client"
 
 [vars]
 NODE_ENV = "production"
-GRAPH_SOURCE = "lx-curated"
+GRAPH_SOURCE = "cognee"
 
 # Environment variables will be set via wrangler secret put
 # N8N_WEBHOOK_URL
