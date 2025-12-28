@@ -1,0 +1,27 @@
+{
+  "name": "@agentic-hub/database",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./types": "./src/types.ts"
+  },
+  "scripts": {
+    "db:generate": "supabase gen types typescript --local > src/database.types.ts",
+    "db:push": "supabase db push",
+    "db:reset": "supabase db reset",
+    "db:migration:new": "supabase migration new"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.47.10",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.10",
+    "supabase": "^1.225.1",
+    "typescript": "^5.7.2"
+  }
+}

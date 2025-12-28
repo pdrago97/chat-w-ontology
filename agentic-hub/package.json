@@ -1,0 +1,26 @@
+{
+  "name": "agentic-hub",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Plataforma SaaS B2B para criação e gestão de agentes conversacionais com Knowledge Graphs",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@agentic-hub/web",
+    "build": "npm run build --workspace=@agentic-hub/web",
+    "lint": "npm run lint --workspace=@agentic-hub/web",
+    "clean": "rm -rf node_modules apps/*/node_modules packages/*/node_modules",
+    "db:up": "docker-compose up -d",
+    "db:down": "docker-compose down",
+    "db:logs": "docker-compose logs -f postgres",
+    "db:reset": "docker-compose down -v && docker-compose up -d"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
