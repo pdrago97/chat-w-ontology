@@ -23,6 +23,7 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
   const [health, setHealth] = useState<Record<string, Health>>({});
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const isDark = typeof document !== 'undefined' && document.documentElement.classList.contains('dark');
 
   // Filter out dev-only sources in production
   const isProduction = typeof window !== 'undefined' &&
@@ -44,9 +45,9 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
     key => availableSources.includes(key)
   );
 
-  // Default to Optimized if available, otherwise Cognee, otherwise first available source
-  const defaultSource = availableSources.includes('optimized') ? 'optimized' :
-                        availableSources.includes('cognee') ? 'cognee' :
+  // Default to curated local graph (comprehensive knowledge-graph.json)
+  const defaultSource = availableSources.includes('curated') ? 'curated' :
+                        availableSources.includes('adminGraph') ? 'adminGraph' :
                         (availableSources[0] || 'curated');
   const [current, setCurrent] = useState<keyof typeof SOURCES>(defaultSource);
 
@@ -113,10 +114,7 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
     // Preload health information for quick glance counts
     refreshHealth();
 
-    // Auto-load Cognee data on mount if it's the default source
-    if (defaultSource === 'cognee') {
-      loadFrom('cognee');
-    }
+    // No auto-load needed - data comes from the loader in _index.tsx
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -164,54 +162,44 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
     }
   }
 
-
-
-  // Keep buttons enabled; we validate live and show tooltips, but do not block selection
-  const disabled = useMemo(() => {
-    const result: Record<string, boolean> = {};
-    availableSources.forEach(source => {
-      result[source] = busy;
-    });
-    return result;
-  }, [busy, availableSources]);
-
-  const counts = (key: keyof typeof SOURCES) => {
+  const getCounts = (key: keyof typeof SOURCES) => {
     const h = health[key];
     if (!h || !h.sample || !h.sample.counts) return '';
     const n = h.sample.counts.nodes ?? '?';
     const e = h.sample.counts.edges ?? '?';
-    return `${n}${e !== undefined ? '•' + e : ''}`;
+    return `${n}${e !== undefined ? '\u2022' + e : ''}`;
   };
-
-  const colorClass = (key: keyof typeof SOURCES, selected: boolean) => {
-    const common = 'px-2.5 py-1.5 rounded-full text-sm font-medium border shadow-sm focus:outline-none focus:ring-2 transition';
-    if (selected) {
-      switch (key) {
-        case 'curated': return `${common} bg-slate-900 border-slate-900 text-white focus:ring-slate-900/40`;
-        case 'supabase': return `${common} bg-cyan-600 border-cyan-600 text-white focus:ring-cyan-700/40`;
-        case 'cognee': return `${common} bg-violet-600 border-violet-600 text-white focus:ring-violet-700/40`;
-      }
-    }
-    return `${common} bg-white text-slate-900 border-slate-300 hover:bg-slate-50`;
-  };
-
-
-
-  const btnClass = colorClass(current, true);
 
   return (
-    <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+    <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
       <button
         aria-label={`Source: ${SOURCES[current].label}`}
         title={`Click to select source — current: ${SOURCES[current].label}`}
-        className={`${btnClass} relative`}
         disabled={busy}
         onClick={() => setDropdownOpen(!dropdownOpen)}
-        style={{ zIndex: 10001, display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+        style={{
+          zIndex: 10001,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 6,
+          padding: '4px 10px',
+          borderRadius: 9999,
+          fontSize: 12,
+          fontWeight: 500,
+          border: '1px solid',
+          borderColor: isDark ? '#4b5563' : '#cbd5e1',
+          background: isDark ? 'rgba(31,41,55,0.9)' : 'rgba(255,255,255,0.9)',
+          color: isDark ? '#e5e7eb' : '#0f172a',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.08)',
+          cursor: busy ? 'not-allowed' : 'pointer',
+          opacity: busy ? 0.6 : 1,
+          transition: 'all 0.2s ease',
+          outline: 'none',
+        }}
       >
         <span>{SOURCES[current].label}</span>
-        <span className="ml-1 text-[10px] opacity-80">{counts(current)}</span>
-        <svg className="ml-1 w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+        <span style={{ marginLeft: 4, fontSize: 10, opacity: 0.8 }}>{getCounts(current)}</span>
+        <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20" style={{ marginLeft: 4 }}>
           <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
       </button>
@@ -219,22 +207,50 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
       {dropdownOpen && (
         <>
           <div
-            className="fixed inset-0 z-10000"
+            style={{ position: 'fixed', inset: 0, zIndex: 10000 }}
             onClick={() => setDropdownOpen(false)}
           />
-          <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-slate-300 rounded-md shadow-lg z-10002 max-h-64 overflow-y-auto">
-            {availableSources.map((key) => {
+          <div style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            marginTop: 4,
+            width: 220,
+            background: isDark ? '#1f2937' : '#ffffff',
+            border: `1px solid ${isDark ? '#4b5563' : '#cbd5e1'}`,
+            borderRadius: 8,
+            boxShadow: isDark
+              ? '0 4px 16px rgba(0,0,0,0.4)'
+              : '0 4px 16px rgba(0,0,0,0.12)',
+            zIndex: 10002,
+            maxHeight: 256,
+            overflowY: 'auto',
+          }}>
+            {availableSources.map((key, idx) => {
               const source = SOURCES[key];
               const isSelected = key === current;
               const h = health[key];
-              const counts = h?.sample?.counts ? `${h.sample.counts.nodes || '?'}•${h.sample.counts.edges || '?'}` : '';
+              const counts = h?.sample?.counts ? `${h.sample.counts.nodes || '?'}\u2022${h.sample.counts.edges || '?'}` : '';
 
               return (
                 <div
                   key={key}
-                  className={`px-3 py-1.5 text-sm cursor-pointer hover:bg-slate-50 border-b border-slate-100 last:border-b-0 ${
-                    isSelected ? 'bg-slate-100 font-medium text-slate-900' : 'text-slate-700'
-                  }`}
+                  style={{
+                    padding: '8px 12px',
+                    fontSize: 13,
+                    cursor: 'pointer',
+                    borderBottom: idx < availableSources.length - 1
+                      ? `1px solid ${isDark ? '#374151' : '#f1f5f9'}`
+                      : 'none',
+                    background: isSelected
+                      ? (isDark ? '#374151' : '#f1f5f9')
+                      : 'transparent',
+                    color: isSelected
+                      ? (isDark ? '#ffffff' : '#0f172a')
+                      : (isDark ? '#d1d5db' : '#475569'),
+                    fontWeight: isSelected ? 500 : 400,
+                    transition: 'background 0.15s ease',
+                  }}
                   onClick={async () => {
                     setDropdownOpen(false);
                     if (key !== current) {
@@ -243,8 +259,27 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
                       if (!ok) setCurrent(current);
                     }
                   }}
+                  onMouseEnter={(e) => {
+                    if (!isSelected) {
+                      (e.target as HTMLElement).style.background = isDark ? '#2d3748' : '#f8fafc';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isSelected) {
+                      (e.target as HTMLElement).style.background = 'transparent';
+                    }
+                  }}
                 >
-                  {source.label} {counts && <span className="text-xs text-slate-500 float-right">{counts}</span>}
+                  {source.label}
+                  {counts && (
+                    <span style={{
+                      float: 'right',
+                      fontSize: 11,
+                      color: isDark ? '#9ca3af' : '#94a3b8',
+                    }}>
+                      {counts}
+                    </span>
+                  )}
                 </div>
               );
             })}
@@ -256,4 +291,3 @@ const SourceSwitcher: React.FC<Props> = ({ onGraphUpdate }) => {
 };
 
 export default SourceSwitcher;
-

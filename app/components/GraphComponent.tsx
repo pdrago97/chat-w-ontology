@@ -4,6 +4,7 @@ import coseBilkent from 'cytoscape-cose-bilkent';
 try { cytoscape.use(coseBilkent as any); } catch {}
 
 import { useLanguage } from '../contexts/LanguageContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { translateGraphData } from '../services/graphTranslation';
 
 import GraphModeToggle from './GraphModeToggle';
@@ -64,6 +65,9 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
     if (raw.includes('contrib')) return 'CONTRIBUTED_TO';
     return e.relation || e.label || '';
   };
+
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   const [autoPan, setAutoPan] = useState(false);
   const [containerSize, setContainerSize] = useState({ w: 0, h: 0 });
@@ -327,9 +331,9 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
               'font-size': '14px',
               'font-weight': '600',
               'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-              'color': '#ffffff',
+              'color': isDark ? '#ffffff' : '#1e293b',
               'text-outline-width': '2px',
-              'text-outline-color': 'rgba(0,0,0,0.7)',
+              'text-outline-color': isDark ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.85)',
               'border-width': '3px',
               'border-style': 'solid',
               'shape': 'roundrectangle',
@@ -517,8 +521,8 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
                 const w = Number(edge.data('weight') ?? 1);
                 return Math.max(2, Math.min(6, 2 + w));
               },
-              'line-color': '#7F8C8D',
-              'target-arrow-color': '#7F8C8D',
+              'line-color': isDark ? '#7F8C8D' : '#94a3b8',
+              'target-arrow-color': isDark ? '#7F8C8D' : '#94a3b8',
               'target-arrow-shape': 'triangle-backcurve',
               'target-arrow-size': '12px',
               'curve-style': 'unbundled-bezier',
@@ -528,17 +532,17 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
               'font-size': '11px',
               'font-weight': '500',
               'font-family': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-              'color': '#34495E',
+              'color': isDark ? '#cbd5e1' : '#334155',
               'text-rotation': 'autorotate',
               'text-margin-y': '-12px',
               'text-opacity': 0.9,
-              'text-background-color': 'rgba(255,255,255,0.8)',
+              'text-background-color': isDark ? 'rgba(15,23,42,0.85)' : 'rgba(255,255,255,0.9)',
               'text-background-padding': '3px',
               'text-background-shape': 'roundrectangle',
-              'text-border-color': '#BDC3C7',
+              'text-border-color': isDark ? '#475569' : '#cbd5e1',
               'text-border-width': '1px',
               'text-border-opacity': 0.5,
-              'opacity': 0.8,
+              'opacity': isDark ? 0.8 : 0.7,
               'transition-property': 'all',
               'transition-duration': '0.3s'
             }
@@ -677,12 +681,13 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
 
       // Reset connected edges
       const connectedEdges = node.connectedEdges();
+      const edgeResetColor = isDark ? '#7F8C8D' : '#94a3b8';
       connectedEdges.animate({
         style: {
           'width': '3px',
-          'line-color': '#7F8C8D',
-          'target-arrow-color': '#7F8C8D',
-          'opacity': 0.8
+          'line-color': edgeResetColor,
+          'target-arrow-color': edgeResetColor,
+          'opacity': isDark ? 0.8 : 0.7
         }
       }, {
         duration: 200
@@ -984,6 +989,44 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
             padding: 12px 24px;
           }
         }
+
+        /* ── Dark mode overrides ── */
+        html.dark .modal-overlay {
+          background: rgba(0, 0, 0, 0.8);
+        }
+        html.dark .modal-content {
+          background: #111827;
+          color: #e5e7eb;
+          border-color: #374151;
+          box-shadow: 0 22px 45px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+        }
+        html.dark .tooltip-title { color: #f3f4f6; }
+        html.dark .tooltip-subtitle { color: #9ca3af; background: rgba(76, 175, 80, 0.15); }
+        html.dark .field-section { background: rgba(31,41,55,0.6); border-color: rgba(255,255,255,0.06); }
+        html.dark .field-item { color: #d1d5db; }
+        html.dark .field-item strong { color: #f3f4f6; }
+        html.dark .field-text { color: #d1d5db; background: rgba(255,255,255,0.03); }
+        html.dark .field-list { color: #d1d5db; }
+        html.dark .field-list li { background: rgba(76, 175, 80, 0.08); }
+        html.dark .modal-close-btn { background: #1f2937; color: #d1d5db; border-color: #374151; }
+        html.dark .modal-close-btn:hover { background: #374151; }
+        html.dark .collapsible { border-color: #374151; background: #1f2937; }
+        html.dark .collapsible > summary { color: #f3f4f6; }
+        html.dark .collapsible[open] > summary { border-color: #374151; background: #111827; }
+        html.dark .code-block { background: #0f172a; color: #e2e8f0; }
+        html.dark .download-container { background: #1f2937; }
+        html.dark .tooltip-header { border-left-color: inherit; }
+        html.dark .person-highlights { background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%); }
+        html.dark .company-info { background: #1e3a5f; border-left-color: #60a5fa; }
+        html.dark .company-info div:first-child { color: #93c5fd; }
+        html.dark .tech-info { background: #3b1010; border-left-color: #f87171; }
+        html.dark .tech-info div:first-child { color: #fca5a5; }
+        html.dark .project-info { background: #451a03; border-left-color: #fbbf24; }
+        html.dark .project-info div:first-child { color: #fcd34d; }
+        html.dark .experience-info { background: #022c22; border-left-color: #34d399; }
+        html.dark .experience-info div:first-child { color: #6ee7b7; }
+        html.dark .professional-description { background: #1f2937; }
+        html.dark .professional-description p { color: #d1d5db; }
       `;
       document.head.appendChild(style);
 
@@ -1121,7 +1164,7 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
       if (autoPanId) cancelAnimationFrame(autoPanId);
       clearTimeout(initTimer);
     };
-  }, [graphData, language, initAttempts, autoPan, storyLens, minDegree]); // re-run when lens/filter changes
+  }, [graphData, language, initAttempts, autoPan, storyLens, minDegree, theme]); // re-run when lens/filter/theme changes
 
   const resetView = () => {
     if (!cyRef.current) return;
@@ -1132,41 +1175,89 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      {/* Bottom-left control cluster (no overlap with canvas center) */}
-      <div style={{ position: 'absolute', bottom: '16px', left: '16px', zIndex: 10002, display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      {/* Bottom-left control cluster */}
+      <div style={{
+        position: 'absolute',
+        bottom: 12,
+        left: 12,
+        zIndex: 10002,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 6,
+        flexWrap: 'wrap',
+      }}>
         <GraphModeToggle mode={mode} onChange={setMode} />
         {mode === '2d' && (
-          <>
-            <button
-              onClick={resetView}
-              className="px-2.5 py-1.5 rounded-md bg-white text-slate-900 border border-slate-300 shadow hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-900/40"
-              title="Reset camera"
-            >
-              Reset camera
-            </button>
-
-
-          </>
+          <button
+            onClick={resetView}
+            style={{
+              padding: '6px 8px',
+              fontSize: 12,
+              borderRadius: 6,
+              background: isDark ? 'rgba(31,41,55,0.9)' : 'rgba(255,255,255,0.9)',
+              backdropFilter: 'blur(8px)',
+              color: isDark ? '#e5e7eb' : '#0f172a',
+              border: `1px solid ${isDark ? '#4b5563' : '#cbd5e1'}`,
+              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+            title="Reset camera"
+          >
+            Reset camera
+          </button>
         )}
       </div>
 
       {/* Top-right: Source switcher + refresh */}
-      <div style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 10001, display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div style={{
+        position: 'absolute',
+        top: 12,
+        right: 12,
+        zIndex: 10001,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 8,
+      }}>
         <SourceSwitcher onGraphUpdate={onGraphUpdate || (() => {})} />
         <button
           onClick={refreshGraphData}
           disabled={isRefreshing}
-          className="px-3 py-2 rounded-full bg-blue-600 text-white shadow hover:bg-blue-700 disabled:opacity-60"
+          style={{
+            padding: '6px 12px',
+            fontSize: 12,
+            borderRadius: 9999,
+            background: '#2563eb',
+            color: '#ffffff',
+            border: 'none',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+            cursor: isRefreshing ? 'not-allowed' : 'pointer',
+            opacity: isRefreshing ? 0.6 : 1,
+            transition: 'all 0.2s ease',
+          }}
           title={lastUpdated ? `Last updated: ${new Date(lastUpdated).toLocaleTimeString()}` : t('graph.refresh')}
         >
-          {isRefreshing ? `🔄 ${t('graph.loading')}` : `🔄 ${t('graph.refresh')}`}
+          {isRefreshing ? t('graph.loading') : t('graph.refresh')}
         </button>
       </div>
 
-      {/* Container info centered at top */}
-      <div style={{ position: 'absolute', top: '16px', left: '50%', transform: 'translateX(-50%)', zIndex: 10000, fontSize: '12px', color: '#111', background: 'rgba(255,255,255,0.85)', padding: '6px 10px', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
-        container: {containerSize.w}x{containerSize.h} • nodes: {counts.nodes} • edges: {counts.edges}
+      {/* Container info - visible on larger screens */}
+      <div className="hidden sm:block" style={{
+        position: 'absolute',
+        top: 12,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 10000,
+        fontSize: 12,
+        color: isDark ? '#9ca3af' : '#4b5563',
+        background: isDark ? 'rgba(17,24,39,0.85)' : 'rgba(255,255,255,0.85)',
+        backdropFilter: 'blur(8px)',
+        padding: '6px 12px',
+        borderRadius: 8,
+        border: `1px solid ${isDark ? '#374151' : '#e5e7eb'}`,
+      }}>
+        nodes: {counts.nodes} / edges: {counts.edges}
       </div>
 
       {/* Graph container(s) */}
@@ -1176,20 +1267,40 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ graphData, onGraphUpdat
           style={{
             position: 'absolute',
             inset: 0,
-            minHeight: '100vh',
             width: '100%',
             height: '100%',
-            background: '#f8fafc' // slate-50 for clean, high-contrast canvas
+            background: isDark ? '#030712' : '#f8fafc',
+            transition: 'background-color 0.3s ease',
           }}
         />
       )}
       {mode === '3d' && isClient && (
-        <React.Suspense fallback={<div style={{position:'absolute',inset:0,display:'grid',placeItems:'center'}}>Loading 3D…</div>}>
-          <ForceGraph3DView graphData={graphData} />
+        <React.Suspense fallback={
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'grid',
+            placeItems: 'center',
+            background: isDark ? '#030712' : '#f8fafc',
+            color: isDark ? '#9ca3af' : '#6b7280',
+          }}>
+            Loading 3D...
+          </div>
+        }>
+          <ForceGraph3DView graphData={graphData} theme={theme} />
         </React.Suspense>
       )}
       {mode === '3d' && !isClient && (
-        <div style={{position:'absolute',inset:0,display:'grid',placeItems:'center'}}>Loading 3D…</div>
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          display: 'grid',
+          placeItems: 'center',
+          background: isDark ? '#030712' : '#f8fafc',
+          color: isDark ? '#9ca3af' : '#6b7280',
+        }}>
+          Loading 3D...
+        </div>
       )}
     </div>
   );

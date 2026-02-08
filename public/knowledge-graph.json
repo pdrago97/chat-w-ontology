@@ -3,60 +3,77 @@
     {
       "id": "Pedro Reichow",
       "type": "Person",
-      "title": "Senior AI Engineer • Data Specialist • Technology Entrepreneur",
+      "title": "Full Stack AI Engineer • Data Specialist • Technology Entrepreneur",
       "location": "Santa Catarina, Brazil",
       "contact": {
-        "email": "pedro_reichow@hotmail.com",
+        "email": "pedroreichow3@gmail.com",
         "linkedin": "https://www.linkedin.com/in/pedroreichow",
-        "portfolio": "https://talk-to-my-resume.vercel.app/"
+        "portfolio": "https://pedroreichow.com.br"
       },
-      "summary": "Experienced AI Engineer and Data Specialist with 5+ years building production-ready artificial intelligence solutions and scalable data systems. Expert in computer vision, large language model integration, and high-performance data pipelines processing 500GB+ daily."
+      "summary": "Full Stack AI Engineer and Data Specialist with 5+ years building production-ready agentic AI systems, multi-agent architectures, and scalable data platforms. Deep expertise in designing autonomous AI agents, orchestrating multi-agent workflows, and integrating LLMs into enterprise-grade pipelines with human-in-the-loop governance. Expert in computer vision, RAG systems, knowledge graphs, and high-performance data pipelines processing 500GB+ daily."
     },
+
     {
-      "id": "Capgemini Brasil",
+      "id": "Santodigital",
       "type": "Experience",
-      "title": "Senior Solutions Consultant (Solutions Consultant IV)",
-      "years": "Jan 2025 - Present",
-      "duration": "8+ months",
+      "title": "Cloud AI Solutions Architect",
+      "years": "Jan 2024 - Present",
+      "duration": "1+ year",
       "location": "Brazil",
-      "description": "Lead enterprise-level AI and data engineering solutions for large-scale clients, specializing in knowledge graphs, fraud detection, and generative AI implementations",
+      "company_type": "Google Partner",
+      "description": "Architecting production-grade RAG and multi-agent systems for enterprise clients as a Cloud AI Solutions Architect at Google Cloud partner",
       "responsibilities": [
-        "Architected microservices in Python for serving agentic AI systems with RAG capabilities",
-        "Built sophisticated ontologies using Protégé and RDF/OWL, integrated with Anzo Analytics",
-        "Developed advanced graph navigation interfaces using TypeScript and Cytoscape.js for fraud detection",
-        "Collaborate with 50+ engineers and consultants on enterprise-scale data engineering optimizations"
+        "Architected production-grade RAG with BigQuery + Vertex AI, reducing document analysis from weeks to minutes with offline evaluation suites for retrieval quality",
+        "Implemented agentic reinforcement loops via ADK: observability logs feeding prompt fine-tuning, reducing hallucinations and improving faithfulness scores in production",
+        "Built multi-agent systems for enterprise clients: autonomous compliance automation, contract alert agents, auto-service with Zendesk handoff and human-in-the-loop governance"
       ],
       "achievements": [
-        "Led enterprise AI implementations for large-scale clients",
-        "Delivered complex business intelligence and fraud risk analysis solutions",
-        "Managed teams of 50+ engineers and consultants"
+        "Reduced document analysis time from weeks to minutes using RAG + BigQuery",
+        "Improved LLM faithfulness scores through agentic reinforcement loops",
+        "Delivered autonomous compliance and contract automation agents"
       ],
       "technologies": [
-        "Python",
-        "RAG",
-        "Protégé",
-        "RDF/OWL",
-        "Anzo Analytics",
-        "TypeScript",
-        "Cytoscape.js",
-        "Microservices",
-        "Fraud Detection",
-        "Knowledge Graphs"
+        "BigQuery", "Vertex AI", "ADK", "RAG", "Python", "Multi-Agent Systems",
+        "Google Cloud", "Zendesk", "LLM Evaluation", "Prompt Engineering"
+      ]
+    },
+    {
+      "id": "CVS Health",
+      "type": "Experience",
+      "title": "Senior Software & Data Engineer | AI Observability",
+      "years": "Aug 2024 - Dec 2025",
+      "duration": "1.5 years",
+      "location": "USA - Remote",
+      "description": "Led AI observability and enterprise agentic AI development for healthcare systems with HIPAA/FedRAMP compliance",
+      "responsibilities": [
+        "Architected SLOs for AI pipeline latency (p50/p95) and cost-per-token monitoring using Datadog/Grafana for healthcare AI systems in HIPAA/FedRAMP compliance",
+        "Built observability dashboards tracking faithfulness and relevance metrics for LLM outputs, enabling prompt version A/B testing and continuous improvement",
+        "Led full-stack development of enterprise agentic AI applications with predictive analysis, autonomous workflow orchestration, and multi-step reasoning pipelines"
+      ],
+      "achievements": [
+        "Established AI observability standards for healthcare LLM systems",
+        "Enabled prompt version A/B testing through faithfulness metrics dashboards",
+        "Led enterprise agentic AI applications with autonomous workflow orchestration"
+      ],
+      "technologies": [
+        "Datadog", "Grafana", "Python", "LLM Observability", "HIPAA",
+        "FedRAMP", "Agentic AI", "Predictive Analysis", "SLO Architecture"
       ]
     },
     {
       "id": "MoveUp AI",
       "type": "Experience",
       "title": "Founding Engineer & Technical Co-founder",
-      "years": "Jan 2025 - Present",
-      "duration": "8+ months",
+      "years": "Jan 2025 - Jul 2025",
+      "duration": "7 months",
       "location": "San Francisco, CA - Remote",
-      "description": "Co-founding AI-powered workforce intelligence platform serving 15+ enterprise teams with integrated Slack workflows, knowledge graphs, and team analytics",
+      "description": "Co-founded AI-powered workforce intelligence platform serving 15+ enterprise teams with agentic Slack workflows, knowledge graphs, and autonomous team analytics",
       "responsibilities": [
-        "Architected TypeScript MCP (Model Context Protocol) servers enabling seamless AI agent communication",
-        "Built sophisticated Python agents using Agno, LangChain, and LangGraph for intelligent team insights",
-        "Implemented Zep memory systems and Supabase vector databases integrated with commercial LLMs",
-        "Developed comprehensive Slack integrations and N8N automation workflows"
+        "Designed graph-based agent orchestration with specialized agents (research, analysis, action) coordinating via shared memory and tool-use protocols",
+        "Architected TypeScript MCP (Model Context Protocol) servers enabling seamless agent-to-agent and agent-to-tool communication across enterprise ecosystems",
+        "Built autonomous Python agents using Agno, LangChain, and LangGraph with multi-step reasoning, dynamic tool selection, and self-correction loops",
+        "Implemented Zep persistent memory, Supabase vector databases, and FalkorDB graph stores integrated with commercial LLMs for long-term contextual agent memory",
+        "Developed end-to-end autonomous workflows with N8N orchestration and Slack integrations"
       ],
       "achievements": [
         "Serving 15+ enterprise teams with AI-powered workforce intelligence",
@@ -64,168 +81,120 @@
         "50%+ reduction in information gathering time through natural language queries"
       ],
       "technologies": [
-        "TypeScript",
-        "MCP Protocol",
-        "Python",
-        "Agno",
-        "LangChain",
-        "LangGraph",
-        "Zep",
-        "Supabase",
-        "OpenAI",
-        "Anthropic",
-        "Slack API",
-        "N8N",
-        "Vector Databases"
+        "TypeScript", "MCP Protocol", "Python", "Agno", "LangChain", "LangGraph",
+        "Zep", "FalkorDB", "Supabase", "OpenAI", "Anthropic", "Slack API", "N8N",
+        "Vector Databases", "Multi-Agent Architecture"
       ]
     },
     {
-      "id": "Trinnix AI Lab",
+      "id": "Capgemini Brasil",
       "type": "Experience",
-      "title": "AI Engineer & Computer Vision Specialist",
-      "years": "Feb 2024 - Nov 2024",
-      "duration": "10 months",
+      "title": "Senior Solutions Consultant (Solutions Consultant IV)",
+      "years": "Jan 2022 - Dec 2023",
+      "duration": "2 years",
       "location": "Brazil",
-      "description": "Led development of AI solutions focusing on computer vision and LLM integration for agricultural technology and precision farming applications",
+      "description": "Architected enterprise-level AI and data engineering solutions specializing in knowledge graphs, fraud detection, and semantic search for financial sector clients",
       "responsibilities": [
-        "Developed and deployed agricultural monitoring systems using YoloX and Roboflow",
-        "Built ontological knowledge graphs using Neo4j for agricultural data analysis",
-        "Integrated multiple LLMs (GPT-4o, Claude 3.5, Gemini 1.5) with advanced prompt engineering",
-        "Built scalable TypeScript platforms with tRPC and Node.js for geospatial analysis"
+        "Architected Python-based API middleware and Knowledge Graph solutions for fraud detection and risk analysis in the financial sector",
+        "Developed sophisticated ontologies using Protege and RDF/OWL with REST APIs for complex business intelligence and semantic search",
+        "Collaborated with teams of 50+ engineers on enterprise data engineering optimizations and API integrations"
       ],
       "achievements": [
-        "Achieved >95% accuracy in plant disease detection and livestock behavior analysis",
-        "Successfully integrated multiple LLMs for automated reporting and intelligent alerting"
+        "Led enterprise AI implementations for large-scale financial clients",
+        "Delivered complex business intelligence and fraud risk analysis solutions",
+        "Managed collaboration across teams of 50+ engineers and consultants"
       ],
       "technologies": [
-        "YoloX",
-        "Roboflow",
-        "Neo4j",
-        "GPT-4o",
-        "Claude 3.5",
-        "Gemini 1.5",
-        "TypeScript",
-        "tRPC",
-        "Node.js",
-        "Computer Vision",
-        "Prompt Engineering"
+        "Python", "RAG", "Protege", "RDF/OWL", "Anzo Analytics",
+        "TypeScript", "Cytoscape.js", "Microservices", "Fraud Detection",
+        "Knowledge Graphs", "REST APIs", "Semantic Search"
       ]
     },
     {
       "id": "Simulated Reality",
       "type": "Experience",
-      "title": "Senior Full Stack Engineer & VR Developer",
-      "years": "Feb 2023 - Feb 2024",
+      "title": "Full Stack Engineer | VR & Real-Time Systems",
+      "years": "Jan 2021 - Dec 2021",
       "duration": "1 year",
       "location": "Westlake Village, California, USA",
-      "description": "Led development of virtual reality applications for healthcare training and wellness, ensuring HIPAA and FedRAMP compliance",
+      "description": "Developed full-stack VR solutions for healthcare training and wellness applications with 3D physics simulations and real-time systems",
       "responsibilities": [
-        "Built VR training platforms using Node.js and React with 3D physics simulations",
-        "Created comprehensive analytics dashboards with Chart.js for training effectiveness measurement",
-        "Implemented scalable Azure App Service architecture with Red Hat OpenShift containers",
-        "Built asynchronous processing pipelines using Redis and RabbitMQ"
+        "Developed full-stack VR solutions using React frontend with Node.js backend for training and wellness applications with 3D object interaction and physics simulations",
+        "Built scalable REST APIs with queues for asynchronous processing and pub/sub for real-time communication between system components",
+        "Engineered pipelines for processing large 3D video files and game updates compiled in Unity and Unreal Engine"
       ],
       "achievements": [
         "Successfully implemented HIPAA and FedRAMP compliance protocols",
         "Processed large 3D video files and Unity/Unreal game updates through queue system"
       ],
       "technologies": [
-        "Node.js",
-        "React",
-        "VR Development",
-        "Chart.js",
-        "Azure App Service",
-        "Red Hat OpenShift",
-        "Redis",
-        "RabbitMQ",
-        "Unity",
-        "Unreal",
-        "HIPAA",
-        "FedRAMP"
+        "Node.js", "React", "VR Development", "Chart.js",
+        "Azure App Service", "Red Hat OpenShift", "Redis", "RabbitMQ",
+        "Unity", "Unreal Engine", "HIPAA", "FedRAMP", "3D Physics"
       ]
     },
     {
       "id": "QI Tech",
       "type": "Experience",
       "title": "Senior Data Engineer",
-      "years": "Mar 2022 - Feb 2023",
-      "duration": "1 year",
-      "location": "São Paulo, Brazil",
-      "description": "Led development of large-scale financial data processing systems and machine learning models for banking-as-a-service platform",
+      "years": "Jan 2019 - Dec 2020",
+      "duration": "2 years",
+      "location": "Sao Paulo, Brazil",
+      "company_type": "Fintech",
+      "description": "Led development of large-scale financial data processing systems for banking-as-a-service platform processing 500GB+ daily",
       "responsibilities": [
-        "Architected PySpark pipelines processing 500GB+ daily financial transactions on Google Cloud Dataproc",
-        "Implemented Spark Structured Streaming for live transaction analysis with windowed aggregations",
-        "Designed Delta Lake implementation on GCS with ACID transactions and time travel capabilities",
-        "Built high-performance gRPC microservices processing 100,000+ daily requests"
+        "Processed 500GB+ daily with PySpark on Dataproc, optimizing gRPC latency and cloud cost efficiency — infrastructure patterns now applied to AI workloads",
+        "Designed Delta Lake on GCS with ACID transactions for audit compliance, enabling data versioning critical for ML reproducibility"
       ],
       "achievements": [
         "Achieved 40% performance improvement in data processing",
-        "Processed 500GB+ daily financial transactions",
-        "Built microservices with 150ms average latency handling 100,000+ daily requests"
+        "Processed 500GB+ daily financial transactions"
       ],
       "technologies": [
-        "PySpark",
-        "Google Cloud Dataproc",
-        "Spark Structured Streaming",
-        "Delta Lake",
-        "GCS",
-        "gRPC",
-        "Microservices",
-        "Apache Airflow",
-        "BigQuery"
+        "PySpark", "Google Cloud Dataproc", "Spark Structured Streaming",
+        "Delta Lake", "GCS", "gRPC", "Microservices", "Apache Airflow", "BigQuery"
       ]
     },
     {
       "id": "PecSmart",
       "type": "Experience",
       "title": "Backend Developer & IoT Specialist",
-      "years": "Dec 2021 - Feb 2022",
-      "duration": "3 months",
-      "location": "Florianópolis, Santa Catarina, Brazil",
-      "description": "Developed IoT systems for precision livestock monitoring using embedded devices and machine learning",
+      "years": "Nov 2017 - Dec 2018",
+      "duration": "1+ year",
+      "location": "Florianopolis, Santa Catarina, Brazil",
+      "company_type": "IoT & AgTech",
+      "description": "Built IoT + ML pipelines for livestock monitoring with Raspberry Pi and real-time behavioral analysis",
       "responsibilities": [
         "Built sensor integration systems on Raspberry Pi for livestock monitoring",
         "Created end-to-end processing pipelines for real-time livestock health prediction",
         "Implemented distributed solutions using BalenaCLI for remote device management"
       ],
       "technologies": [
-        "Raspberry Pi",
-        "IoT",
-        "BalenaCLI",
-        "Python",
-        "Django",
-        "Edge Computing",
-        "Sensor Integration"
+        "Raspberry Pi", "IoT", "BalenaCLI", "Python", "Django",
+        "Edge Computing", "Sensor Integration", "Machine Learning"
       ]
     },
     {
       "id": "Fontes Promotora",
       "type": "Experience",
       "title": "Backend Developer",
-      "years": "May 2021 - Oct 2021",
-      "duration": "6 months",
-      "location": "Florianópolis, Santa Catarina, Brazil",
-      "description": "Developed web scraping, automation, and data processing solutions for enterprise clients",
+      "years": "Jan 2017 - Oct 2017",
+      "duration": "10 months",
+      "location": "Florianopolis, Santa Catarina, Brazil",
+      "description": "Built scalable APIs and web scraping solutions for enterprise data collection and automation",
       "responsibilities": [
-        "Built robust data extraction systems using Scrapy and Requests for enterprise data collection",
-        "Created scalable APIs using FastAPI, Flask, and Django REST Framework",
-        "Implemented advanced data processing pipelines with Pandas for business intelligence",
-        "Delivered complete applications using ReactJS frontend with cloud deployment on AWS"
+        "Built scalable APIs using FastAPI, Flask, and Django REST, creating middleware layer abstracting database complexity",
+        "Developed robust web scraping solutions using Scrapy and Requests for enterprise data collection",
+        "Delivered complete full-stack solutions with ReactJS frontend deployed on AWS and Docker containers"
       ],
       "technologies": [
-        "Scrapy",
-        "Requests",
-        "FastAPI",
-        "Flask",
-        "Django REST",
-        "Pandas",
-        "ReactJS",
-        "AWS",
-        "Docker"
+        "Scrapy", "Requests", "FastAPI", "Flask", "Django REST",
+        "Pandas", "ReactJS", "AWS", "Docker"
       ]
     },
+
     {
-      "id": "Estácio University",
+      "id": "Estacio University",
       "type": "Education",
       "degree": "Bachelor of Science in Systems Analysis and Development",
       "years": "2021 - 2023",
@@ -245,19 +214,16 @@
       "years": "2012 - 2016",
       "location": "Federal Institute of Santa Catarina (IFSC)"
     },
+
     {
-      "id": "AI & Machine Learning Skills",
+      "id": "AI & Agentic Systems",
       "type": "Skills",
-      "category": "Artificial Intelligence & Machine Learning",
+      "category": "Artificial Intelligence & Agentic Systems",
       "items": [
-        "Computer Vision (YoloX, OpenCV)",
-        "Large Language Models (GPT-4o, Claude, Gemini)",
-        "Natural Language Processing",
-        "Prompt Engineering",
-        "Neural Networks",
-        "Deep Learning Frameworks",
-        "RAG (Retrieval Augmented Generation)",
-        "Agentic AI Systems"
+        "Agentic AI Architecture", "Multi-Agent Orchestration", "Large Language Models",
+        "RAG Pipelines", "Computer Vision", "NLP", "Prompt Engineering",
+        "Model Context Protocol (MCP)", "Tool-Use Agents", "Human-in-the-Loop Systems",
+        "LLM Evaluation & Observability"
       ],
       "proficiency": "Expert"
     },
@@ -266,15 +232,9 @@
       "type": "Skills",
       "category": "Data Engineering & Big Data",
       "items": [
-        "Apache Spark (PySpark, Spark SQL, Streaming)",
-        "Apache Airflow",
-        "Delta Lake",
-        "Data Lake/Warehouse Architecture",
-        "ETL/ELT Pipelines",
-        "Data Modeling",
-        "Performance Optimization",
-        "Real-time Processing",
-        "Distributed Computing"
+        "Apache Spark", "Apache Airflow", "Delta Lake", "Data Lake/Warehouse Architecture",
+        "ETL/ELT Pipelines", "Data Modeling", "Performance Optimization",
+        "Real-time Processing", "Distributed Computing"
       ],
       "proficiency": "Expert"
     },
@@ -283,18 +243,9 @@
       "type": "Skills",
       "category": "Programming & Development",
       "items": [
-        "Python",
-        "TypeScript",
-        "JavaScript",
-        "SQL",
-        "Node.js",
-        "React",
-        "Django",
-        "FastAPI",
-        "Flask",
-        "GraphQL",
-        "gRPC",
-        "Microservices Architecture"
+        "Python", "TypeScript", "JavaScript", "SQL",
+        "Node.js", "React", "Django", "FastAPI", "Flask",
+        "GraphQL", "gRPC", "Microservices Architecture"
       ],
       "proficiency": "Expert"
     },
@@ -303,91 +254,212 @@
       "type": "Skills",
       "category": "Cloud & Infrastructure",
       "items": [
-        "AWS (S3, Redshift, Glue, Lambda, EMR)",
-        "Google Cloud Platform (BigQuery, Dataproc, Composer)",
-        "Azure (App Service, Blob Storage)",
-        "Docker",
-        "Kubernetes",
-        "Infrastructure-as-Code",
-        "CI/CD",
+        "AWS", "Google Cloud Platform", "Azure",
+        "Docker", "Kubernetes", "Infrastructure-as-Code", "CI/CD",
         "Red Hat OpenShift"
       ],
       "proficiency": "Expert"
     },
     {
-      "id": "Specialized Technologies Skills",
+      "id": "Specialized Tech Skills",
       "type": "Skills",
       "category": "Specialized Technologies",
       "items": [
-        "Knowledge Graphs (Neo4j, Protégé, RDF/OWL)",
-        "IoT Systems (Raspberry Pi)",
-        "Virtual Reality Development",
-        "Geospatial Analysis",
-        "Real-time Systems",
-        "Edge Computing",
-        "Fraud Detection Systems"
+        "Knowledge Graphs", "IoT Systems", "Virtual Reality Development",
+        "Geospatial Analysis", "Real-time Systems", "Edge Computing",
+        "Fraud Detection Systems", "Vector Databases"
       ],
       "proficiency": "Advanced"
     },
     {
-      "id": "Agricultural AI Project",
-      "type": "Project",
-      "name": "Agricultural Monitoring Systems",
-      "description": "Computer vision models for agricultural map analysis with >95% accuracy in disease detection",
-      "technologies": [
-        "YoloX",
-        "Roboflow",
-        "Computer Vision",
-        "Neo4j",
-        "LLMs"
+      "id": "Development Practices",
+      "type": "Skills",
+      "category": "Development Practices",
+      "items": [
+        "Test-Driven Development (TDD)", "Performance Optimization",
+        "System Architecture Design", "Technical Documentation",
+        "Agile Development", "Team Leadership"
       ],
-      "company": "Trinnix AI Lab",
-      "impact": "95%+ accuracy in plant disease detection and livestock behavior analysis"
+      "proficiency": "Expert"
+    },
+
+    { "id": "Python", "type": "Technology", "category": "language", "description": "Primary programming language for AI/ML, data engineering, and backend development" },
+    { "id": "TypeScript", "type": "Technology", "category": "language", "description": "Full-stack development language for frontend, MCP servers, and enterprise platforms" },
+    { "id": "JavaScript", "type": "Technology", "category": "language", "description": "Web development language for frontend and backend applications" },
+    { "id": "SQL", "type": "Technology", "category": "language", "description": "Query language for relational databases and data analytics" },
+    { "id": "Node.js", "type": "Technology", "category": "runtime", "description": "JavaScript runtime for building scalable server-side applications" },
+
+    { "id": "React", "type": "Technology", "category": "framework", "description": "Frontend framework for building modern user interfaces and VR applications" },
+    { "id": "Django", "type": "Technology", "category": "framework", "description": "Python web framework for rapid backend development and REST APIs" },
+    { "id": "FastAPI", "type": "Technology", "category": "framework", "description": "Modern Python web framework for building high-performance APIs" },
+    { "id": "Flask", "type": "Technology", "category": "framework", "description": "Lightweight Python web framework for APIs and microservices" },
+    { "id": "GraphQL", "type": "Technology", "category": "api", "description": "Query language for APIs enabling flexible data retrieval" },
+    { "id": "gRPC", "type": "Technology", "category": "protocol", "description": "High-performance RPC framework for microservice communication" },
+    { "id": "REST APIs", "type": "Technology", "category": "api", "description": "RESTful API design pattern for web services" },
+
+    { "id": "LangChain", "type": "Technology", "category": "ai_framework", "description": "Framework for building applications with LLMs and agentic pipelines" },
+    { "id": "LangGraph", "type": "Technology", "category": "ai_framework", "description": "Graph-based multi-agent orchestration framework for autonomous workflows" },
+    { "id": "CrewAI", "type": "Technology", "category": "ai_framework", "description": "Multi-agent orchestration framework for collaborative AI agent teams" },
+    { "id": "Agno", "type": "Technology", "category": "ai_framework", "description": "Lightweight Python framework for building autonomous AI agents" },
+    { "id": "ADK", "type": "Technology", "category": "ai_framework", "description": "Agent Development Kit for building and deploying AI agents on Google Cloud" },
+    { "id": "OpenCV", "type": "Technology", "category": "ai_library", "description": "Computer vision library for image processing and object detection" },
+    { "id": "YoloX", "type": "Technology", "category": "ai_model", "description": "State-of-the-art object detection model for real-time computer vision" },
+
+    { "id": "OpenAI", "type": "Technology", "category": "ai_provider", "description": "LLM provider for GPT models powering intelligent agents and RAG systems" },
+    { "id": "Anthropic Claude", "type": "Technology", "category": "ai_provider", "description": "LLM provider for Claude models for advanced reasoning and code generation" },
+    { "id": "Llama", "type": "Technology", "category": "ai_model", "description": "Meta's open-source large language model family" },
+    { "id": "Gemini", "type": "Technology", "category": "ai_model", "description": "Google's multimodal large language model family" },
+    { "id": "Kimi", "type": "Technology", "category": "ai_model", "description": "Moonshot AI large language model with extended context window" },
+    { "id": "Qwen", "type": "Technology", "category": "ai_model", "description": "Alibaba's large language model family for multilingual tasks" },
+
+    { "id": "Apache Spark", "type": "Technology", "category": "data", "description": "Unified analytics engine for large-scale distributed data processing" },
+    { "id": "PySpark", "type": "Technology", "category": "data", "description": "Python API for Apache Spark enabling distributed data processing" },
+    { "id": "Spark SQL", "type": "Technology", "category": "data", "description": "SQL interface for Apache Spark structured data processing" },
+    { "id": "Spark Streaming", "type": "Technology", "category": "data", "description": "Real-time stream processing extension for Apache Spark" },
+    { "id": "Apache Airflow", "type": "Technology", "category": "data", "description": "Workflow orchestration platform for scheduling and monitoring data pipelines" },
+    { "id": "Delta Lake", "type": "Technology", "category": "data", "description": "Open-source storage layer with ACID transactions for data lake reliability" },
+    { "id": "Pandas", "type": "Technology", "category": "data", "description": "Python data manipulation and analysis library" },
+
+    { "id": "AWS", "type": "Technology", "category": "cloud", "description": "Amazon Web Services cloud platform for scalable infrastructure" },
+    { "id": "S3", "type": "Technology", "category": "cloud_service", "description": "AWS object storage service for scalable data storage" },
+    { "id": "Redshift", "type": "Technology", "category": "cloud_service", "description": "AWS cloud data warehouse for large-scale analytics" },
+    { "id": "AWS Glue", "type": "Technology", "category": "cloud_service", "description": "AWS serverless ETL service for data integration" },
+    { "id": "Lambda", "type": "Technology", "category": "cloud_service", "description": "AWS serverless compute service for event-driven functions" },
+    { "id": "EMR", "type": "Technology", "category": "cloud_service", "description": "AWS managed cluster platform for big data processing" },
+    { "id": "Google Cloud", "type": "Technology", "category": "cloud", "description": "Google Cloud Platform for data and AI workloads" },
+    { "id": "BigQuery", "type": "Technology", "category": "cloud_service", "description": "Google Cloud serverless data warehouse for analytics at scale" },
+    { "id": "Dataproc", "type": "Technology", "category": "cloud_service", "description": "Google Cloud managed Spark and Hadoop service" },
+    { "id": "Vertex AI", "type": "Technology", "category": "ai_platform", "description": "Google Cloud unified AI platform for ML model training and deployment" },
+    { "id": "Composer", "type": "Technology", "category": "cloud_service", "description": "Google Cloud managed Apache Airflow service for workflow orchestration" },
+    { "id": "GCS", "type": "Technology", "category": "cloud_service", "description": "Google Cloud Storage for scalable object storage" },
+    { "id": "Azure", "type": "Technology", "category": "cloud", "description": "Microsoft Azure cloud platform for enterprise applications" },
+
+    { "id": "Docker", "type": "Technology", "category": "infrastructure", "description": "Containerization technology for consistent deployment and scaling" },
+    { "id": "Kubernetes", "type": "Technology", "category": "infrastructure", "description": "Container orchestration platform for automated deployment and scaling" },
+    { "id": "Red Hat OpenShift", "type": "Technology", "category": "infrastructure", "description": "Enterprise Kubernetes platform for hybrid cloud deployments" },
+    { "id": "CI/CD", "type": "Technology", "category": "infrastructure", "description": "Continuous Integration and Continuous Deployment automation pipelines" },
+
+    { "id": "Neo4j", "type": "Technology", "category": "database", "description": "Graph database for knowledge graphs and ontological data modeling" },
+    { "id": "Supabase", "type": "Technology", "category": "database", "description": "Open-source Firebase alternative with PostgreSQL and vector database" },
+    { "id": "FalkorDB", "type": "Technology", "category": "database", "description": "High-performance graph database for knowledge graph stores" },
+    { "id": "Zep", "type": "Technology", "category": "ai_memory", "description": "Persistent memory system for long-term contextual AI agent memory" },
+    { "id": "Redis", "type": "Technology", "category": "database", "description": "In-memory data store for caching and real-time messaging" },
+    { "id": "RabbitMQ", "type": "Technology", "category": "messaging", "description": "Message broker for asynchronous processing and pub/sub communication" },
+
+    { "id": "Protege", "type": "Technology", "category": "ontology", "description": "Ontology editor for creating and managing semantic web ontologies" },
+    { "id": "RDF/OWL", "type": "Technology", "category": "ontology", "description": "Semantic web standards for representing knowledge and ontologies" },
+    { "id": "Anzo Analytics", "type": "Technology", "category": "ontology", "description": "Enterprise knowledge graph platform for semantic data integration" },
+    { "id": "Cytoscape.js", "type": "Technology", "category": "visualization", "description": "JavaScript library for graph visualization and network analysis" },
+
+    { "id": "Datadog", "type": "Technology", "category": "observability", "description": "Monitoring and observability platform for AI pipeline SLOs and metrics" },
+    { "id": "Grafana", "type": "Technology", "category": "observability", "description": "Open-source analytics and visualization platform for metrics dashboards" },
+
+    { "id": "Unity", "type": "Technology", "category": "game_engine", "description": "Cross-platform game engine for VR/AR and 3D applications" },
+    { "id": "Unreal Engine", "type": "Technology", "category": "game_engine", "description": "High-fidelity game engine for VR simulations and 3D rendering" },
+
+    { "id": "N8N", "type": "Technology", "category": "automation", "description": "Workflow automation platform for connecting enterprise tools and services" },
+    { "id": "Slack API", "type": "Technology", "category": "integration", "description": "Slack platform APIs for building enterprise communication integrations" },
+    { "id": "Zendesk", "type": "Technology", "category": "integration", "description": "Customer service platform with API for automated support workflows" },
+
+    { "id": "Scrapy", "type": "Technology", "category": "scraping", "description": "Python web scraping framework for enterprise data collection" },
+    { "id": "Raspberry Pi", "type": "Technology", "category": "iot", "description": "Single-board computer for IoT and edge computing applications" },
+    { "id": "BalenaCLI", "type": "Technology", "category": "iot", "description": "CLI tool for managing IoT device fleets and remote deployments" },
+    { "id": "Chart.js", "type": "Technology", "category": "visualization", "description": "JavaScript charting library for data visualization" },
+
+    { "id": "MCP Protocol", "type": "Technology", "category": "protocol", "description": "Model Context Protocol for agent-to-agent and agent-to-tool communication" },
+    { "id": "Vector Databases", "type": "Technology", "category": "ai_infrastructure", "description": "Specialized databases for storing and querying vector embeddings" },
+
+    { "id": "Agentic AI", "type": "Concept", "category": "ai", "description": "AI architecture for building autonomous agents that can plan, reason, and act independently" },
+    { "id": "Multi-Agent Orchestration", "type": "Concept", "category": "ai", "description": "Coordination of multiple AI agents working together through graph-based or DAG orchestration" },
+    { "id": "RAG", "type": "Concept", "category": "ai", "description": "Retrieval-Augmented Generation - combining LLMs with external knowledge retrieval for accurate responses" },
+    { "id": "Computer Vision", "type": "Concept", "category": "ai", "description": "AI field focused on enabling machines to interpret and understand visual information" },
+    { "id": "NLP", "type": "Concept", "category": "ai", "description": "Natural Language Processing for understanding and generating human language" },
+    { "id": "Prompt Engineering", "type": "Concept", "category": "ai", "description": "Art of crafting effective prompts to optimize LLM outputs and behavior" },
+    { "id": "Tool-Use Agents", "type": "Concept", "category": "ai", "description": "AI agents that can dynamically select and use external tools to accomplish tasks" },
+    { "id": "Human-in-the-Loop", "type": "Concept", "category": "ai", "description": "Governance pattern ensuring human oversight and approval for critical AI agent actions" },
+    { "id": "LLM Evaluation", "type": "Concept", "category": "ai", "description": "Methods for assessing LLM output quality including faithfulness, relevance, and hallucination detection" },
+    { "id": "Edge AI", "type": "Concept", "category": "ai", "description": "Running AI models on edge devices like IoT sensors and embedded systems" },
+    { "id": "Multimodal AI", "type": "Concept", "category": "ai", "description": "AI systems processing multiple data types: text, images, audio, and video" },
+    { "id": "Conversational AI", "type": "Concept", "category": "ai", "description": "AI systems for natural language dialogue and automated customer interaction" },
+    { "id": "Deep Learning", "type": "Concept", "category": "ai", "description": "Neural network architectures with multiple layers for complex pattern recognition" },
+    { "id": "Self-Correction Loops", "type": "Concept", "category": "ai", "description": "Agent patterns that detect and correct their own errors through iterative reasoning" },
+    { "id": "Shared Memory", "type": "Concept", "category": "ai", "description": "Multi-agent memory systems enabling agents to share context and state" },
+
+    { "id": "ETL/ELT Pipelines", "type": "Concept", "category": "data", "description": "Data integration patterns for Extract, Transform, Load processing workflows" },
+    { "id": "Data Modeling", "type": "Concept", "category": "data", "description": "Design of data structures, schemas, and relationships for efficient storage and analysis" },
+    { "id": "Data Lake Architecture", "type": "Concept", "category": "data", "description": "Storage architecture for raw data in native format at scale" },
+    { "id": "Data Warehouse", "type": "Concept", "category": "data", "description": "Centralized repository for structured analytical data optimized for querying" },
+    { "id": "Real-time Analytics", "type": "Concept", "category": "data", "description": "Processing and analyzing data as it arrives for immediate insights" },
+    { "id": "Distributed Computing", "type": "Concept", "category": "data", "description": "Computing paradigm using multiple machines for parallel processing at scale" },
+    { "id": "ACID Transactions", "type": "Concept", "category": "data", "description": "Database properties ensuring Atomicity, Consistency, Isolation, and Durability" },
+    { "id": "Data Versioning", "type": "Concept", "category": "data", "description": "Tracking data changes over time for reproducibility and audit compliance" },
+    { "id": "Stream Processing", "type": "Concept", "category": "data", "description": "Real-time processing of continuous data streams for immediate insights" },
+
+    { "id": "Microservices", "type": "Concept", "category": "architecture", "description": "Architectural pattern of loosely coupled, independently deployable services" },
+    { "id": "Infrastructure-as-Code", "type": "Concept", "category": "devops", "description": "Managing infrastructure through code and automation rather than manual processes" },
+    { "id": "TDD", "type": "Concept", "category": "practice", "description": "Test-Driven Development methodology writing tests before implementation" },
+    { "id": "System Architecture", "type": "Concept", "category": "practice", "description": "High-level design of complex software systems and their interactions" },
+    { "id": "Agile Development", "type": "Concept", "category": "practice", "description": "Iterative software development methodology with continuous feedback loops" },
+    { "id": "Team Leadership", "type": "Concept", "category": "practice", "description": "Leading and mentoring technical teams for effective delivery" },
+    { "id": "Performance Optimization", "type": "Concept", "category": "practice", "description": "Techniques for improving system speed, efficiency, and resource utilization" },
+
+    { "id": "Knowledge Graphs", "type": "Concept", "category": "specialized", "description": "Graph structures representing entities and their relationships for semantic understanding" },
+    { "id": "Semantic Search", "type": "Concept", "category": "specialized", "description": "Search technology understanding query meaning and context beyond keyword matching" },
+    { "id": "Fraud Detection", "type": "Concept", "category": "specialized", "description": "AI/ML systems for identifying fraudulent transactions and suspicious patterns" },
+    { "id": "IoT Systems", "type": "Concept", "category": "specialized", "description": "Internet of Things networks of connected devices and sensors" },
+    { "id": "VR Development", "type": "Concept", "category": "specialized", "description": "Virtual Reality application development for immersive 3D experiences" },
+    { "id": "Geospatial Analysis", "type": "Concept", "category": "specialized", "description": "Analysis of geographic and spatial data for location-based insights" },
+    { "id": "3D Physics", "type": "Concept", "category": "specialized", "description": "Physics simulation for realistic 3D object interaction in VR environments" },
+    { "id": "Sensor Integration", "type": "Concept", "category": "specialized", "description": "Connecting and processing data from physical sensors in IoT systems" },
+
+    { "id": "SLO Architecture", "type": "Concept", "category": "observability", "description": "Service Level Objective design for monitoring AI pipeline reliability" },
+    { "id": "A/B Testing", "type": "Concept", "category": "methodology", "description": "Experimental methodology comparing variants to optimize outcomes" },
+    { "id": "Cost-per-Token", "type": "Concept", "category": "ai_ops", "description": "Metric tracking LLM usage costs for budget optimization" },
+    { "id": "Faithfulness Metrics", "type": "Concept", "category": "ai_ops", "description": "Evaluation metrics measuring how accurately LLM outputs reflect source data" },
+
+    { "id": "HIPAA", "type": "Compliance", "category": "healthcare", "description": "Health Insurance Portability and Accountability Act for healthcare data privacy" },
+    { "id": "FedRAMP", "type": "Compliance", "category": "government", "description": "Federal Risk and Authorization Management Program for cloud security compliance" },
+
+    { "id": "Healthcare Domain", "type": "Domain", "category": "industry", "description": "Healthcare innovation including VR training, AI observability, and HIPAA/FedRAMP compliance systems" },
+    { "id": "Fintech Domain", "type": "Domain", "category": "industry", "description": "Financial technology including banking-as-a-service, fraud detection, and large-scale transaction processing" },
+    { "id": "AgTech Domain", "type": "Domain", "category": "industry", "description": "Agricultural technology including precision farming, IoT livestock monitoring, and edge AI computing" },
+    { "id": "Enterprise AI Domain", "type": "Domain", "category": "industry", "description": "Enterprise AI solutions including multi-agent systems, RAG, autonomous automation, and knowledge graphs" },
+    { "id": "VR/AR Domain", "type": "Domain", "category": "industry", "description": "Virtual and Augmented Reality applications for training, healthcare, and wellness" },
+    { "id": "Smart City", "type": "Domain", "category": "industry", "description": "Smart city solutions leveraging IoT, AI, and distributed computing" },
+
+    {
+      "id": "RAG Systems Project",
+      "type": "Project",
+      "name": "Enterprise RAG & Document Intelligence",
+      "description": "Production-grade RAG system with BigQuery + Vertex AI reducing document analysis from weeks to minutes",
+      "technologies": ["BigQuery", "Vertex AI", "RAG", "Python", "LLM Evaluation"],
+      "company": "Santodigital",
+      "impact": "Reduced document analysis time from weeks to minutes with offline evaluation suites"
     },
     {
-      "id": "Financial Data Platform Project",
+      "id": "AI Observability Project",
       "type": "Project",
-      "name": "Banking-as-a-Service Platform",
-      "description": "Large-scale financial data processing systems with machine learning models",
-      "technologies": [
-        "PySpark",
-        "Google Cloud",
-        "Delta Lake",
-        "gRPC",
-        "Microservices"
-      ],
-      "company": "QI Tech",
-      "impact": "500GB+ daily processing with 40% performance improvement, 100,000+ daily requests with 150ms latency"
+      "name": "Healthcare AI Observability Platform",
+      "description": "AI pipeline observability system tracking faithfulness, relevance, and latency for healthcare LLM systems",
+      "technologies": ["Datadog", "Grafana", "Python", "SLO Architecture"],
+      "company": "CVS Health",
+      "impact": "Established AI observability standards enabling prompt A/B testing for healthcare systems"
     },
     {
-      "id": "VR Healthcare Project",
+      "id": "Multi-Agent Enterprise Project",
       "type": "Project",
-      "name": "Healthcare VR Training Platform",
-      "description": "Virtual reality applications for healthcare training and wellness with compliance standards",
-      "technologies": [
-        "Node.js",
-        "React",
-        "VR",
-        "Azure",
-        "Redis",
-        "RabbitMQ"
-      ],
-      "company": "Simulated Reality",
-      "impact": "HIPAA and FedRAMP compliant VR training solutions"
+      "name": "Enterprise Multi-Agent Automation",
+      "description": "Autonomous compliance automation, contract alert agents, and auto-service systems with human-in-the-loop governance",
+      "technologies": ["ADK", "Multi-Agent Systems", "Python", "Zendesk"],
+      "company": "Santodigital",
+      "impact": "Delivered autonomous compliance and contract automation for enterprise clients"
     },
     {
       "id": "Workforce Intelligence Project",
       "type": "Project",
       "name": "AI-Powered Workforce Intelligence Platform",
-      "description": "Enterprise AI platform with integrated Slack workflows and team analytics",
-      "technologies": [
-        "TypeScript",
-        "MCP Protocol",
-        "Python",
-        "LangChain",
-        "Supabase",
-        "Vector Databases"
-      ],
+      "description": "Enterprise AI platform with graph-based agent orchestration, MCP servers, and autonomous Slack workflows serving 15+ teams",
+      "technologies": ["TypeScript", "MCP Protocol", "Python", "LangChain", "LangGraph", "Supabase", "FalkorDB"],
       "company": "MoveUp AI",
       "impact": "Serving 15+ enterprise teams, 50%+ reduction in information gathering time"
     },
@@ -395,226 +467,584 @@
       "id": "Enterprise AI Solutions Project",
       "type": "Project",
       "name": "Enterprise Knowledge Graphs & Fraud Detection",
-      "description": "Sophisticated ontologies and graph navigation interfaces for business intelligence",
-      "technologies": [
-        "Protégé",
-        "RDF/OWL",
-        "Anzo Analytics",
-        "Cytoscape.js",
-        "TypeScript"
-      ],
+      "description": "Sophisticated ontologies and graph navigation interfaces for business intelligence and fraud risk analysis",
+      "technologies": ["Protege", "RDF/OWL", "Anzo Analytics", "Cytoscape.js", "TypeScript"],
       "company": "Capgemini Brasil",
-      "impact": "Complex business intelligence and fraud risk analysis for large-scale clients"
-    }
+      "impact": "Complex business intelligence and fraud risk analysis for large-scale financial clients"
+    },
+    {
+      "id": "VR Healthcare Project",
+      "type": "Project",
+      "name": "Healthcare VR Training Platform",
+      "description": "Virtual reality applications for healthcare training with 3D physics simulations and HIPAA/FedRAMP compliance",
+      "technologies": ["Node.js", "React", "VR", "Azure", "Redis", "RabbitMQ", "Unity", "Unreal Engine"],
+      "company": "Simulated Reality",
+      "impact": "HIPAA and FedRAMP compliant VR training solutions with 3D physics simulations"
+    },
+    {
+      "id": "Financial Data Platform Project",
+      "type": "Project",
+      "name": "Banking-as-a-Service Data Platform",
+      "description": "Large-scale financial data processing with PySpark, Delta Lake, and gRPC microservices for 500GB+ daily processing",
+      "technologies": ["PySpark", "Google Cloud", "Delta Lake", "gRPC", "Microservices"],
+      "company": "QI Tech",
+      "impact": "500GB+ daily processing with 40% performance improvement"
+    },
+    {
+      "id": "Agricultural AI Project",
+      "type": "Project",
+      "name": "Agricultural Monitoring & Precision Farming",
+      "description": "IoT + ML pipelines for livestock monitoring with Raspberry Pi and real-time behavioral analysis",
+      "technologies": ["Raspberry Pi", "IoT", "Machine Learning", "Python", "Edge Computing"],
+      "company": "PecSmart",
+      "impact": "Real-time livestock health prediction using edge computing and ML"
+    },
+
+    { "id": "Achievement: Multi-Agent Orchestration", "type": "Achievement", "description": "Designed and deployed multi-agent systems with graph-based orchestration for enterprise workflow automation" },
+    { "id": "Achievement: Disease Detection AI", "type": "Achievement", "description": "Built agricultural AI systems achieving >95% accuracy in disease detection for precision farming applications" },
+    { "id": "Achievement: 500GB+ Processing", "type": "Achievement", "description": "Architected financial data processing systems handling 500GB+ daily transactions with 40% performance improvement" },
+    { "id": "Achievement: Healthcare VR", "type": "Achievement", "description": "Pioneered healthcare VR applications compliant with HIPAA and FedRAMP standards" },
+    { "id": "Achievement: Tech Founder", "type": "Achievement", "description": "Founded technology consulting practice delivering agentic AI and enterprise automation solutions" },
+
+    { "id": "Agentic AI Expertise", "type": "ExpertiseArea", "name": "Agentic AI & Autonomous Systems", "items": ["Multi-Agent Architectures", "Agent Orchestration (Graph-based & DAG)", "Tool-Use Agents", "Agentic Automation", "RAG", "MCP Servers", "Human-in-the-Loop Governance", "LLM Evaluation & Observability"] },
+    { "id": "AI Applications Expertise", "type": "ExpertiseArea", "name": "AI Applications", "items": ["Computer Vision", "NLP", "Multimodal AI Systems", "Edge AI Computing", "Conversational AI"] },
+    { "id": "Data Science Expertise", "type": "ExpertiseArea", "name": "Data Science & Engineering", "items": ["Large-scale Distributed Systems", "Real-time Analytics", "Knowledge Graph Technologies", "Vector Databases", "Performance Optimization"] },
+    { "id": "Emerging Tech Expertise", "type": "ExpertiseArea", "name": "Emerging Technologies", "items": ["IoT Integration", "Virtual/Augmented Reality", "Blockchain Applications"] },
+
+    { "id": "2017", "type": "Timeline", "year": 2017, "events": ["Fontes Promotora", "PecSmart start", "UFSC studies"] },
+    { "id": "2018", "type": "Timeline", "year": 2018, "events": ["PecSmart IoT development", "Agricultural AI"] },
+    { "id": "2019", "type": "Timeline", "year": 2019, "events": ["QI Tech start", "500GB+ data processing"] },
+    { "id": "2020", "type": "Timeline", "year": 2020, "events": ["QI Tech data engineering", "Delta Lake architecture"] },
+    { "id": "2021", "type": "Timeline", "year": 2021, "events": ["Simulated Reality", "VR development", "Healthcare VR"] },
+    { "id": "2022", "type": "Timeline", "year": 2022, "events": ["Capgemini start", "Knowledge Graphs", "Fraud Detection"] },
+    { "id": "2023", "type": "Timeline", "year": 2023, "events": ["Capgemini consulting", "UFSC graduation", "Estacio graduation"] },
+    { "id": "2024", "type": "Timeline", "year": 2024, "events": ["Santodigital start", "CVS Health start", "RAG systems", "Multi-agent development"] },
+    { "id": "2025", "type": "Timeline", "year": 2025, "events": ["MoveUp AI co-founding", "MCP architecture", "Workforce intelligence platform"] }
   ],
+
   "edges": [
-    {
-      "source": "Pedro Reichow",
-      "target": "Capgemini Brasil",
-      "relation": "WORKS_AT",
-      "current": true
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "MoveUp AI",
-      "relation": "FOUNDED",
-      "current": true,
-      "role": "Technical Co-founder"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "Trinnix AI Lab",
-      "relation": "WORKED_AT"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "Simulated Reality",
-      "relation": "WORKED_AT"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "QI Tech",
-      "relation": "WORKED_AT"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "PecSmart",
-      "relation": "WORKED_AT"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "Fontes Promotora",
-      "relation": "WORKED_AT"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "Estácio University",
-      "relation": "GRADUATED_FROM"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "UFSC",
-      "relation": "STUDIED_AT"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "IFSC",
-      "relation": "GRADUATED_FROM"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "AI & Machine Learning Skills",
-      "relation": "HAS_EXPERTISE",
-      "level": "Expert"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "Data Engineering Skills",
-      "relation": "HAS_EXPERTISE",
-      "level": "Expert"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "Programming Skills",
-      "relation": "HAS_EXPERTISE",
-      "level": "Expert"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "Cloud & Infrastructure Skills",
-      "relation": "HAS_EXPERTISE",
-      "level": "Expert"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "Specialized Technologies Skills",
-      "relation": "HAS_EXPERTISE",
-      "level": "Advanced"
-    },
-    {
-      "source": "Trinnix AI Lab",
-      "target": "Agricultural AI Project",
-      "relation": "HOSTED_PROJECT"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "Agricultural AI Project",
-      "relation": "LED_PROJECT"
-    },
-    {
-      "source": "QI Tech",
-      "target": "Financial Data Platform Project",
-      "relation": "HOSTED_PROJECT"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "Financial Data Platform Project",
-      "relation": "ARCHITECTED"
-    },
-    {
-      "source": "Simulated Reality",
-      "target": "VR Healthcare Project",
-      "relation": "HOSTED_PROJECT"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "VR Healthcare Project",
-      "relation": "LED_DEVELOPMENT"
-    },
-    {
-      "source": "MoveUp AI",
-      "target": "Workforce Intelligence Project",
-      "relation": "HOSTED_PROJECT"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "Workforce Intelligence Project",
-      "relation": "CO_FOUNDED"
-    },
-    {
-      "source": "Capgemini Brasil",
-      "target": "Enterprise AI Solutions Project",
-      "relation": "HOSTED_PROJECT"
-    },
-    {
-      "source": "Pedro Reichow",
-      "target": "Enterprise AI Solutions Project",
-      "relation": "LEADS"
-    },
-    {
-      "source": "Agricultural AI Project",
-      "target": "AI & Machine Learning Skills",
-      "relation": "UTILIZED_SKILLS"
-    },
-    {
-      "source": "Financial Data Platform Project",
-      "target": "Data Engineering Skills",
-      "relation": "UTILIZED_SKILLS"
-    },
-    {
-      "source": "VR Healthcare Project",
-      "target": "Programming Skills",
-      "relation": "UTILIZED_SKILLS"
-    },
-    {
-      "source": "VR Healthcare Project",
-      "target": "Cloud & Infrastructure Skills",
-      "relation": "UTILIZED_SKILLS"
-    },
-    {
-      "source": "Workforce Intelligence Project",
-      "target": "AI & Machine Learning Skills",
-      "relation": "UTILIZED_SKILLS"
-    },
-    {
-      "source": "Workforce Intelligence Project",
-      "target": "Programming Skills",
-      "relation": "UTILIZED_SKILLS"
-    },
-    {
-      "source": "Enterprise AI Solutions Project",
-      "target": "Specialized Technologies Skills",
-      "relation": "UTILIZED_SKILLS"
-    },
-    {
-      "source": "Enterprise AI Solutions Project",
-      "target": "AI & Machine Learning Skills",
-      "relation": "UTILIZED_SKILLS"
-    },
-    {
-      "source": "Capgemini Brasil",
-      "target": "AI & Machine Learning Skills",
-      "relation": "REQUIRES_SKILLS"
-    },
-    {
-      "source": "Capgemini Brasil",
-      "target": "Specialized Technologies Skills",
-      "relation": "REQUIRES_SKILLS"
-    },
-    {
-      "source": "MoveUp AI",
-      "target": "AI & Machine Learning Skills",
-      "relation": "REQUIRES_SKILLS"
-    },
-    {
-      "source": "Trinnix AI Lab",
-      "target": "AI & Machine Learning Skills",
-      "relation": "REQUIRES_SKILLS"
-    },
-    {
-      "source": "QI Tech",
-      "target": "Data Engineering Skills",
-      "relation": "REQUIRES_SKILLS"
-    },
-    {
-      "source": "Simulated Reality",
-      "target": "Programming Skills",
-      "relation": "REQUIRES_SKILLS"
-    },
-    {
-      "source": "Simulated Reality",
-      "target": "Cloud & Infrastructure Skills",
-      "relation": "REQUIRES_SKILLS"
-    }
+    { "source": "Pedro Reichow", "target": "Santodigital", "relation": "WORKS_AT", "current": true },
+    { "source": "Pedro Reichow", "target": "CVS Health", "relation": "WORKED_AT" },
+    { "source": "Pedro Reichow", "target": "MoveUp AI", "relation": "CO_FOUNDED", "role": "Technical Co-founder" },
+    { "source": "Pedro Reichow", "target": "Capgemini Brasil", "relation": "WORKED_AT" },
+    { "source": "Pedro Reichow", "target": "Simulated Reality", "relation": "WORKED_AT" },
+    { "source": "Pedro Reichow", "target": "QI Tech", "relation": "WORKED_AT" },
+    { "source": "Pedro Reichow", "target": "PecSmart", "relation": "WORKED_AT" },
+    { "source": "Pedro Reichow", "target": "Fontes Promotora", "relation": "WORKED_AT" },
+
+    { "source": "Pedro Reichow", "target": "Estacio University", "relation": "GRADUATED_FROM" },
+    { "source": "Pedro Reichow", "target": "UFSC", "relation": "STUDIED_AT" },
+    { "source": "Pedro Reichow", "target": "IFSC", "relation": "GRADUATED_FROM" },
+
+    { "source": "Pedro Reichow", "target": "AI & Agentic Systems", "relation": "HAS_EXPERTISE", "level": "Expert" },
+    { "source": "Pedro Reichow", "target": "Data Engineering Skills", "relation": "HAS_EXPERTISE", "level": "Expert" },
+    { "source": "Pedro Reichow", "target": "Programming Skills", "relation": "HAS_EXPERTISE", "level": "Expert" },
+    { "source": "Pedro Reichow", "target": "Cloud & Infrastructure Skills", "relation": "HAS_EXPERTISE", "level": "Expert" },
+    { "source": "Pedro Reichow", "target": "Specialized Tech Skills", "relation": "HAS_EXPERTISE", "level": "Advanced" },
+    { "source": "Pedro Reichow", "target": "Development Practices", "relation": "HAS_EXPERTISE", "level": "Expert" },
+
+    { "source": "Pedro Reichow", "target": "Python", "relation": "EXPERT_IN" },
+    { "source": "Pedro Reichow", "target": "TypeScript", "relation": "EXPERT_IN" },
+    { "source": "Pedro Reichow", "target": "JavaScript", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "SQL", "relation": "EXPERT_IN" },
+    { "source": "Pedro Reichow", "target": "Node.js", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "React", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "Django", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "FastAPI", "relation": "EXPERT_IN" },
+    { "source": "Pedro Reichow", "target": "Flask", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "GraphQL", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "gRPC", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "LangChain", "relation": "EXPERT_IN" },
+    { "source": "Pedro Reichow", "target": "LangGraph", "relation": "EXPERT_IN" },
+    { "source": "Pedro Reichow", "target": "CrewAI", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "Agno", "relation": "EXPERT_IN" },
+    { "source": "Pedro Reichow", "target": "ADK", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "PySpark", "relation": "EXPERT_IN" },
+    { "source": "Pedro Reichow", "target": "Docker", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "Kubernetes", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "AWS", "relation": "EXPERT_IN" },
+    { "source": "Pedro Reichow", "target": "Google Cloud", "relation": "EXPERT_IN" },
+    { "source": "Pedro Reichow", "target": "Azure", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "Neo4j", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "OpenAI", "relation": "INTEGRATES" },
+    { "source": "Pedro Reichow", "target": "Anthropic Claude", "relation": "INTEGRATES" },
+    { "source": "Pedro Reichow", "target": "MCP Protocol", "relation": "ARCHITECT_OF" },
+    { "source": "Pedro Reichow", "target": "Vertex AI", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "Datadog", "relation": "PROFICIENT_IN" },
+    { "source": "Pedro Reichow", "target": "Apache Airflow", "relation": "EXPERT_IN" },
+    { "source": "Pedro Reichow", "target": "Delta Lake", "relation": "EXPERT_IN" },
+    { "source": "Pedro Reichow", "target": "BigQuery", "relation": "EXPERT_IN" },
+
+    { "source": "Pedro Reichow", "target": "Agentic AI", "relation": "SPECIALIZES_IN" },
+    { "source": "Pedro Reichow", "target": "Multi-Agent Orchestration", "relation": "SPECIALIZES_IN" },
+    { "source": "Pedro Reichow", "target": "RAG", "relation": "SPECIALIZES_IN" },
+    { "source": "Pedro Reichow", "target": "Computer Vision", "relation": "SPECIALIZES_IN" },
+    { "source": "Pedro Reichow", "target": "NLP", "relation": "SPECIALIZES_IN" },
+    { "source": "Pedro Reichow", "target": "Knowledge Graphs", "relation": "SPECIALIZES_IN" },
+    { "source": "Pedro Reichow", "target": "Microservices", "relation": "PRACTICES" },
+    { "source": "Pedro Reichow", "target": "System Architecture", "relation": "PRACTICES" },
+    { "source": "Pedro Reichow", "target": "TDD", "relation": "PRACTICES" },
+    { "source": "Pedro Reichow", "target": "Agile Development", "relation": "PRACTICES" },
+    { "source": "Pedro Reichow", "target": "Team Leadership", "relation": "DEMONSTRATES" },
+
+    { "source": "Pedro Reichow", "target": "Agentic AI Expertise", "relation": "AREA_OF_EXPERTISE" },
+    { "source": "Pedro Reichow", "target": "AI Applications Expertise", "relation": "AREA_OF_EXPERTISE" },
+    { "source": "Pedro Reichow", "target": "Data Science Expertise", "relation": "AREA_OF_EXPERTISE" },
+    { "source": "Pedro Reichow", "target": "Emerging Tech Expertise", "relation": "AREA_OF_EXPERTISE" },
+
+    { "source": "Pedro Reichow", "target": "Achievement: Multi-Agent Orchestration", "relation": "ACHIEVED" },
+    { "source": "Pedro Reichow", "target": "Achievement: Disease Detection AI", "relation": "ACHIEVED" },
+    { "source": "Pedro Reichow", "target": "Achievement: 500GB+ Processing", "relation": "ACHIEVED" },
+    { "source": "Pedro Reichow", "target": "Achievement: Healthcare VR", "relation": "ACHIEVED" },
+    { "source": "Pedro Reichow", "target": "Achievement: Tech Founder", "relation": "ACHIEVED" },
+
+    { "source": "Pedro Reichow", "target": "Healthcare Domain", "relation": "HAS_EXPERIENCE_IN" },
+    { "source": "Pedro Reichow", "target": "Fintech Domain", "relation": "HAS_EXPERIENCE_IN" },
+    { "source": "Pedro Reichow", "target": "AgTech Domain", "relation": "HAS_EXPERIENCE_IN" },
+    { "source": "Pedro Reichow", "target": "Enterprise AI Domain", "relation": "HAS_EXPERIENCE_IN" },
+    { "source": "Pedro Reichow", "target": "VR/AR Domain", "relation": "HAS_EXPERIENCE_IN" },
+
+    { "source": "Pedro Reichow", "target": "RAG Systems Project", "relation": "ARCHITECTED" },
+    { "source": "Pedro Reichow", "target": "AI Observability Project", "relation": "LED_DEVELOPMENT" },
+    { "source": "Pedro Reichow", "target": "Multi-Agent Enterprise Project", "relation": "BUILT" },
+    { "source": "Pedro Reichow", "target": "Workforce Intelligence Project", "relation": "CO_FOUNDED" },
+    { "source": "Pedro Reichow", "target": "Enterprise AI Solutions Project", "relation": "LED_DEVELOPMENT" },
+    { "source": "Pedro Reichow", "target": "VR Healthcare Project", "relation": "LED_DEVELOPMENT" },
+    { "source": "Pedro Reichow", "target": "Financial Data Platform Project", "relation": "ARCHITECTED" },
+    { "source": "Pedro Reichow", "target": "Agricultural AI Project", "relation": "BUILT" },
+
+    { "source": "Santodigital", "target": "RAG Systems Project", "relation": "HOSTED_PROJECT" },
+    { "source": "Santodigital", "target": "Multi-Agent Enterprise Project", "relation": "HOSTED_PROJECT" },
+    { "source": "CVS Health", "target": "AI Observability Project", "relation": "HOSTED_PROJECT" },
+    { "source": "MoveUp AI", "target": "Workforce Intelligence Project", "relation": "HOSTED_PROJECT" },
+    { "source": "Capgemini Brasil", "target": "Enterprise AI Solutions Project", "relation": "HOSTED_PROJECT" },
+    { "source": "Simulated Reality", "target": "VR Healthcare Project", "relation": "HOSTED_PROJECT" },
+    { "source": "QI Tech", "target": "Financial Data Platform Project", "relation": "HOSTED_PROJECT" },
+    { "source": "PecSmart", "target": "Agricultural AI Project", "relation": "HOSTED_PROJECT" },
+
+    { "source": "Santodigital", "target": "Google Cloud", "relation": "USES" },
+    { "source": "Santodigital", "target": "Vertex AI", "relation": "USES" },
+    { "source": "Santodigital", "target": "BigQuery", "relation": "USES" },
+    { "source": "Santodigital", "target": "ADK", "relation": "USES" },
+    { "source": "Santodigital", "target": "Python", "relation": "USES" },
+    { "source": "Santodigital", "target": "Zendesk", "relation": "INTEGRATES" },
+    { "source": "Santodigital", "target": "RAG", "relation": "APPLIES" },
+    { "source": "Santodigital", "target": "Multi-Agent Orchestration", "relation": "APPLIES" },
+    { "source": "Santodigital", "target": "Human-in-the-Loop", "relation": "APPLIES" },
+    { "source": "Santodigital", "target": "LLM Evaluation", "relation": "APPLIES" },
+    { "source": "Santodigital", "target": "Prompt Engineering", "relation": "APPLIES" },
+    { "source": "Santodigital", "target": "Agentic AI", "relation": "APPLIES" },
+
+    { "source": "CVS Health", "target": "Datadog", "relation": "USES" },
+    { "source": "CVS Health", "target": "Grafana", "relation": "USES" },
+    { "source": "CVS Health", "target": "Python", "relation": "USES" },
+    { "source": "CVS Health", "target": "HIPAA", "relation": "COMPLIES_WITH" },
+    { "source": "CVS Health", "target": "FedRAMP", "relation": "COMPLIES_WITH" },
+    { "source": "CVS Health", "target": "SLO Architecture", "relation": "APPLIES" },
+    { "source": "CVS Health", "target": "A/B Testing", "relation": "APPLIES" },
+    { "source": "CVS Health", "target": "Faithfulness Metrics", "relation": "APPLIES" },
+    { "source": "CVS Health", "target": "Cost-per-Token", "relation": "MONITORS" },
+    { "source": "CVS Health", "target": "LLM Evaluation", "relation": "APPLIES" },
+    { "source": "CVS Health", "target": "Agentic AI", "relation": "APPLIES" },
+
+    { "source": "MoveUp AI", "target": "Python", "relation": "USES" },
+    { "source": "MoveUp AI", "target": "TypeScript", "relation": "USES" },
+    { "source": "MoveUp AI", "target": "MCP Protocol", "relation": "USES" },
+    { "source": "MoveUp AI", "target": "LangChain", "relation": "USES" },
+    { "source": "MoveUp AI", "target": "LangGraph", "relation": "USES" },
+    { "source": "MoveUp AI", "target": "Agno", "relation": "USES" },
+    { "source": "MoveUp AI", "target": "Zep", "relation": "USES" },
+    { "source": "MoveUp AI", "target": "Supabase", "relation": "USES" },
+    { "source": "MoveUp AI", "target": "FalkorDB", "relation": "USES" },
+    { "source": "MoveUp AI", "target": "OpenAI", "relation": "INTEGRATES" },
+    { "source": "MoveUp AI", "target": "Anthropic Claude", "relation": "INTEGRATES" },
+    { "source": "MoveUp AI", "target": "Slack API", "relation": "INTEGRATES" },
+    { "source": "MoveUp AI", "target": "N8N", "relation": "USES" },
+    { "source": "MoveUp AI", "target": "Multi-Agent Orchestration", "relation": "APPLIES" },
+    { "source": "MoveUp AI", "target": "Agentic AI", "relation": "APPLIES" },
+    { "source": "MoveUp AI", "target": "Tool-Use Agents", "relation": "APPLIES" },
+    { "source": "MoveUp AI", "target": "Self-Correction Loops", "relation": "APPLIES" },
+    { "source": "MoveUp AI", "target": "Shared Memory", "relation": "APPLIES" },
+    { "source": "MoveUp AI", "target": "Knowledge Graphs", "relation": "APPLIES" },
+    { "source": "MoveUp AI", "target": "Vector Databases", "relation": "USES" },
+
+    { "source": "Capgemini Brasil", "target": "Python", "relation": "USES" },
+    { "source": "Capgemini Brasil", "target": "TypeScript", "relation": "USES" },
+    { "source": "Capgemini Brasil", "target": "Neo4j", "relation": "USES" },
+    { "source": "Capgemini Brasil", "target": "Protege", "relation": "USES" },
+    { "source": "Capgemini Brasil", "target": "RDF/OWL", "relation": "USES" },
+    { "source": "Capgemini Brasil", "target": "Anzo Analytics", "relation": "USES" },
+    { "source": "Capgemini Brasil", "target": "Cytoscape.js", "relation": "USES" },
+    { "source": "Capgemini Brasil", "target": "REST APIs", "relation": "USES" },
+    { "source": "Capgemini Brasil", "target": "Knowledge Graphs", "relation": "APPLIES" },
+    { "source": "Capgemini Brasil", "target": "Fraud Detection", "relation": "APPLIES" },
+    { "source": "Capgemini Brasil", "target": "Semantic Search", "relation": "APPLIES" },
+    { "source": "Capgemini Brasil", "target": "Microservices", "relation": "APPLIES" },
+
+    { "source": "Simulated Reality", "target": "React", "relation": "USES" },
+    { "source": "Simulated Reality", "target": "Node.js", "relation": "USES" },
+    { "source": "Simulated Reality", "target": "Azure", "relation": "USES" },
+    { "source": "Simulated Reality", "target": "Red Hat OpenShift", "relation": "USES" },
+    { "source": "Simulated Reality", "target": "Redis", "relation": "USES" },
+    { "source": "Simulated Reality", "target": "RabbitMQ", "relation": "USES" },
+    { "source": "Simulated Reality", "target": "Unity", "relation": "USES" },
+    { "source": "Simulated Reality", "target": "Unreal Engine", "relation": "USES" },
+    { "source": "Simulated Reality", "target": "Chart.js", "relation": "USES" },
+    { "source": "Simulated Reality", "target": "HIPAA", "relation": "COMPLIES_WITH" },
+    { "source": "Simulated Reality", "target": "FedRAMP", "relation": "COMPLIES_WITH" },
+    { "source": "Simulated Reality", "target": "VR Development", "relation": "APPLIES" },
+    { "source": "Simulated Reality", "target": "3D Physics", "relation": "APPLIES" },
+    { "source": "Simulated Reality", "target": "REST APIs", "relation": "USES" },
+
+    { "source": "QI Tech", "target": "PySpark", "relation": "USES" },
+    { "source": "QI Tech", "target": "Spark SQL", "relation": "USES" },
+    { "source": "QI Tech", "target": "Spark Streaming", "relation": "USES" },
+    { "source": "QI Tech", "target": "Dataproc", "relation": "USES" },
+    { "source": "QI Tech", "target": "Google Cloud", "relation": "USES" },
+    { "source": "QI Tech", "target": "GCS", "relation": "USES" },
+    { "source": "QI Tech", "target": "BigQuery", "relation": "USES" },
+    { "source": "QI Tech", "target": "Delta Lake", "relation": "USES" },
+    { "source": "QI Tech", "target": "Apache Airflow", "relation": "USES" },
+    { "source": "QI Tech", "target": "gRPC", "relation": "USES" },
+    { "source": "QI Tech", "target": "ACID Transactions", "relation": "APPLIES" },
+    { "source": "QI Tech", "target": "Data Versioning", "relation": "APPLIES" },
+    { "source": "QI Tech", "target": "Distributed Computing", "relation": "APPLIES" },
+    { "source": "QI Tech", "target": "Performance Optimization", "relation": "APPLIES" },
+    { "source": "QI Tech", "target": "Microservices", "relation": "APPLIES" },
+    { "source": "QI Tech", "target": "Stream Processing", "relation": "APPLIES" },
+
+    { "source": "PecSmart", "target": "Raspberry Pi", "relation": "USES" },
+    { "source": "PecSmart", "target": "BalenaCLI", "relation": "USES" },
+    { "source": "PecSmart", "target": "Python", "relation": "USES" },
+    { "source": "PecSmart", "target": "Django", "relation": "USES" },
+    { "source": "PecSmart", "target": "IoT Systems", "relation": "APPLIES" },
+    { "source": "PecSmart", "target": "Edge AI", "relation": "APPLIES" },
+    { "source": "PecSmart", "target": "Sensor Integration", "relation": "APPLIES" },
+    { "source": "PecSmart", "target": "Deep Learning", "relation": "APPLIES" },
+
+    { "source": "Fontes Promotora", "target": "FastAPI", "relation": "USES" },
+    { "source": "Fontes Promotora", "target": "Flask", "relation": "USES" },
+    { "source": "Fontes Promotora", "target": "Django", "relation": "USES" },
+    { "source": "Fontes Promotora", "target": "React", "relation": "USES" },
+    { "source": "Fontes Promotora", "target": "Scrapy", "relation": "USES" },
+    { "source": "Fontes Promotora", "target": "Pandas", "relation": "USES" },
+    { "source": "Fontes Promotora", "target": "AWS", "relation": "USES" },
+    { "source": "Fontes Promotora", "target": "Docker", "relation": "USES" },
+    { "source": "Fontes Promotora", "target": "REST APIs", "relation": "USES" },
+    { "source": "Fontes Promotora", "target": "Microservices", "relation": "APPLIES" },
+
+    { "source": "Santodigital", "target": "Healthcare Domain", "relation": "OPERATES_IN" },
+    { "source": "Santodigital", "target": "Enterprise AI Domain", "relation": "OPERATES_IN" },
+    { "source": "CVS Health", "target": "Healthcare Domain", "relation": "OPERATES_IN" },
+    { "source": "CVS Health", "target": "Enterprise AI Domain", "relation": "OPERATES_IN" },
+    { "source": "MoveUp AI", "target": "Enterprise AI Domain", "relation": "OPERATES_IN" },
+    { "source": "Capgemini Brasil", "target": "Fintech Domain", "relation": "OPERATES_IN" },
+    { "source": "Capgemini Brasil", "target": "Enterprise AI Domain", "relation": "OPERATES_IN" },
+    { "source": "QI Tech", "target": "Fintech Domain", "relation": "OPERATES_IN" },
+    { "source": "Simulated Reality", "target": "Healthcare Domain", "relation": "OPERATES_IN" },
+    { "source": "Simulated Reality", "target": "VR/AR Domain", "relation": "OPERATES_IN" },
+    { "source": "PecSmart", "target": "AgTech Domain", "relation": "OPERATES_IN" },
+
+    { "source": "RAG Systems Project", "target": "BigQuery", "relation": "BUILT_WITH" },
+    { "source": "RAG Systems Project", "target": "Vertex AI", "relation": "BUILT_WITH" },
+    { "source": "RAG Systems Project", "target": "Python", "relation": "BUILT_WITH" },
+    { "source": "RAG Systems Project", "target": "RAG", "relation": "IMPLEMENTS" },
+    { "source": "RAG Systems Project", "target": "LLM Evaluation", "relation": "APPLIES" },
+    { "source": "RAG Systems Project", "target": "Prompt Engineering", "relation": "APPLIES" },
+
+    { "source": "AI Observability Project", "target": "Datadog", "relation": "BUILT_WITH" },
+    { "source": "AI Observability Project", "target": "Grafana", "relation": "BUILT_WITH" },
+    { "source": "AI Observability Project", "target": "Python", "relation": "BUILT_WITH" },
+    { "source": "AI Observability Project", "target": "SLO Architecture", "relation": "IMPLEMENTS" },
+    { "source": "AI Observability Project", "target": "Faithfulness Metrics", "relation": "TRACKS" },
+    { "source": "AI Observability Project", "target": "A/B Testing", "relation": "ENABLES" },
+    { "source": "AI Observability Project", "target": "HIPAA", "relation": "COMPLIES_WITH" },
+
+    { "source": "Multi-Agent Enterprise Project", "target": "ADK", "relation": "BUILT_WITH" },
+    { "source": "Multi-Agent Enterprise Project", "target": "Python", "relation": "BUILT_WITH" },
+    { "source": "Multi-Agent Enterprise Project", "target": "Zendesk", "relation": "INTEGRATES" },
+    { "source": "Multi-Agent Enterprise Project", "target": "Agentic AI", "relation": "IMPLEMENTS" },
+    { "source": "Multi-Agent Enterprise Project", "target": "Multi-Agent Orchestration", "relation": "IMPLEMENTS" },
+    { "source": "Multi-Agent Enterprise Project", "target": "Human-in-the-Loop", "relation": "APPLIES" },
+    { "source": "Multi-Agent Enterprise Project", "target": "Tool-Use Agents", "relation": "USES" },
+
+    { "source": "Workforce Intelligence Project", "target": "TypeScript", "relation": "BUILT_WITH" },
+    { "source": "Workforce Intelligence Project", "target": "Python", "relation": "BUILT_WITH" },
+    { "source": "Workforce Intelligence Project", "target": "MCP Protocol", "relation": "BUILT_WITH" },
+    { "source": "Workforce Intelligence Project", "target": "LangChain", "relation": "BUILT_WITH" },
+    { "source": "Workforce Intelligence Project", "target": "LangGraph", "relation": "BUILT_WITH" },
+    { "source": "Workforce Intelligence Project", "target": "Agno", "relation": "BUILT_WITH" },
+    { "source": "Workforce Intelligence Project", "target": "Supabase", "relation": "BUILT_WITH" },
+    { "source": "Workforce Intelligence Project", "target": "FalkorDB", "relation": "BUILT_WITH" },
+    { "source": "Workforce Intelligence Project", "target": "Zep", "relation": "BUILT_WITH" },
+    { "source": "Workforce Intelligence Project", "target": "Slack API", "relation": "INTEGRATES" },
+    { "source": "Workforce Intelligence Project", "target": "N8N", "relation": "INTEGRATES" },
+    { "source": "Workforce Intelligence Project", "target": "OpenAI", "relation": "INTEGRATES" },
+    { "source": "Workforce Intelligence Project", "target": "Anthropic Claude", "relation": "INTEGRATES" },
+    { "source": "Workforce Intelligence Project", "target": "Multi-Agent Orchestration", "relation": "IMPLEMENTS" },
+    { "source": "Workforce Intelligence Project", "target": "Agentic AI", "relation": "IMPLEMENTS" },
+    { "source": "Workforce Intelligence Project", "target": "Self-Correction Loops", "relation": "IMPLEMENTS" },
+    { "source": "Workforce Intelligence Project", "target": "Shared Memory", "relation": "IMPLEMENTS" },
+    { "source": "Workforce Intelligence Project", "target": "Knowledge Graphs", "relation": "USES" },
+    { "source": "Workforce Intelligence Project", "target": "Vector Databases", "relation": "USES" },
+
+    { "source": "Enterprise AI Solutions Project", "target": "Protege", "relation": "BUILT_WITH" },
+    { "source": "Enterprise AI Solutions Project", "target": "RDF/OWL", "relation": "BUILT_WITH" },
+    { "source": "Enterprise AI Solutions Project", "target": "Anzo Analytics", "relation": "BUILT_WITH" },
+    { "source": "Enterprise AI Solutions Project", "target": "Cytoscape.js", "relation": "BUILT_WITH" },
+    { "source": "Enterprise AI Solutions Project", "target": "TypeScript", "relation": "BUILT_WITH" },
+    { "source": "Enterprise AI Solutions Project", "target": "Neo4j", "relation": "BUILT_WITH" },
+    { "source": "Enterprise AI Solutions Project", "target": "Knowledge Graphs", "relation": "IMPLEMENTS" },
+    { "source": "Enterprise AI Solutions Project", "target": "Fraud Detection", "relation": "IMPLEMENTS" },
+    { "source": "Enterprise AI Solutions Project", "target": "Semantic Search", "relation": "IMPLEMENTS" },
+
+    { "source": "VR Healthcare Project", "target": "React", "relation": "BUILT_WITH" },
+    { "source": "VR Healthcare Project", "target": "Node.js", "relation": "BUILT_WITH" },
+    { "source": "VR Healthcare Project", "target": "Unity", "relation": "BUILT_WITH" },
+    { "source": "VR Healthcare Project", "target": "Unreal Engine", "relation": "BUILT_WITH" },
+    { "source": "VR Healthcare Project", "target": "Azure", "relation": "DEPLOYED_ON" },
+    { "source": "VR Healthcare Project", "target": "Redis", "relation": "BUILT_WITH" },
+    { "source": "VR Healthcare Project", "target": "RabbitMQ", "relation": "BUILT_WITH" },
+    { "source": "VR Healthcare Project", "target": "VR Development", "relation": "IMPLEMENTS" },
+    { "source": "VR Healthcare Project", "target": "3D Physics", "relation": "IMPLEMENTS" },
+    { "source": "VR Healthcare Project", "target": "HIPAA", "relation": "COMPLIES_WITH" },
+    { "source": "VR Healthcare Project", "target": "FedRAMP", "relation": "COMPLIES_WITH" },
+
+    { "source": "Financial Data Platform Project", "target": "PySpark", "relation": "BUILT_WITH" },
+    { "source": "Financial Data Platform Project", "target": "Dataproc", "relation": "BUILT_WITH" },
+    { "source": "Financial Data Platform Project", "target": "Google Cloud", "relation": "DEPLOYED_ON" },
+    { "source": "Financial Data Platform Project", "target": "GCS", "relation": "BUILT_WITH" },
+    { "source": "Financial Data Platform Project", "target": "Delta Lake", "relation": "BUILT_WITH" },
+    { "source": "Financial Data Platform Project", "target": "gRPC", "relation": "BUILT_WITH" },
+    { "source": "Financial Data Platform Project", "target": "Apache Airflow", "relation": "BUILT_WITH" },
+    { "source": "Financial Data Platform Project", "target": "BigQuery", "relation": "BUILT_WITH" },
+    { "source": "Financial Data Platform Project", "target": "ACID Transactions", "relation": "IMPLEMENTS" },
+    { "source": "Financial Data Platform Project", "target": "Data Versioning", "relation": "IMPLEMENTS" },
+    { "source": "Financial Data Platform Project", "target": "Stream Processing", "relation": "IMPLEMENTS" },
+    { "source": "Financial Data Platform Project", "target": "Distributed Computing", "relation": "APPLIES" },
+
+    { "source": "Agricultural AI Project", "target": "Raspberry Pi", "relation": "BUILT_WITH" },
+    { "source": "Agricultural AI Project", "target": "Python", "relation": "BUILT_WITH" },
+    { "source": "Agricultural AI Project", "target": "IoT Systems", "relation": "IMPLEMENTS" },
+    { "source": "Agricultural AI Project", "target": "Edge AI", "relation": "IMPLEMENTS" },
+    { "source": "Agricultural AI Project", "target": "Sensor Integration", "relation": "IMPLEMENTS" },
+    { "source": "Agricultural AI Project", "target": "Deep Learning", "relation": "APPLIES" },
+    { "source": "Agricultural AI Project", "target": "Computer Vision", "relation": "APPLIES" },
+
+    { "source": "Achievement: Multi-Agent Orchestration", "target": "Multi-Agent Orchestration", "relation": "DEMONSTRATES" },
+    { "source": "Achievement: Multi-Agent Orchestration", "target": "Agentic AI", "relation": "DEMONSTRATES" },
+    { "source": "Achievement: Disease Detection AI", "target": "Computer Vision", "relation": "DEMONSTRATES" },
+    { "source": "Achievement: Disease Detection AI", "target": "Deep Learning", "relation": "DEMONSTRATES" },
+    { "source": "Achievement: Disease Detection AI", "target": "AgTech Domain", "relation": "APPLIED_IN" },
+    { "source": "Achievement: 500GB+ Processing", "target": "Distributed Computing", "relation": "DEMONSTRATES" },
+    { "source": "Achievement: 500GB+ Processing", "target": "Performance Optimization", "relation": "DEMONSTRATES" },
+    { "source": "Achievement: 500GB+ Processing", "target": "Fintech Domain", "relation": "APPLIED_IN" },
+    { "source": "Achievement: Healthcare VR", "target": "VR Development", "relation": "DEMONSTRATES" },
+    { "source": "Achievement: Healthcare VR", "target": "HIPAA", "relation": "COMPLIES_WITH" },
+    { "source": "Achievement: Healthcare VR", "target": "FedRAMP", "relation": "COMPLIES_WITH" },
+    { "source": "Achievement: Healthcare VR", "target": "Healthcare Domain", "relation": "APPLIED_IN" },
+    { "source": "Achievement: Tech Founder", "target": "Agentic AI", "relation": "DEMONSTRATES" },
+    { "source": "Achievement: Tech Founder", "target": "Enterprise AI Domain", "relation": "APPLIED_IN" },
+
+    { "source": "Agentic AI Expertise", "target": "Agentic AI", "relation": "COVERS" },
+    { "source": "Agentic AI Expertise", "target": "Multi-Agent Orchestration", "relation": "COVERS" },
+    { "source": "Agentic AI Expertise", "target": "RAG", "relation": "COVERS" },
+    { "source": "Agentic AI Expertise", "target": "MCP Protocol", "relation": "COVERS" },
+    { "source": "Agentic AI Expertise", "target": "Tool-Use Agents", "relation": "COVERS" },
+    { "source": "Agentic AI Expertise", "target": "Human-in-the-Loop", "relation": "COVERS" },
+    { "source": "Agentic AI Expertise", "target": "LLM Evaluation", "relation": "COVERS" },
+
+    { "source": "AI Applications Expertise", "target": "Computer Vision", "relation": "COVERS" },
+    { "source": "AI Applications Expertise", "target": "NLP", "relation": "COVERS" },
+    { "source": "AI Applications Expertise", "target": "Multimodal AI", "relation": "COVERS" },
+    { "source": "AI Applications Expertise", "target": "Edge AI", "relation": "COVERS" },
+    { "source": "AI Applications Expertise", "target": "Conversational AI", "relation": "COVERS" },
+
+    { "source": "Data Science Expertise", "target": "Distributed Computing", "relation": "COVERS" },
+    { "source": "Data Science Expertise", "target": "Real-time Analytics", "relation": "COVERS" },
+    { "source": "Data Science Expertise", "target": "Knowledge Graphs", "relation": "COVERS" },
+    { "source": "Data Science Expertise", "target": "Vector Databases", "relation": "COVERS" },
+    { "source": "Data Science Expertise", "target": "Performance Optimization", "relation": "COVERS" },
+
+    { "source": "Emerging Tech Expertise", "target": "IoT Systems", "relation": "COVERS" },
+    { "source": "Emerging Tech Expertise", "target": "VR Development", "relation": "COVERS" },
+
+    { "source": "LangChain", "target": "OpenAI", "relation": "INTEGRATES_WITH" },
+    { "source": "LangChain", "target": "Anthropic Claude", "relation": "INTEGRATES_WITH" },
+    { "source": "LangGraph", "target": "LangChain", "relation": "EXTENDS" },
+    { "source": "Agno", "target": "OpenAI", "relation": "INTEGRATES_WITH" },
+    { "source": "Agno", "target": "Anthropic Claude", "relation": "INTEGRATES_WITH" },
+    { "source": "CrewAI", "target": "OpenAI", "relation": "INTEGRATES_WITH" },
+    { "source": "ADK", "target": "Google Cloud", "relation": "PART_OF" },
+    { "source": "ADK", "target": "Vertex AI", "relation": "INTEGRATES_WITH" },
+    { "source": "ADK", "target": "Gemini", "relation": "USES" },
+
+    { "source": "Vertex AI", "target": "Google Cloud", "relation": "PART_OF" },
+    { "source": "BigQuery", "target": "Google Cloud", "relation": "PART_OF" },
+    { "source": "Dataproc", "target": "Google Cloud", "relation": "PART_OF" },
+    { "source": "Composer", "target": "Google Cloud", "relation": "PART_OF" },
+    { "source": "GCS", "target": "Google Cloud", "relation": "PART_OF" },
+    { "source": "S3", "target": "AWS", "relation": "PART_OF" },
+    { "source": "Redshift", "target": "AWS", "relation": "PART_OF" },
+    { "source": "AWS Glue", "target": "AWS", "relation": "PART_OF" },
+    { "source": "Lambda", "target": "AWS", "relation": "PART_OF" },
+    { "source": "EMR", "target": "AWS", "relation": "PART_OF" },
+
+    { "source": "MCP Protocol", "target": "Anthropic Claude", "relation": "CREATED_BY" },
+    { "source": "MCP Protocol", "target": "OpenAI", "relation": "INTEGRATES_WITH" },
+    { "source": "MCP Protocol", "target": "Agentic AI", "relation": "ENABLES" },
+    { "source": "MCP Protocol", "target": "Tool-Use Agents", "relation": "ENABLES" },
+
+    { "source": "PySpark", "target": "Apache Spark", "relation": "PART_OF" },
+    { "source": "Spark SQL", "target": "Apache Spark", "relation": "PART_OF" },
+    { "source": "Spark Streaming", "target": "Apache Spark", "relation": "PART_OF" },
+    { "source": "Delta Lake", "target": "Apache Spark", "relation": "EXTENDS" },
+    { "source": "Composer", "target": "Apache Airflow", "relation": "MANAGED_VERSION_OF" },
+
+    { "source": "Agentic AI", "target": "Multi-Agent Orchestration", "relation": "ENABLES" },
+    { "source": "Agentic AI", "target": "Tool-Use Agents", "relation": "INCLUDES" },
+    { "source": "Agentic AI", "target": "Self-Correction Loops", "relation": "INCLUDES" },
+    { "source": "Agentic AI", "target": "Human-in-the-Loop", "relation": "REQUIRES" },
+    { "source": "RAG", "target": "Vector Databases", "relation": "REQUIRES" },
+    { "source": "RAG", "target": "NLP", "relation": "BUILDS_ON" },
+    { "source": "RAG", "target": "LLM Evaluation", "relation": "MEASURED_BY" },
+    { "source": "Knowledge Graphs", "target": "Neo4j", "relation": "IMPLEMENTED_WITH" },
+    { "source": "Knowledge Graphs", "target": "Semantic Search", "relation": "ENABLES" },
+    { "source": "Knowledge Graphs", "target": "Fraud Detection", "relation": "ENABLES" },
+    { "source": "IoT Systems", "target": "Edge AI", "relation": "ENABLES" },
+    { "source": "IoT Systems", "target": "Sensor Integration", "relation": "REQUIRES" },
+    { "source": "ETL/ELT Pipelines", "target": "Data Lake Architecture", "relation": "FEEDS" },
+    { "source": "ETL/ELT Pipelines", "target": "Data Warehouse", "relation": "FEEDS" },
+    { "source": "Data Modeling", "target": "Data Lake Architecture", "relation": "DESIGNS" },
+    { "source": "Data Modeling", "target": "Data Warehouse", "relation": "DESIGNS" },
+    { "source": "Stream Processing", "target": "Real-time Analytics", "relation": "ENABLES" },
+    { "source": "ACID Transactions", "target": "Data Versioning", "relation": "ENABLES" },
+    { "source": "Deep Learning", "target": "Computer Vision", "relation": "POWERS" },
+    { "source": "Deep Learning", "target": "NLP", "relation": "POWERS" },
+    { "source": "Microservices", "target": "Docker", "relation": "DEPLOYED_WITH" },
+    { "source": "Microservices", "target": "Kubernetes", "relation": "ORCHESTRATED_BY" },
+    { "source": "Microservices", "target": "REST APIs", "relation": "COMMUNICATES_VIA" },
+    { "source": "Microservices", "target": "gRPC", "relation": "COMMUNICATES_VIA" },
+    { "source": "VR Development", "target": "Unity", "relation": "USES" },
+    { "source": "VR Development", "target": "Unreal Engine", "relation": "USES" },
+    { "source": "VR Development", "target": "3D Physics", "relation": "REQUIRES" },
+
+    { "source": "Santodigital", "target": "2024", "relation": "ACTIVE_IN" },
+    { "source": "CVS Health", "target": "2024", "relation": "STARTED_IN" },
+    { "source": "CVS Health", "target": "2025", "relation": "ENDED_IN" },
+    { "source": "MoveUp AI", "target": "2025", "relation": "FOUNDED_IN" },
+    { "source": "Capgemini Brasil", "target": "2022", "relation": "STARTED_IN" },
+    { "source": "Capgemini Brasil", "target": "2023", "relation": "ENDED_IN" },
+    { "source": "Simulated Reality", "target": "2021", "relation": "ACTIVE_IN" },
+    { "source": "QI Tech", "target": "2019", "relation": "STARTED_IN" },
+    { "source": "QI Tech", "target": "2020", "relation": "ENDED_IN" },
+    { "source": "PecSmart", "target": "2017", "relation": "STARTED_IN" },
+    { "source": "PecSmart", "target": "2018", "relation": "ENDED_IN" },
+    { "source": "Fontes Promotora", "target": "2017", "relation": "ACTIVE_IN" },
+    { "source": "Estacio University", "target": "2023", "relation": "GRADUATED_IN" },
+    { "source": "UFSC", "target": "2023", "relation": "GRADUATED_IN" },
+    { "source": "IFSC", "target": "2016", "relation": "GRADUATED_IN" },
+
+    { "source": "AI & Agentic Systems", "target": "Agentic AI", "relation": "INCLUDES" },
+    { "source": "AI & Agentic Systems", "target": "Multi-Agent Orchestration", "relation": "INCLUDES" },
+    { "source": "AI & Agentic Systems", "target": "RAG", "relation": "INCLUDES" },
+    { "source": "AI & Agentic Systems", "target": "Computer Vision", "relation": "INCLUDES" },
+    { "source": "AI & Agentic Systems", "target": "NLP", "relation": "INCLUDES" },
+    { "source": "AI & Agentic Systems", "target": "Prompt Engineering", "relation": "INCLUDES" },
+    { "source": "AI & Agentic Systems", "target": "MCP Protocol", "relation": "INCLUDES" },
+    { "source": "AI & Agentic Systems", "target": "Tool-Use Agents", "relation": "INCLUDES" },
+    { "source": "AI & Agentic Systems", "target": "Human-in-the-Loop", "relation": "INCLUDES" },
+    { "source": "AI & Agentic Systems", "target": "LLM Evaluation", "relation": "INCLUDES" },
+
+    { "source": "Data Engineering Skills", "target": "Apache Spark", "relation": "INCLUDES" },
+    { "source": "Data Engineering Skills", "target": "Apache Airflow", "relation": "INCLUDES" },
+    { "source": "Data Engineering Skills", "target": "Delta Lake", "relation": "INCLUDES" },
+    { "source": "Data Engineering Skills", "target": "ETL/ELT Pipelines", "relation": "INCLUDES" },
+    { "source": "Data Engineering Skills", "target": "Data Modeling", "relation": "INCLUDES" },
+    { "source": "Data Engineering Skills", "target": "Real-time Analytics", "relation": "INCLUDES" },
+    { "source": "Data Engineering Skills", "target": "Distributed Computing", "relation": "INCLUDES" },
+
+    { "source": "Programming Skills", "target": "Python", "relation": "INCLUDES" },
+    { "source": "Programming Skills", "target": "TypeScript", "relation": "INCLUDES" },
+    { "source": "Programming Skills", "target": "JavaScript", "relation": "INCLUDES" },
+    { "source": "Programming Skills", "target": "SQL", "relation": "INCLUDES" },
+    { "source": "Programming Skills", "target": "Node.js", "relation": "INCLUDES" },
+    { "source": "Programming Skills", "target": "React", "relation": "INCLUDES" },
+    { "source": "Programming Skills", "target": "FastAPI", "relation": "INCLUDES" },
+    { "source": "Programming Skills", "target": "GraphQL", "relation": "INCLUDES" },
+    { "source": "Programming Skills", "target": "gRPC", "relation": "INCLUDES" },
+
+    { "source": "Cloud & Infrastructure Skills", "target": "AWS", "relation": "INCLUDES" },
+    { "source": "Cloud & Infrastructure Skills", "target": "Google Cloud", "relation": "INCLUDES" },
+    { "source": "Cloud & Infrastructure Skills", "target": "Azure", "relation": "INCLUDES" },
+    { "source": "Cloud & Infrastructure Skills", "target": "Docker", "relation": "INCLUDES" },
+    { "source": "Cloud & Infrastructure Skills", "target": "Kubernetes", "relation": "INCLUDES" },
+    { "source": "Cloud & Infrastructure Skills", "target": "CI/CD", "relation": "INCLUDES" },
+
+    { "source": "Specialized Tech Skills", "target": "Knowledge Graphs", "relation": "INCLUDES" },
+    { "source": "Specialized Tech Skills", "target": "IoT Systems", "relation": "INCLUDES" },
+    { "source": "Specialized Tech Skills", "target": "VR Development", "relation": "INCLUDES" },
+    { "source": "Specialized Tech Skills", "target": "Geospatial Analysis", "relation": "INCLUDES" },
+    { "source": "Specialized Tech Skills", "target": "Vector Databases", "relation": "INCLUDES" },
+    { "source": "Specialized Tech Skills", "target": "Fraud Detection", "relation": "INCLUDES" },
+
+    { "source": "Development Practices", "target": "TDD", "relation": "INCLUDES" },
+    { "source": "Development Practices", "target": "Performance Optimization", "relation": "INCLUDES" },
+    { "source": "Development Practices", "target": "System Architecture", "relation": "INCLUDES" },
+    { "source": "Development Practices", "target": "Agile Development", "relation": "INCLUDES" },
+    { "source": "Development Practices", "target": "Team Leadership", "relation": "INCLUDES" },
+    { "source": "Development Practices", "target": "Microservices", "relation": "INCLUDES" },
+
+    { "source": "OpenAI", "target": "Agentic AI", "relation": "ENABLES" },
+    { "source": "Anthropic Claude", "target": "Agentic AI", "relation": "ENABLES" },
+    { "source": "Llama", "target": "Deep Learning", "relation": "BUILT_ON" },
+    { "source": "Gemini", "target": "Multimodal AI", "relation": "SUPPORTS" },
+    { "source": "Qwen", "target": "NLP", "relation": "EXCELS_AT" },
+    { "source": "YoloX", "target": "Computer Vision", "relation": "IMPLEMENTS" },
+    { "source": "OpenCV", "target": "Computer Vision", "relation": "IMPLEMENTS" },
+
+    { "source": "Supabase", "target": "Vector Databases", "relation": "SUPPORTS" },
+    { "source": "FalkorDB", "target": "Knowledge Graphs", "relation": "IMPLEMENTS" },
+    { "source": "Zep", "target": "Shared Memory", "relation": "IMPLEMENTS" },
+    { "source": "Redis", "target": "Real-time Analytics", "relation": "ENABLES" },
+    { "source": "RabbitMQ", "target": "Microservices", "relation": "ENABLES" },
+
+    { "source": "Docker", "target": "CI/CD", "relation": "ENABLES" },
+    { "source": "Kubernetes", "target": "Docker", "relation": "ORCHESTRATES" },
+    { "source": "Red Hat OpenShift", "target": "Kubernetes", "relation": "EXTENDS" },
+    { "source": "Infrastructure-as-Code", "target": "CI/CD", "relation": "ENABLES" },
+
+    { "source": "Datadog", "target": "SLO Architecture", "relation": "IMPLEMENTS" },
+    { "source": "Grafana", "target": "Real-time Analytics", "relation": "VISUALIZES" },
+    { "source": "Faithfulness Metrics", "target": "LLM Evaluation", "relation": "PART_OF" },
+    { "source": "Cost-per-Token", "target": "LLM Evaluation", "relation": "PART_OF" },
+    { "source": "A/B Testing", "target": "Prompt Engineering", "relation": "OPTIMIZES" },
+
+    { "source": "N8N", "target": "Agentic AI", "relation": "AUTOMATES" },
+    { "source": "Slack API", "target": "Conversational AI", "relation": "ENABLES" },
+    { "source": "Zendesk", "target": "Conversational AI", "relation": "ENABLES" },
+
+    { "source": "Scrapy", "target": "Python", "relation": "BUILT_WITH" },
+    { "source": "Pandas", "target": "Python", "relation": "BUILT_WITH" },
+    { "source": "Raspberry Pi", "target": "Edge AI", "relation": "ENABLES" },
+    { "source": "BalenaCLI", "target": "Raspberry Pi", "relation": "MANAGES" },
+
+    { "source": "Protege", "target": "RDF/OWL", "relation": "CREATES" },
+    { "source": "RDF/OWL", "target": "Knowledge Graphs", "relation": "DEFINES" },
+    { "source": "Anzo Analytics", "target": "Knowledge Graphs", "relation": "IMPLEMENTS" },
+    { "source": "Cytoscape.js", "target": "Knowledge Graphs", "relation": "VISUALIZES" },
+    { "source": "Chart.js", "target": "Real-time Analytics", "relation": "VISUALIZES" },
+
+    { "source": "Healthcare Domain", "target": "HIPAA", "relation": "REGULATED_BY" },
+    { "source": "Healthcare Domain", "target": "FedRAMP", "relation": "REGULATED_BY" },
+    { "source": "VR/AR Domain", "target": "VR Development", "relation": "APPLIES" },
+    { "source": "AgTech Domain", "target": "IoT Systems", "relation": "LEVERAGES" },
+    { "source": "AgTech Domain", "target": "Edge AI", "relation": "LEVERAGES" },
+    { "source": "Fintech Domain", "target": "Fraud Detection", "relation": "REQUIRES" },
+    { "source": "Enterprise AI Domain", "target": "Agentic AI", "relation": "DRIVEN_BY" },
+    { "source": "Enterprise AI Domain", "target": "Multi-Agent Orchestration", "relation": "DRIVEN_BY" },
+    { "source": "Enterprise AI Domain", "target": "RAG", "relation": "DRIVEN_BY" },
+    { "source": "Smart City", "target": "IoT Systems", "relation": "LEVERAGES" },
+    { "source": "Smart City", "target": "Distributed Computing", "relation": "LEVERAGES" }
   ]
 }

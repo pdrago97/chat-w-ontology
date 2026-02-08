@@ -6,21 +6,59 @@ interface Props {
 }
 
 const GraphModeToggle: React.FC<Props> = ({ mode, onChange }) => {
+  const isDark = typeof document !== 'undefined' && document.documentElement.classList.contains('dark');
+
+  const baseStyle: React.CSSProperties = {
+    padding: '6px 10px',
+    fontSize: 12,
+    fontWeight: 600,
+    border: '1px solid',
+    transition: 'all 0.2s ease',
+    cursor: 'pointer',
+    outline: 'none',
+  };
+
+  const activeStyle: React.CSSProperties = {
+    ...baseStyle,
+    background: isDark ? '#2563eb' : '#0f172a',
+    color: '#ffffff',
+    borderColor: isDark ? '#2563eb' : '#0f172a',
+  };
+
+  const inactiveStyle: React.CSSProperties = {
+    ...baseStyle,
+    background: isDark ? 'rgba(31,41,55,0.9)' : 'rgba(255,255,255,0.9)',
+    color: isDark ? '#e5e7eb' : '#0f172a',
+    borderColor: isDark ? '#4b5563' : '#cbd5e1',
+  };
+
   return (
-    <div className="inline-flex rounded-md shadow-sm" role="group">
+    <div style={{ display: 'inline-flex', borderRadius: 8, boxShadow: '0 1px 3px rgba(0,0,0,0.1)', overflow: 'hidden' }} role="group">
       <button
         type="button"
         onClick={() => onChange('2d')}
-        className={`px-3 py-2 text-sm font-semibold border ${mode === '2d' ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'} border-slate-300 rounded-l-lg hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-900/50`}
+        style={{
+          ...(mode === '2d' ? activeStyle : inactiveStyle),
+          borderTopLeftRadius: 8,
+          borderBottomLeftRadius: 8,
+          borderTopRightRadius: 0,
+          borderBottomRightRadius: 0,
+        }}
       >2D</button>
       <button
         type="button"
         onClick={() => onChange('3d')}
-        className={`px-3 py-2 text-sm font-semibold border ${mode === '3d' ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'} border-slate-300 rounded-r-lg hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-900/50`}
+        style={{
+          ...(mode === '3d' ? activeStyle : inactiveStyle),
+          borderTopRightRadius: 8,
+          borderBottomRightRadius: 8,
+          borderTopLeftRadius: 0,
+          borderBottomLeftRadius: 0,
+          borderLeft: 'none',
+        }}
       >3D</button>
     </div>
   );
 };
 
 export default GraphModeToggle;
-

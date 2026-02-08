@@ -37,6 +37,7 @@ const loadClientDeps = async () => {
 
 interface ForceGraph3DViewProps {
   graphData: any;
+  theme?: string;
 }
 
 // Simple color palette matching 2D types
@@ -54,7 +55,7 @@ const colorByType = (type?: string) => {
   }
 };
 
-export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
+export default function ForceGraph3DView({ graphData, theme }: ForceGraph3DViewProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const fgRef = useRef<any>(null);
   const composerRef = useRef<any>(null);
@@ -217,16 +218,17 @@ export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
 
           // Create text sprite for the label
           const label = n.label || n.name || n.id || 'Node';
-          const textSprite = createTextSprite(label, '#333333');
+          const isDarkMode = document.documentElement.classList.contains('dark');
+          const textSprite = createTextSprite(label, isDarkMode ? '#e2e8f0' : '#333333');
           textSprite.position.set(0, 8, 0); // Position above the node
           group.add(textSprite);
 
           return group;
         })
-        .linkColor(() => 'rgba(71, 85, 105, 0.65)') // slate-600
+        .linkColor(() => (theme === 'dark' || document.documentElement.classList.contains('dark')) ? 'rgba(148, 163, 184, 0.5)' : 'rgba(71, 85, 105, 0.65)')
         .linkDirectionalParticles(0)
         .linkWidth(0.8)
-        .backgroundColor('#f8fafc') // slate-50
+        .backgroundColor(document.documentElement.classList.contains('dark') ? '#0a0f1a' : '#f8fafc')
         .onNodeHover((n: any, prevNode: any) => {
           setHoverNodeId(n ? String(n.id) : null);
 
@@ -339,29 +341,85 @@ export default function ForceGraph3DView({ graphData }: ForceGraph3DViewProps) {
     controls.autoRotate = autoRotate;
   }, [autoRotate]);
 
+  // Update 3D scene background and re-render node labels when theme changes
+  useEffect(() => {
+    if (!fgRef.current) return;
+    const isDark = theme === 'dark';
+    fgRef.current.backgroundColor(isDark ? '#0a0f1a' : '#f8fafc');
+    // Also update scene background for Three.js
+    const scene = fgRef.current.scene();
+    if (scene) {
+      scene.background = new THREE.Color(isDark ? '#0a0f1a' : '#f8fafc');
+    }
+    // Force re-render of node labels with updated theme colors
+    // Re-assign the nodeThreeObject accessor to trigger a refresh
+    const currentAccessor = fgRef.current.nodeThreeObject();
+    if (currentAccessor) {
+      fgRef.current.nodeThreeObject(fgRef.current.nodeThreeObject());
+    }
+  }, [theme]);
+
   const resetCamera = () => {
     if (!fgRef.current) return;
     fgRef.current.zoomToFit(400);
   };
 
+  const isDark3D = theme === 'dark' || (typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
+
   return (
     <div style={{ position: 'absolute', inset: 0 }}>
-      {/* Bottom-right: 3D controls so 2D/3D toggle at bottom-left stays clickable */}
-      <div style={{ position: 'absolute', bottom: 16, right: 16, zIndex: 10001, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+      {/* Bottom-right: 3D controls */}
+      <div style={{
+        position: 'absolute',
+        bottom: 12,
+        right: 12,
+        zIndex: 10001,
+        display: 'flex',
+        gap: 6,
+        flexWrap: 'wrap',
+      }}>
         <button
           onClick={resetCamera}
-          className="px-3 py-2 rounded-lg bg-white text-slate-900 border border-slate-300 shadow hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-900/40"
+          style={{
+            padding: '6px 10px',
+            fontSize: 12,
+            borderRadius: 6,
+            background: isDark3D ? 'rgba(31,41,55,0.9)' : 'rgba(255,255,255,0.9)',
+            backdropFilter: 'blur(8px)',
+            color: isDark3D ? '#e5e7eb' : '#0f172a',
+            border: `1px solid ${isDark3D ? '#4b5563' : '#cbd5e1'}`,
+            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+          }}
           title="Reset camera"
         >Reset camera</button>
-
       </div>
 
-      {/* Container info centered at top */}
-      <div style={{ position: 'absolute', top: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 10000, fontSize: 12, background: 'rgba(255,255,255,0.85)', padding: '6px 10px', borderRadius: 8, border: '1px solid #e5e7eb', color: '#111' }}>
-        container: {size.w}x{size.h} • nodes: {counts.nodes} • edges: {counts.links} {error ? ` • error: ${error}` : ''}
+      {/* Container info - visible on larger screens */}
+      <div className="hidden sm:block" style={{
+        position: 'absolute',
+        top: 12,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 10000,
+        fontSize: 12,
+        color: isDark3D ? '#9ca3af' : '#4b5563',
+        background: isDark3D ? 'rgba(17,24,39,0.85)' : 'rgba(255,255,255,0.85)',
+        backdropFilter: 'blur(8px)',
+        padding: '6px 12px',
+        borderRadius: 8,
+        border: `1px solid ${isDark3D ? '#374151' : '#e5e7eb'}`,
+      }}>
+        nodes: {counts.nodes} / links: {counts.links} {error ? ` / error: ${error}` : ''}
       </div>
 
-      <div ref={containerRef} style={{ position: 'absolute', inset: 0, background: '#f5f7fa' }} />
+      <div ref={containerRef} style={{
+        position: 'absolute',
+        inset: 0,
+        background: isDark3D ? '#030712' : '#f8fafc',
+        transition: 'background-color 0.3s ease',
+      }} />
     </div>
   );
 }
@@ -551,6 +609,11 @@ function showCustomTooltip(node: any) {
       pointer-events: none;
       transform: translateY(-100%) translateY(-8px);
     }
+    html.dark .custom-node-tooltip {
+      background: rgba(15, 23, 42, 0.95);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+    }
 
     .tooltip-header {
       margin-bottom: 10px;
@@ -697,13 +760,18 @@ function showInfoModal(data: any) {
   style.textContent = `
     .modal-overlay { position:fixed; inset:0; background:rgba(2,6,23,0.72); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:9999; opacity:0; }
     .modal-content { background:#ffffff; color:#0b1220; border:1px solid #e5e7eb; border-radius:16px; padding:24px 28px; max-width:640px; width:92vw; max-height:80vh; overflow:auto; box-shadow:0 22px 45px -12px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.03); transform-origin:center center; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; line-height:1.6; font-size:16px; position:relative; }
+    html.dark .modal-content { background:#1e293b; color:#e2e8f0; border-color:#334155; }
     .modal-title { margin:0 0 8px 0; font-size:22px; font-weight:700; }
     .modal-sub { margin:0 0 12px 0; font-size:13px; color:#475569; }
     .modal-close { position:absolute; top:10px; right:10px; width:32px; height:32px; border-radius:9999px; border:1px solid #e5e7eb; background:#fff; color:#334155; font-size:18px; line-height:1; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,0.08); }
+    html.dark .modal-close { background:#334155; border-color:#475569; color:#e2e8f0; }
     .modal-close:hover { background:#f8fafc; }
+    html.dark .modal-close:hover { background:#475569; }
     .kv { margin:6px 0; font-size:15px; }
     .kv strong { color:#0f172a; }
+    html.dark .kv strong { color:#f1f5f9; }
     .long { margin:12px 0; padding:12px; background:#f8fafc; border-left:3px solid #94a3b8; border-radius:8px; font-size:15px; }
+    html.dark .long { background:#0f172a; }
   `;
   document.head.appendChild(style);
 

@@ -154,6 +154,48 @@
             text-align: justify;
         }
 
+        .summary-text li {
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+        }
+
+        .summary-text ul {
+            list-style-type: disc;
+            padding-left: 1.2rem;
+        }
+
+        /* Areas of Expertise */
+        .expertise-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .expertise-category {
+            margin-bottom: 0.8rem;
+        }
+
+        .expertise-category h3 {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .expertise-category p {
+            font-size: 0.95rem;
+        }
+
+        /* Achievements */
+        .achievements-list {
+            list-style-type: disc;
+            padding-left: 1.2rem;
+        }
+
+        .achievements-list li {
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+        }
+
         /* Print Styles */
         @media print {
             body {
@@ -196,40 +238,179 @@
         <header>
             <h1>Pedro Reichow</h1>
             <div class="contact-info">
-                pedro_reichow@hotmail.com • linkedin.com/in/pedroreichow • Talk to My Resume
+                pedroreichow3@gmai.com • linkedin.com/in/pedroreichow • pedroreichow.com.br
             </div>
         </header>
 
         <section>
-            <h2>Professional Summary</h2>
-            <p class="summary-text">
-                Experienced AI Engineer and Data Specialist with 7+ years building production-ready artificial
-                intelligence solutions and scalable data systems. Expert in computer vision, large language model
-                integration, and high-performance data pipelines processing 500GB+ daily. Proven track record of leading
-                technical teams, founding technology ventures, and delivering innovative solutions across agriculture,
-                healthcare, and fintech. Strong background in full-stack development, cloud architecture, and emerging
-                AI technologies.
-            </p>
+            <h2>Summary</h2>
+            <div class="summary-text">
+                <ul>
+                    <li>Full Stack AI Engineer and Data Specialist with 5+ years building production-ready agentic AI
+                        systems, multi-agent architectures, and scalable data platforms.</li>
+                    <li>Deep expertise in designing autonomous AI agents, orchestrating multi-agent workflows, and
+                        integrating LLMs into enterprise-grade pipelines with human-in-the-loop governance.</li>
+                    <li>Expert in computer vision, RAG systems, knowledge graphs, and high-performance data pipelines
+                        processing 500GB+ daily.</li>
+                    <li>Proven track record of leading technical teams, founding technology ventures, and delivering
+                        agentic automation solutions across agriculture, healthcare, and fintech.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Technical Expertise</h2>
+            <div class="skills-section">
+                <div class="skill-category">
+                    <h3>Programming & Development</h3>
+                    <p>Python, TypeScript, JavaScript, SQL, Node.js, React, Django, FastAPI, Flask, GraphQL, gRPC,
+                        Microservices Architecture</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Artificial Intelligence & Agentic Systems</h3>
+                    <p>Agentic AI Architecture, Multi-Agent Orchestration (LangGraph, CrewAI, Agno, ADK), Large Language
+                        Models (Llama, Claude, Gemini, Kimi, Qwen), RAG Pipelines, Computer Vision (YoloX, OpenCV), NLP,
+                        Prompt Engineering, Model Context Protocol (MCP), Tool-Use Agents, Human-in-the-Loop Systems</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Data Engineering & Big Data</h3>
+                    <p>Apache Spark (PySpark, Spark SQL, Streaming), Apache Airflow, Delta Lake, Data Lake/Warehouse
+                        Architecture, ETL/ELT Pipelines, Data Modeling, Performance Optimization</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Cloud & Infrastructure</h3>
+                    <p>AWS (S3, Redshift, Glue, Lambda, EMR), Google Cloud Platform (BigQuery, Dataproc, Composer),
+                        Azure, Docker, Kubernetes, Infrastructure-as-Code, CI/CD</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Specialized Technologies</h3>
+                    <p>Knowledge Graphs (Neo4j), IoT Systems (Raspberry Pi), Virtual Reality Development, Geospatial
+                        Analysis, Real-time Systems, Distributed Computing</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Development Practices</h3>
+                    <p>Test-Driven Development (TDD), Performance Optimization, System Architecture Design, Technical
+                        Documentation, Agile Development, Team Leadership</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Education</h2>
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <span class="company">Estácio University</span>
+                    </div>
+                    <span class="date">2023</span>
+                </div>
+                <div class="role">Bachelor of Science in Systems Analysis and Development</div>
+            </div>
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <span class="company">Federal University of Santa Catarina (UFSC)</span>
+                    </div>
+                    <span class="date">2023</span>
+                </div>
+                <div class="role">Bachelor of Science in Electrical Engineering</div>
+            </div>
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <span class="company">Federal Institute of Santa Catarina (IFSC)</span>
+                    </div>
+                    <span class="date">2016</span>
+                </div>
+                <div class="role">Technical Diploma in Electrotechnics</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Areas of Expertise & Innovation Focus</h2>
+            <div class="expertise-section">
+                <div class="expertise-category">
+                    <h3>Agentic AI & Autonomous Systems</h3>
+                    <p>Multi-Agent Architectures, Agent Orchestration (Graph-based & DAG), Tool-Use Agents, Agentic
+                        Automation, Retrieval-Augmented Generation (RAG), MCP Servers, Human-in-the-Loop Governance, LLM
+                        Evaluation & Observability</p>
+                </div>
+                <div class="expertise-category">
+                    <h3>AI Applications</h3>
+                    <p>Computer Vision, Natural Language Processing, Multimodal AI Systems, Edge AI Computing,
+                        Conversational AI</p>
+                </div>
+                <div class="expertise-category">
+                    <h3>Data Science & Engineering</h3>
+                    <p>Large-scale Distributed Systems, Real-time Analytics, Knowledge Graph Technologies, Vector
+                        Databases, Performance Optimization</p>
+                </div>
+                <div class="expertise-category">
+                    <h3>Emerging Technologies</h3>
+                    <p>IoT Integration, Virtual/Augmented Reality, Blockchain Applications</p>
+                </div>
+                <div class="expertise-category">
+                    <h3>Applied Research Domains</h3>
+                    <p>Agricultural Technology, Healthcare Innovation, Financial Technology, Smart City Solutions</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Key Achievements</h2>
+            <ul class="achievements-list">
+                <li>Designed and deployed multi-agent systems with graph-based orchestration for enterprise workflow
+                    automation.</li>
+                <li>Built agricultural AI systems achieving >95% accuracy in disease detection for precision farming
+                    applications.</li>
+                <li>Architected financial data processing systems handling 500GB+ daily transactions with 40%
+                    performance improvement.</li>
+                <li>Pioneered healthcare VR applications compliant with HIPAA and FedRAMP standards.</li>
+                <li>Founded technology consulting practice delivering agentic AI and enterprise automation solutions.
+                </li>
+            </ul>
         </section>
 
         <section>
             <h2>Professional Experience</h2>
 
-            <!-- CVS Health -->
+            <!-- Santodigital -->
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <span class="company">Santodigital (Google Partner)</span>
+                    </div>
+                    <span class="date">Jan 2024 – Present</span>
+                </div>
+                <div class="role">Cloud AI Solutions Architect</div>
+                <div class="job-details">
+                    <ul>
+                        <li>Architected production-grade RAG with BigQuery + Vertex AI, reducing document analysis from
+                            weeks to minutes with offline evaluation suites for retrieval quality.</li>
+                        <li>Implemented agentic reinforcement loops via ADK: observability logs feeding prompt
+                            fine-tuning, reducing hallucinations and improving faithfulness scores in production.</li>
+                        <li>Built multi-agent systems for enterprise clients: autonomous compliance automation, contract
+                            alert agents, auto-service with Zendesk handoff and human-in-the-loop governance for
+                            critical actions.</li>
+                    </ul>
+                </div>
+            </div> <!-- CVS Health -->
             <div class="job">
                 <div class="job-header">
                     <div>
                         <span class="company">CVS Health</span>
-                        <span class="location"></span>
                     </div>
-                    <span class="date">Feb 2024 – Present</span>
+                    <span class="date">Aug 2024 – Dec 2025</span>
                 </div>
-                <div class="role">Staff Fullstack & AI/ML Engineer</div>
+                <div class="role">Senior Software & Data Engineer | AI Observability</div>
                 <div class="job-details">
                     <ul>
-                        <li>Leading the development of scalable AI/ML platforms to enhance patient care and operational efficiency.</li>
-                        <li>Architecting full-stack solutions using modern frameworks (React, Node.js, Python) integrated with advanced ML models.</li>
-                        <li>Driving technical strategy and mentorship for cross-functional engineering teams.</li>
+                        <li>Architected SLOs for AI pipeline latency (p50/p95) and cost-per-token monitoring using
+                            Datadog/Grafana for healthcare AI systems in HIPAA/FedRAMP compliance.</li>
+                        <li>Built observability dashboards tracking faithfulness and relevance metrics for LLM outputs,
+                            enabling prompt version A/B testing and continuous improvement.</li>
+                        <li>Led full-stack development of enterprise agentic AI applications with predictive analysis,
+                            autonomous workflow orchestration, and multi-step reasoning pipelines.</li>
                     </ul>
                 </div>
             </div>
@@ -239,56 +420,18 @@
                 <div class="job-header">
                     <div>
                         <span class="company">Capgemini Brasil</span>
-                        <span class="location"></span>
                     </div>
-                    <span class="date">Aug 2022 – Jan 2024</span>
+                    <span class="date">Jan 2022 – Dec 2023</span>
                 </div>
                 <div class="role">Senior Solutions Consultant (Solutions Consultant IV)</div>
                 <div class="job-details">
                     <ul>
-                        <li>Lead enterprise-level AI and data engineering solutions for large-scale clients, specializing in knowledge graphs, fraud detection, and generative AI implementations.</li>
-                        <li><strong>Agentic AI Infrastructure:</strong> Architected microservices in Python for serving agentic AI systems with RAG capabilities and intelligent document indexing for enterprise clients.</li>
-                        <li><strong>Ontology Development:</strong> Built sophisticated ontologies using Protégé and RDF/OWL, integrated with Anzo Analytics for complex business intelligence and fraud risk analysis.</li>
-                        <li><strong>Graph Database Solutions:</strong> Developed advanced graph navigation interfaces using TypeScript and Cytoscape.js for fraud detection, usage pattern analysis, and risk assessment.</li>
-                        <li><strong>Team Leadership:</strong> Collaborate with 50+ engineers and consultants on enterprise-scale data engineering optimizations and generative AI solutions.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- SantoDigital -->
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <span class="company">SantoDigital</span>
-                        <span class="location"></span>
-                    </div>
-                    <span class="date">Apr 2021 – Jul 2022</span>
-                </div>
-                <div class="role">Senior AI/ML Engineer</div>
-                <div class="job-details">
-                    <ul>
-                        <li>Developed and deployed machine learning pipelines for data-intensive applications.</li>
-                        <li>Optimized model performance and inference latency for real-time production environments.</li>
-                        <li>Collaborated with data scientists to productize research models using cloud-native technologies.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Ruedata -->
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <span class="company">Ruedata</span>
-                        <span class="location"></span>
-                    </div>
-                    <span class="date">Jan 2020 – Mar 2021</span>
-                </div>
-                <div class="role">Senior Integrations Engineer</div>
-                <div class="job-details">
-                    <ul>
-                        <li>Led critical backend integration projects to unify disparate data sources.</li>
-                        <li>Engineered robust APIs and microservices to support high-throughput data processing.</li>
-                        <li>Implemented automated testing and CI/CD pipelines to ensure code quality and rapid delivery.</li>
+                        <li>Architected Python-based API middleware and Knowledge Graph solutions for fraud detection
+                            and risk analysis in the financial sector, creating database abstraction layers.</li>
+                        <li>Developed sophisticated ontologies using Protege and RDF/OWL with REST APIs for complex
+                            business intelligence and semantic search.</li>
+                        <li>Collaborated with teams of 50+ engineers on enterprise data engineering optimizations and
+                            API integrations.</li>
                     </ul>
                 </div>
             </div>
@@ -297,19 +440,19 @@
             <div class="job">
                 <div class="job-header">
                     <div>
-                        <span class="company">Simulated Reality (Healthcare Technology)</span>
-                        <span class="location"></span>
+                        <span class="company">Simulated Reality</span>
                     </div>
-                    <span class="date">Mar 2019 – Dec 2019</span>
+                    <span class="date">Jan 2021 – Dec 2021</span>
                 </div>
-                <div class="role">Senior Full Stack Engineer & VR Developer</div>
+                <div class="role">Full Stack Engineer | VR & Real-Time Systems</div>
                 <div class="job-details">
                     <ul>
-                        <li>Led development of virtual reality applications for healthcare training and wellness, ensuring HIPAA and FedRAMP compliance.</li>
-                        <li><strong>VR Development:</strong> Built VR training platforms using Node.js and React with 3D physics simulations and real-time interaction systems.</li>
-                        <li><strong>Data Analytics:</strong> Created comprehensive analytics dashboards with Chart.js for training effectiveness measurement and user progress tracking.</li>
-                        <li><strong>Cloud Infrastructure:</strong> Implemented scalable Azure App Service architecture with Red Hat OpenShift containers for enterprise healthcare deployment.</li>
-                        <li><strong>Real-time Systems:</strong> Built asynchronous processing pipelines using Redis and RabbitMQ for handling large 3D video files and Unity/Unreal game updates.</li>
+                        <li>Developed full-stack VR solutions using React frontend with Node.js backend for training and
+                            wellness applications with 3D object interaction and physics simulations.</li>
+                        <li>Built scalable REST APIs with queues for asynchronous processing and pub/sub for real-time
+                            communication between system components.</li>
+                        <li>Engineered pipelines for processing large 3D video files and game updates compiled in Unity
+                            and Unreal Engine.</li>
                     </ul>
                 </div>
             </div>
@@ -318,19 +461,17 @@
             <div class="job">
                 <div class="job-header">
                     <div>
-                        <span class="company">QI Tech (Fintech Research)</span>
-                        <span class="location"></span>
+                        <span class="company">QI Tech (Fintech)</span>
                     </div>
-                    <span class="date">Aug 2018 – Feb 2019</span>
+                    <span class="date">Jan 2019 – Dec 2020</span>
                 </div>
                 <div class="role">Senior Data Engineer</div>
                 <div class="job-details">
                     <ul>
-                        <li>Led development of large-scale financial data processing systems and machine learning models for banking-as-a-service platform.</li>
-                        <li><strong>Big Data Engineering:</strong> Architected PySpark pipelines processing 500GB+ daily financial transactions on Google Cloud Dataproc, achieving 40% performance improvement.</li>
-                        <li><strong>Real-time Processing:</strong> Implemented Spark Structured Streaming for live transaction analysis with windowed aggregations and watermarking.</li>
-                        <li><strong>Data Architecture:</strong> Designed Delta Lake implementation on GCS with ACID transactions and time travel capabilities for audit compliance.</li>
-                        <li><strong>Microservices Development:</strong> Built high-performance gRPC microservices processing 100,000+ daily requests with 150ms average latency.</li>
+                        <li>Processed 500GB+ daily with PySpark on Dataproc, optimizing gRPC latency and cloud cost
+                            efficiency — infrastructure patterns now applied to AI workloads.</li>
+                        <li>Designed Delta Lake on GCS with ACID transactions for audit compliance, enabling data
+                            versioning critical for ML reproducibility.</li>
                     </ul>
                 </div>
             </div>
@@ -339,18 +480,15 @@
             <div class="job">
                 <div class="job-header">
                     <div>
-                        <span class="company">PecSmart (IoT & Agricultural Technology)</span>
-                        <span class="location"></span>
+                        <span class="company">PecSmart (IoT & AgTech)</span>
                     </div>
-                    <span class="date">May 2018 – Jul 2018</span>
+                    <span class="date">Nov 2017 – Dec 2018</span>
                 </div>
                 <div class="role">Backend Developer & IoT Specialist</div>
                 <div class="job-details">
                     <ul>
-                        <li>Developed IoT systems for precision livestock monitoring using embedded devices and machine learning.</li>
-                        <li><strong>IoT Development:</strong> Built sensor integration systems on Raspberry Pi for livestock monitoring, processing multi-modal data (audio, visual, environmental).</li>
-                        <li><strong>Data Pipelines:</strong> Created end-to-end processing pipelines for real-time livestock health prediction and behavioral analysis.</li>
-                        <li><strong>Edge Computing:</strong> Implemented distributed solutions using BalenaCLI for remote device management and deployment.</li>
+                        <li>Built IoT + ML pipelines for livestock monitoring with Raspberry Pi and real-time behavioral
+                            analysis.</li>
                     </ul>
                 </div>
             </div>
@@ -360,18 +498,18 @@
                 <div class="job-header">
                     <div>
                         <span class="company">Fontes Promotora</span>
-                        <span class="location"></span>
                     </div>
-                    <span class="date">Jan 2018 – Apr 2018</span>
+                    <span class="date">Jan 2017 – Oct 2017</span>
                 </div>
                 <div class="role">Backend Developer</div>
                 <div class="job-details">
                     <ul>
-                        <li>Developed web scraping, automation, and data processing solutions for enterprise clients.</li>
-                        <li><strong>Web Scraping Solutions:</strong> Built robust data extraction systems using Scrapy and Requests for enterprise data collection.</li>
-                        <li><strong>API Development:</strong> Created scalable APIs using FastAPI, Flask, and Django REST Framework for client applications.</li>
-                        <li><strong>Data Processing:</strong> Implemented advanced data processing pipelines with Pandas for business intelligence solutions.</li>
-                        <li><strong>Full-Stack Solutions:</strong> Delivered complete applications using ReactJS frontend with cloud deployment on AWS and Docker.</li>
+                        <li>Built scalable APIs using FastAPI, Flask, and Django REST, creating a middleware layer that
+                            abstracts database complexity from front-end applications.</li>
+                        <li>Developed robust web scraping solutions using Scrapy and Requests for enterprise data
+                            collection and automation.</li>
+                        <li>Delivered complete full-stack solutions with ReactJS frontend deployed on AWS and Docker
+                            containers.</li>
                     </ul>
                 </div>
             </div>
@@ -385,80 +523,29 @@
                         <span class="company">MoveUp AI</span>
                         <span class="location">San Francisco, CA - Remote</span>
                     </div>
-                    <span class="date">Nov 2022 – Jan 2023</span>
+                    <span class="date">Jan 2025 – july 2025</span>
                 </div>
+                <div class="role">Founding Engineer & Technical Co-founder</div>
                 <div class="job-details">
                     <ul>
-                        <li>Co-founding AI-powered workforce intelligence platform serving 15+ enterprise teams with integrated Slack workflows, knowledge graphs, and team analytics.</li>
-                        <li><strong>MCP Architecture:</strong> Architected TypeScript MCP (Model Context Protocol) servers enabling seamless AI agent communication across enterprise tools and workflows.</li>
-                        <li><strong>AI Agent Development:</strong> Built sophisticated Python agents using Agno, LangChain, and LangGraph for intelligent team insights and automated workflow orchestration.</li>
+                        <li>Co-founding AI-powered workforce intelligence platform serving 15+ enterprise teams with
+                            agentic Slack workflows, knowledge graphs, and autonomous team analytics.</li>
+                        <li><strong>Multi-Agent Architecture:</strong> Designed graph-based agent orchestration with
+                            specialized agents (research, analysis, action) coordinating via shared memory and tool-use
+                            protocols.</li>
+                        <li><strong>MCP Infrastructure:</strong> Architected TypeScript MCP (Model Context Protocol)
+                            servers enabling seamless agent-to-agent and agent-to-tool communication across enterprise
+                            ecosystems.</li>
+                        <li><strong>Agentic AI Development:</strong> Built autonomous Python agents using Agno,
+                            LangChain, and LangGraph with multi-step reasoning, dynamic tool selection, and
+                            self-correction loops.</li>
+                        <li><strong>Knowledge Graph & Memory Systems:</strong> Implemented Zep persistent memory,
+                            Supabase vector databases, and FalkorDB graph stores integrated with commercial LLMs
+                            (Anthropic, OpenAI) for long-term contextual agent memory.</li>
+                        <li><strong>Agentic Automation:</strong> Developed end-to-end autonomous workflows with N8N
+                            orchestration and Slack integrations — agents that research, draft, review, and deliver
+                            without manual intervention.</li>
                     </ul>
-                </div>
-            </div>
-
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <span class="company">Trinnix AI Lab</span>
-                        <span class="location"></span>
-                    </div>
-                    <span class="date">Jan 2021 – May 2021</span>
-                </div>
-                <div class="role">Chief Technology Officer (CTO)</div>
-                <div class="job-details">
-                    <ul>
-                        <li>Led development of AI solutions focusing on computer vision and LLM integration for agricultural technology and precision farming applications.</li>
-                        <li><strong>Computer Vision Systems:</strong> Developed and deployed agricultural monitoring systems using YoloX and Roboflow, achieving >95% accuracy in plant disease detection and livestock behavior analysis.</li>
-                        <li><strong>Knowledge Graph Development:</strong> Built ontological knowledge graphs using Neo4j for agricultural data analysis and business intelligence.</li>
-                        <li><strong>AI Integration:</strong> Integrated multiple LLMs (GPT-4o, Claude 3.5, Gemini 1.5) with advanced prompt engineering for automated reporting and intelligent alerting.</li>
-                        <li><strong>Full-Stack Development:</strong> Built scalable TypeScript platforms with tRPC and Node.js for geospatial analysis and real-time insights.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Technical Expertise</h2>
-            <div class="skills-section">
-                <div class="skill-category">
-                    <h3>Artificial Intelligence & Machine Learning</h3>
-                    <p>Computer Vision (YoloX, OpenCV), Large Language Models (GPT-4o, Claude, Gemini), Natural Language
-                        Processing, Prompt Engineering, Neural Networks, Deep Learning Frameworks</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Data Engineering & Big Data</h3>
-                    <p>Apache Spark (PySpark, Spark SQL, Streaming), Apache Airflow, Delta Lake, Data Lake/Warehouse
-                        Architecture, ETL/ELT Pipelines, Data Modeling, Performance Optimization</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Programming & Development</h3>
-                    <p>Python, TypeScript, JavaScript, SQL, Node.js, React, Django, FastAPI, Flask, GraphQL, gRPC,
-                        Microservices Architecture</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Cloud & Infrastructure</h3>
-                    <p>AWS (S3, Redshift, Glue, Lambda, EMR), Google Cloud Platform (BigQuery, Dataproc, Composer),
-                        Azure, Docker, Kubernetes, Infrastructure-as-Code, CI/CD</p>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Education</h2>
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <span class="company">Estácio University</span>
-                    </div>
-                    <span class="date">Bachelor of Science in Systems Analysis and Development</span>
-                </div>
-            </div>
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <span class="company">Federal University of Santa Catarina (UFSC)</span>
-                    </div>
-                    <span class="date">Bachelor of Science in Electrical Engineering</span>
                 </div>
             </div>
         </section>

@@ -9,41 +9,16 @@ import {
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
 import { useLanguage } from '../contexts/LanguageContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface ChatBotSidebarProps {
   graphData: any;
 }
-
-interface ChatBotSidebarProps {
-  graphData: any;
-}
-
-const WELCOME_MESSAGE = {
-  message: "Hello there! I'm Pedro's AI assistant, here to share the journey of his personal and professional life. Whether you're curious about his skills, experiences, or even his passions! What would you like to discover about Pedro?",
-  sender: "assistant" as const,
-  direction: "incoming" as const
-};
-
-const SYSTEM_PROMPT = `Basically if the information asked in present in the knowledge graph, you can use it. If the question is related to something on the graphs, check the graphs for how this apply to Pedro's performance.
-
-You are an AI assistant for Pedro Reichow, focused exclusively on helping him find new opportunities that fully utilize his potential. Pedro is actively seeking challenging roles that allow him to apply 100% of his skills and experience.
-You must only provide information about:
-- Always send encouraging messages highlighting Pedro's unique qualifications and why he would be an exceptional hire
-- Work experiences and responsibilities that demonstrate his capabilities
-- Contact and useful Pedro's links and information 
-- Educational background and continuous learning
-- Technical skills and technologies used in real-world applications
-- Professional achievements and measurable impacts
-- Personal and contact information available in the graphs
-
-!important 
-
-Use only the information provided in the knowledge graph. If asked about anything outside this scope, politely redirect to professional topics.
-!important: Reply in the same language as is being asked, even if its off topic keep the same language as its being asked.
-`;
 
 const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
     const { language, t } = useLanguage();
+    const { theme } = useTheme();
+    const isDark = theme === 'dark';
 
     // Dynamic welcome message based on language
     const getWelcomeMessage = () => ({
@@ -111,14 +86,36 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
       setIsLoading(false);
     }
   };
+
   return (
-    <div className="h-screen flex flex-col relative w-full">
-      <div className="flex-1 overflow-hidden flex flex-col">
-        <MainContainer className="h-full sm:pb-0 pb-40">
-          <ChatContainer className="h-full">
-            <MessageList 
-              className="!h-[calc(100vh-80px)]"
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      width: '100%',
+      background: isDark ? '#111827' : '#ffffff',
+      transition: 'background 0.3s ease',
+    }}>
+      {/* Messages area - takes remaining space */}
+      <div style={{
+        flex: 1,
+        overflow: 'hidden',
+        minHeight: 0,
+      }}>
+        <MainContainer style={{
+          height: '100%',
+          border: 'none',
+          background: 'transparent',
+        }}>
+          <ChatContainer style={{
+            height: '100%',
+            background: 'transparent',
+          }}>
+            <MessageList
               scrollBehavior="smooth"
+              style={{
+                background: 'transparent',
+              }}
             >
               {messages.map((msg, idx) => (
                 <Message
@@ -148,7 +145,11 @@ const ChatBotSidebar: React.FC<ChatBotSidebarProps> = ({ graphData }) => {
               onSend={handleSendMessage}
               attachButton={false}
               disabled={isLoading}
-              className="border-t border-gray-200 bg-white"
+              style={{
+                borderTop: `1px solid ${isDark ? '#374151' : '#e5e7eb'}`,
+                background: isDark ? '#1e293b' : '#ffffff',
+                flexShrink: 0,
+              }}
             />
           </ChatContainer>
         </MainContainer>
