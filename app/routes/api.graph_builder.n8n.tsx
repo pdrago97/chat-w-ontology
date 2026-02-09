@@ -1,4 +1,4 @@
-import { json, type ActionFunction } from "@remix-run/node";
+import { json, type ActionFunction } from "@remix-run/cloudflare";
 
 // Proxy for the Graph-Builder n8n webhook.
 // Security-first: requires N8N_GRAPH_BUILDER_WEBHOOK_URL to be set.

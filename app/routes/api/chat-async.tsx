@@ -1,4 +1,4 @@
-import { json, type ActionFunction } from "@remix-run/node";
+import { json, type ActionFunction } from "@remix-run/cloudflare";
 
 // Async Chat API - Workaround for Vercel 10s timeout limit
 // Returns immediately with job ID, frontend polls for results

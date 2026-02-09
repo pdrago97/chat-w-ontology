@@ -1,5 +1,5 @@
-import { json } from "@remix-run/node";
-import type { ActionFunction } from "@remix-run/node";
+import { json } from "@remix-run/cloudflare";
+import type { ActionFunction } from "@remix-run/cloudflare";
 import fs from 'fs/promises';
 import path from 'path';
 

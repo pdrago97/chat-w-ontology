@@ -21,19 +21,15 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
-  // Server-side configuration
   ssr: {
     external: ["fs", "path", "url", "zlib", "http", "https", "node:fs/promises"],
   },
-  // Optimize dependencies
   optimizeDeps: {
     exclude: ["fs", "path", "url", "zlib", "http", "https"],
   },
-  // Build configuration
   build: {
     rollupOptions: {
       external: ["fs", "path", "url", "zlib", "http", "https", "node:fs/promises"],
     },
   },
-
 });

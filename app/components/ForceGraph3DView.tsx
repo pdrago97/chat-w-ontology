@@ -64,8 +64,8 @@ export default function ForceGraph3DView({ graphData, theme }: ForceGraph3DViewP
   const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
   const [autoRotate, setAutoRotate] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [size, setSize] = useState<{w:number;h:number}>({ w: 0, h: 0 });
-  const [counts, setCounts] = useState<{nodes:number;links:number}>({ nodes: 0, links: 0 });
+  const [size, setSize] = useState<{ w: number; h: number }>({ w: 0, h: 0 });
+  const [counts, setCounts] = useState<{ nodes: number; links: number }>({ nodes: 0, links: 0 });
   const [hoveredNode, setHoveredNode] = useState<any>(null);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const { language } = useLanguage();
@@ -80,7 +80,7 @@ export default function ForceGraph3DView({ graphData, theme }: ForceGraph3DViewP
       const out: any = {};
       for (const [k, v] of Object.entries(obj)) {
         if (k.startsWith('__')) continue; // e.g., __threeObj, __lineObj, __indexColor
-        if (['fx','fy','fz','vx','vy','vz','x','y','z','index'].includes(k)) continue;
+        if (['fx', 'fy', 'fz', 'vx', 'vy', 'vz', 'x', 'y', 'z', 'index'].includes(k)) continue;
         out[k] = v;
       }
       return out;
@@ -98,7 +98,7 @@ export default function ForceGraph3DView({ graphData, theme }: ForceGraph3DViewP
         const out: any = {};
         for (const [k, v] of Object.entries(o)) {
           if (k.startsWith('__')) continue;
-          if (['fx','fy','fz','vx','vy','vz','x','y','z','index','__indexColor'].includes(k)) continue;
+          if (['fx', 'fy', 'fz', 'vx', 'vy', 'vz', 'x', 'y', 'z', 'index', '__indexColor'].includes(k)) continue;
           const sv = rec(v);
           if (sv !== undefined) out[k] = sv;
         }
@@ -228,6 +228,51 @@ export default function ForceGraph3DView({ graphData, theme }: ForceGraph3DViewP
         .linkColor(() => (theme === 'dark' || document.documentElement.classList.contains('dark')) ? 'rgba(148, 163, 184, 0.5)' : 'rgba(71, 85, 105, 0.65)')
         .linkDirectionalParticles(0)
         .linkWidth(0.8)
+        .linkThreeObjectExtend(true)
+        .linkThreeObject((link: any) => {
+          // Create a text sprite for the link label
+          const label = link.relation || link.label || '';
+          if (!label) return null;
+
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d')!;
+          const fontSize = 28;
+          context.font = `${fontSize}px Arial, sans-serif`;
+
+          // Measure text and set canvas size
+          const metrics = context.measureText(label);
+          canvas.width = Math.max(metrics.width + 10, 50);
+          canvas.height = fontSize + 10;
+
+          // Redraw text after canvas resize
+          context.font = `${fontSize}px Arial, sans-serif`;
+          context.fillStyle = 'rgba(100, 116, 139, 0.9)'; // slate-500 with opacity
+          context.textAlign = 'center';
+          context.textBaseline = 'middle';
+          context.fillText(label, canvas.width / 2, canvas.height / 2);
+
+          const texture = new THREE.CanvasTexture(canvas);
+          const spriteMaterial = new THREE.SpriteMaterial({
+            map: texture,
+            transparent: true,
+            depthWrite: false
+          });
+          const sprite = new THREE.Sprite(spriteMaterial);
+          sprite.scale.set(canvas.width / 8, canvas.height / 8, 1);
+
+          return sprite;
+        })
+        .linkPositionUpdate((sprite: any, { start, end }: any) => {
+          // Position label at the midpoint of the link
+          if (sprite) {
+            const middlePos = {
+              x: start.x + (end.x - start.x) / 2,
+              y: start.y + (end.y - start.y) / 2,
+              z: start.z + (end.z - start.z) / 2
+            };
+            Object.assign(sprite.position, middlePos);
+          }
+        })
         .backgroundColor(document.documentElement.classList.contains('dark') ? '#0a0f1a' : '#f8fafc')
         .onNodeHover((n: any, prevNode: any) => {
           setHoverNodeId(n ? String(n.id) : null);
@@ -331,7 +376,7 @@ export default function ForceGraph3DView({ graphData, theme }: ForceGraph3DViewP
       composerRef.current = null;
       bloomRef.current = null;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graphData, language]);
 
   // apply auto-rotate changes
@@ -807,7 +852,7 @@ function renderNodeHtml(data: any) {
   if (!data) return '<h3>No data</h3>';
   const title = data.label || data.name || data.id || 'Node';
   const type = data.type ? `<div style="font-size:12px;color:#666;margin-bottom:8px">${data.type}</div>` : '';
-  const shouldSkip = (k: string) => k.startsWith('__') || ['fx','fy','fz','vx','vy','vz','x','y','z','index','__indexColor'].includes(k);
+  const shouldSkip = (k: string) => k.startsWith('__') || ['fx', 'fy', 'fz', 'vx', 'vy', 'vz', 'x', 'y', 'z', 'index', '__indexColor'].includes(k);
   const kv = Object.entries(data)
     .filter(([k, v]) => !shouldSkip(k) && v !== null && v !== undefined)
     .map(([k, v]) => `<div style="margin:6px 0"><strong>${k}:</strong> ${typeof v === 'object' ? JSON.stringify(v) : v}</div>`)
@@ -830,7 +875,7 @@ function renderNodeHtml(data: any) {
 }
 
 // Global function for downloading resume
-(window as any).downloadResume = function() {
+(window as any).downloadResume = function () {
   const link = document.createElement('a');
   link.href = '/Pedro Reichow - Resume.pdf';
   link.download = 'Pedro Reichow - Resume.pdf';

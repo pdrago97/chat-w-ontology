@@ -29,17 +29,82 @@ const generateId = () => {
 
 // Cleanup old jobs
 const cleanupJobs = () => {
-  const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
+  const oneHourAgo = Date.now() - 60 * 60 * 1000;
   for (const [id, job] of jobs.entries()) {
-    if (job.createdAt < fiveMinutesAgo) {
+    if (job.createdAt < oneHourAgo) {
       jobs.delete(id);
     }
   }
 };
 
+// Background processing function
+const processJobInBackground = async (
+  jobId: string, 
+  message: string, 
+  language: string, 
+  history: any[], 
+  webhookUrl: string, 
+  headers: Record<string, string>
+) => {
+  console.log(`[SMART-CHAT-ASYNC] Starting background processing for job ${jobId}`);
+  
+  try {
+    const res = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        'User-Agent': 'Remix-Chat-Smart-Async/1.0'
+      },
+      body: JSON.stringify({ message, language, history }),
+      keepalive: true
+    });
+
+    if (!res.ok) {
+      throw new Error(`N8N webhook failed: ${res.status}`);
+    }
+
+    const raw = await res.text();
+    let out: any;
+    try {
+      out = JSON.parse(raw);
+    } catch (e) {
+      out = { reply: raw };
+    }
+
+    const reply = out?.reply ?? out?.message ?? out?.text ?? out?.answer ?? out?.response ?? (typeof out === 'string' ? out : raw);
+
+    if (!reply || reply.trim() === '') {
+      throw new Error('Empty response from N8N');
+    }
+
+    // Update job with result
+    const job = jobs.get(jobId);
+    if (job) {
+      job.status = 'completed';
+      job.result = {
+        message: reply,
+        sender: 'assistant',
+        direction: 'incoming'
+      };
+      jobs.set(jobId, job);
+      console.log(`[SMART-CHAT-ASYNC] Job ${jobId} completed successfully`);
+    }
+
+  } catch (error: any) {
+    console.error(`[SMART-CHAT-ASYNC] Job ${jobId} failed:`, error.message);
+    
+    const job = jobs.get(jobId);
+    if (job) {
+      job.status = 'error';
+      job.error = 'The AI system is currently experiencing high load. Please try again in a moment.';
+      jobs.set(jobId, job);
+    }
+  }
+};
+
 export const action: ActionFunction = async ({ request }) => {
-  if (request.method !== 'POST') {
-    return json({ error: 'Method not allowed' }, { status: 405 });
+  if (request.method !== "POST") {
+    return json({ error: "Method not allowed" }, { status: 405 });
   }
 
   try {
@@ -81,18 +146,18 @@ export const action: ActionFunction = async ({ request }) => {
       headers['Authorization'] = `Basic ${b64}`;
     }
 
-    // Try fast response first (7 seconds timeout)
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 7000);
-
     console.log(`[SMART-CHAT] Attempting fast response for: ${message.substring(0, 50)}...`);
+
+    // Try fast response first (10 second timeout)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
 
     try {
       const res = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
           ...headers,
-          'User-Agent': 'Remix-Chat-Bot-Smart/1.0'
+          'User-Agent': 'Remix-Chat-Smart-Fast/1.0'
         },
         body: JSON.stringify({ message, language, history }),
         signal: controller.signal,
@@ -100,20 +165,27 @@ export const action: ActionFunction = async ({ request }) => {
       });
 
       clearTimeout(timeoutId);
-      const endTime = Date.now();
-      console.log(`[SMART-CHAT] Fast response completed in ${endTime - startTime}ms`);
+
+      if (!res.ok) {
+        throw new Error(`N8N webhook failed: ${res.status}`);
+      }
 
       const raw = await res.text();
-      let reply = raw;
-
+      let out: any;
       try {
-        const parsed = JSON.parse(raw);
-        if (parsed.message) reply = parsed.message;
-        else if (parsed.response) reply = parsed.response;
-        else if (parsed.reply) reply = parsed.reply;
+        out = JSON.parse(raw);
       } catch (e) {
-        // Use raw text if JSON parsing fails
+        out = { reply: raw };
       }
+
+      const reply = out?.reply ?? out?.message ?? out?.text ?? out?.answer ?? out?.response ?? (typeof out === 'string' ? out : raw);
+
+      if (!reply || reply.trim() === '') {
+        throw new Error('Empty response from N8N');
+      }
+
+      const endTime = Date.now();
+      console.log(`[SMART-CHAT] Fast response completed in ${endTime - startTime}ms`);
 
       return json({
         message: reply,
@@ -145,7 +217,7 @@ export const action: ActionFunction = async ({ request }) => {
           direction: 'incoming',
           isAsync: true,
           jobId: jobId,
-          pollUrl: `/api.chat-smart.poll.${jobId}`
+          pollUrl: `/api/chat-smart/poll/${jobId}`
         });
       } else {
         throw error; // Re-throw non-timeout errors
@@ -158,100 +230,6 @@ export const action: ActionFunction = async ({ request }) => {
       message: "I apologize, but I encountered an error. Please try again or contact Pedro via LinkedIn: https://www.linkedin.com/in/pedroreichow",
       sender: 'assistant',
       direction: 'incoming'
-    });
-  }
-};
-
-// Background processing function
-async function processJobInBackground(
-  jobId: string, 
-  message: string, 
-  language: string, 
-  history: any[], 
-  webhookUrl: string, 
-  headers: Record<string, string>
-) {
-  try {
-    console.log(`[SMART-CHAT-ASYNC] Starting background processing for job ${jobId}`);
-    
-    const res = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: {
-        ...headers,
-        'User-Agent': 'Remix-Chat-Bot-Smart-Async/1.0'
-      },
-      body: JSON.stringify({ message, language, history }),
-      keepalive: true
-    });
-
-    const raw = await res.text();
-    let reply = raw;
-
-    try {
-      const parsed = JSON.parse(raw);
-      if (parsed.message) reply = parsed.message;
-      else if (parsed.response) reply = parsed.response;
-      else if (parsed.reply) reply = parsed.reply;
-    } catch (e) {
-      // Use raw text if JSON parsing fails
-    }
-
-    const job = jobs.get(jobId);
-    if (job) {
-      job.status = 'completed';
-      job.result = {
-        message: reply,
-        sender: 'assistant',
-        direction: 'incoming'
-      };
-      jobs.set(jobId, job);
-      console.log(`[SMART-CHAT-ASYNC] Job ${jobId} completed successfully`);
-    }
-
-  } catch (error: any) {
-    console.error(`[SMART-CHAT-ASYNC] Job ${jobId} failed:`, error.message);
-    
-    const job = jobs.get(jobId);
-    if (job) {
-      job.status = 'error';
-      job.error = 'Processing failed. Please try asking your question again.';
-      jobs.set(jobId, job);
-    }
-  }
-}
-
-// GET endpoint for polling job status
-export const loader = async ({ request, params }: { request: Request, params: any }) => {
-  const url = new URL(request.url);
-  const pathParts = url.pathname.split('/');
-  const jobId = pathParts[pathParts.length - 1]; // Get last part of path
-
-  if (!jobId || jobId === 'poll') {
-    return json({ error: 'Job ID is required' }, { status: 400 });
-  }
-
-  const job = jobs.get(jobId);
-  if (!job) {
-    return json({ error: 'Job not found or expired' }, { status: 404 });
-  }
-
-  if (job.status === 'completed') {
-    // Clean up completed job
-    jobs.delete(jobId);
-    return json({
-      status: 'completed',
-      result: job.result
-    });
-  } else if (job.status === 'error') {
-    // Clean up failed job
-    jobs.delete(jobId);
-    return json({
-      status: 'error',
-      error: job.error
-    });
-  } else {
-    return json({
-      status: 'processing'
     });
   }
 };

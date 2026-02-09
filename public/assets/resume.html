@@ -1,468 +1,410 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedro Reichow - Resume</title>
+    <title>Resume - Pedro Reichow</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
-            --primary: #2c3e50;
-            /* Dark slate blue/gray - Professional */
-            --accent: #2980b9;
-            /* Blue accent */
-            --text: #333333;
-            --text-light: #666666;
-            --bg: #ffffff;
-            --border: #e0e0e0;
+            --primary: #1a2a6c;
+            --text: #2d3436;
+            --grey: #636e72;
+            --line: #000;
         }
 
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
-            font-family: 'Georgia', serif;
-            /* Matching the PDF font hint */
+            font-family: 'Inter', sans-serif;
+            line-height: 1.4;
             color: var(--text);
-            line-height: 1.5;
-            background: #f5f5f5;
-            padding: 2rem;
+            background-color: #f5f6fa;
+            margin: 0;
+            padding: 40px 0;
         }
 
-        .resume-container {
-            max-width: 900px;
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 40px 50px;
             margin: 0 auto;
-            background: var(--bg);
-            padding: 3rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Header */
         header {
             text-align: center;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 1.5rem;
+            margin-bottom: 25px;
         }
 
         h1 {
-            font-family: 'Arial', sans-serif;
-            font-size: 2.2rem;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 26pt;
+            margin: 0;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            color: #000;
         }
 
-        .contact-info {
-            font-family: 'Arial', sans-serif;
-            font-size: 0.9rem;
+        .tagline {
+            font-weight: 600;
+            font-size: 11pt;
+            margin: 5px 0;
             color: var(--text);
         }
 
-        .contact-info a {
-            color: var(--text);
-            text-decoration: none;
-            margin: 0 0.5rem;
+        .contact {
+            font-size: 9pt;
+            color: var(--grey);
         }
 
-        /* Sections */
+        .contact span {
+            margin: 0 8px;
+        }
+
         section {
-            margin-bottom: 2rem;
+            margin-bottom: 18px;
         }
 
         h2 {
-            font-family: 'Arial', sans-serif;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            color: var(--accent);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.3rem;
-            margin-bottom: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 11pt;
             font-weight: 700;
+            text-transform: uppercase;
+            color: #000;
+            margin: 0 0 4px 0;
+            letter-spacing: 0.5px;
         }
 
-        /* Job Items */
+        hr {
+            border: 0;
+            border-top: 1.5px solid var(--line);
+            margin-bottom: 10px;
+        }
+
         .job {
-            margin-bottom: 1.5rem;
+            margin-bottom: 12px;
         }
 
         .job-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 0.3rem;
         }
 
-        .company {
+        .job-title {
             font-weight: 700;
-            font-size: 1.05rem;
-            color: var(--primary);
+            font-size: 10.5pt;
+            color: #000;
         }
 
-        .role {
-            font-style: italic;
+        .job-date {
             font-weight: 600;
-            color: var(--text);
+            font-size: 9pt;
+            color: var(--grey);
         }
 
-        .location {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        .date {
-            font-family: 'Arial', sans-serif;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            font-weight: 600;
-        }
-
-        .job-details ul {
-            list-style-type: disc;
-            padding-left: 1.2rem;
-            margin-top: 0.5rem;
-        }
-
-        .job-details li {
-            margin-bottom: 0.3rem;
-            font-size: 0.95rem;
-        }
-
-        /* Skills Grid */
-        .skills-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .skill-category {
-            margin-bottom: 1rem;
-        }
-
-        .skill-category h3 {
-            font-size: 1rem;
+        .company-name {
+            font-weight: 700;
+            font-size: 10pt;
             color: var(--primary);
-            margin-bottom: 0.3rem;
-            border-bottom: none;
+            margin-bottom: 2px;
+            display: block;
         }
 
-        .summary-text {
+        ul {
+            margin: 4px 0;
+            padding-left: 18px;
+        }
+
+        li {
+            font-size: 9pt;
+            margin-bottom: 2px;
             text-align: justify;
         }
 
-        /* Print Styles */
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-
-            .resume-container {
-                box-shadow: none;
-                padding: 0;
-                max-width: 100%;
-            }
-
-            .no-print {
-                display: none !important;
-            }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
-        .print-btn {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            z-index: 100;
+        .grid-item {
+            margin-bottom: 8px;
+        }
+
+        .grid-item strong {
+            display: block;
+            font-size: 9.5pt;
+            margin-bottom: 2px;
+            text-decoration: underline;
+        }
+
+        .grid-item p {
+            font-size: 8.5pt;
+            margin: 0;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .edu-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 9pt;
+        }
+
+        .edu-info strong {
+            font-size: 9.5pt;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+
+            .page {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+            }
+
+            @page {
+                margin: 0;
+            }
         }
     </style>
 </head>
 
 <body>
-    <button class="print-btn no-print" onclick="window.print()">🖨️ Save as PDF</button>
 
-    <div class="resume-container">
+    <div class="page">
         <header>
             <h1>Pedro Reichow</h1>
-            <div class="contact-info">
-                pedro_reichow@hotmail.com • linkedin.com/in/pedroreichow • Talk to My Resume
+            <div class="tagline">AI Platform Engineer • RAG & Agentic Systems • Technology Entrepreneur</div>
+            <div class="contact">
+                Santa Catarina, Brazil <span>•</span>
+                <a href="mailto:pedro_reichow@hotmail.com"
+                    style="color: inherit; text-decoration: none;">pedro_reichow@hotmail.com</a> <span>•</span>
+                <a href="https://linkedin.com/in/pedroreichow" target="_blank"
+                    style="color: inherit; text-decoration: none;">linkedin.com/in/pedroreichow</a> <span>•</span>
+                <a href="https://pedroreichow.com.br" target="_blank"
+                    style="color: var(--primary); text-decoration: none; font-weight: 700;">Talk to My Resume</a>
             </div>
         </header>
 
         <section>
             <h2>Professional Summary</h2>
-            <p class="summary-text">
-                Experienced AI Engineer and Data Specialist with 7+ years building production-ready artificial
-                intelligence solutions and scalable data systems. Expert in computer vision, large language model
-                integration, and high-performance data pipelines processing 500GB+ daily. Proven track record of leading
-                technical teams, founding technology ventures, and delivering innovative solutions across agriculture,
-                healthcare, and fintech. Strong background in full-stack development, cloud architecture, and emerging
-                AI technologies.
+            <hr>
+            <p style="font-size: 9.5pt; margin: 0; text-align: justify;">
+                <strong>AI Platform Engineer</strong> combining production-grade LLM systems with robust software
+                engineering.
+                Expert in <strong>Hybrid Retrieval</strong> (Vector + Knowledge Graphs via Cognee), <strong>RAG
+                    Evaluation Harnesses</strong>,
+                and multi-tool agent orchestration. 7+ years building scalable AI platforms with focus on
+                <strong>observability (SLOs, p50/p95 latency)</strong>, security, and cost optimization.
+                Proven track record delivering enterprise systems that transform manual processes from weeks to minutes.
+                Fluent in English, intermediate Spanish.
             </p>
         </section>
 
         <section>
             <h2>Professional Experience</h2>
+            <hr>
 
-            <!-- CVS Health -->
             <div class="job">
                 <div class="job-header">
-                    <div>
-                        <span class="company">CVS Health</span>
-                        <span class="location"></span>
-                    </div>
-                    <span class="date">Feb 2024 – Present</span>
+                    <span class="job-title">Senior Software & Data Engineer | AI Observability</span>
+                    <span class="job-date">Aug 2024 – Present</span>
                 </div>
-                <div class="role">Staff Fullstack & AI/ML Engineer</div>
-                <div class="job-details">
-                    <ul>
-                        <li>Leading the development of scalable AI/ML platforms to enhance patient care and operational efficiency.</li>
-                        <li>Architecting full-stack solutions using modern frameworks (React, Node.js, Python) integrated with advanced ML models.</li>
-                        <li>Driving technical strategy and mentorship for cross-functional engineering teams.</li>
-                    </ul>
-                </div>
+                <span class="company-name">CVS Health</span>
+                <ul>
+                    <li>Architected <strong>SLOs for AI pipeline latency (p50/p95)</strong> and cost-per-token
+                        monitoring
+                        using Datadog/Grafana for healthcare AI systems in <strong>HIPAA/FedRAMP</strong> compliance.
+                    </li>
+                    <li>Built observability dashboards tracking <strong>faithfulness and relevance metrics</strong> for
+                        LLM outputs, enabling prompt version A/B testing and continuous improvement.</li>
+                    <li>Full-stack development of enterprise AI applications with predictive analysis and workflow
+                        automation.</li>
+                </ul>
             </div>
 
-            <!-- Capgemini -->
             <div class="job">
                 <div class="job-header">
-                    <div>
-                        <span class="company">Capgemini Brasil</span>
-                        <span class="location"></span>
-                    </div>
-                    <span class="date">Aug 2022 – Jan 2024</span>
+                    <span class="job-title">Cloud AI Solutions Architect</span>
+                    <span class="job-date">Jan 2024 – Jul 2024</span>
                 </div>
-                <div class="role">Senior Solutions Consultant (Solutions Consultant IV)</div>
-                <div class="job-details">
-                    <ul>
-                        <li>Lead enterprise-level AI and data engineering solutions for large-scale clients, specializing in knowledge graphs, fraud detection, and generative AI implementations.</li>
-                        <li><strong>Agentic AI Infrastructure:</strong> Architected microservices in Python for serving agentic AI systems with RAG capabilities and intelligent document indexing for enterprise clients.</li>
-                        <li><strong>Ontology Development:</strong> Built sophisticated ontologies using Protégé and RDF/OWL, integrated with Anzo Analytics for complex business intelligence and fraud risk analysis.</li>
-                        <li><strong>Graph Database Solutions:</strong> Developed advanced graph navigation interfaces using TypeScript and Cytoscape.js for fraud detection, usage pattern analysis, and risk assessment.</li>
-                        <li><strong>Team Leadership:</strong> Collaborate with 50+ engineers and consultants on enterprise-scale data engineering optimizations and generative AI solutions.</li>
-                    </ul>
-                </div>
+                <span class="company-name">Santodigital (Google Partner)</span>
+                <ul>
+                    <li>Architected <strong>production-grade RAG with BigQuery + Vertex AI</strong>, reducing document
+                        analysis
+                        from weeks to minutes with offline evaluation suites for retrieval quality.</li>
+                    <li>Implemented <strong>reinforcement loops via ADK</strong>: observability logs feeding prompt
+                        fine-tuning,
+                        reducing hallucinations and improving faithfulness scores in production.</li>
+                    <li>Built AI Agents for enterprise clients: compliance automation, contract alerts, auto-service
+                        with
+                        <strong>Zendesk handoff</strong> and human-in-the-loop for critical actions.
+                    </li>
+                </ul>
             </div>
 
-            <!-- SantoDigital -->
             <div class="job">
                 <div class="job-header">
-                    <div>
-                        <span class="company">SantoDigital</span>
-                        <span class="location"></span>
-                    </div>
-                    <span class="date">Apr 2021 – Jul 2022</span>
+                    <span class="job-title">Senior Solutions Consultant (Solutions Consultant IV)</span>
+                    <span class="job-date">Jan 2022 – Dec 2023</span>
                 </div>
-                <div class="role">Senior AI/ML Engineer</div>
-                <div class="job-details">
-                    <ul>
-                        <li>Developed and deployed machine learning pipelines for data-intensive applications.</li>
-                        <li>Optimized model performance and inference latency for real-time production environments.</li>
-                        <li>Collaborated with data scientists to productize research models using cloud-native technologies.</li>
-                    </ul>
-                </div>
+                <span class="company-name">Capgemini Brasil</span>
+                <ul>
+                    <li>Architecture of <strong>Knowledge Graph</strong> solutions and data engineering for fraud
+                        detection and risk analysis in financial sector.</li>
+                    <li>Development of sophisticated ontologies using <strong>Protégé and RDF/OWL</strong> for complex
+                        business
+                        intelligence and semantic search.</li>
+                    <li>Technical collaboration with teams of <strong>50+ engineers</strong> on enterprise data
+                        engineering optimizations.</li>
+                </ul>
             </div>
 
-            <!-- Ruedata -->
             <div class="job">
                 <div class="job-header">
-                    <div>
-                        <span class="company">Ruedata</span>
-                        <span class="location"></span>
-                    </div>
-                    <span class="date">Jan 2020 – Mar 2021</span>
+                    <span class="job-title">Full Stack Engineer | VR & Real-Time Systems</span>
+                    <span class="job-date">Jan 2021 – Dec 2021</span>
                 </div>
-                <div class="role">Senior Integrations Engineer</div>
-                <div class="job-details">
-                    <ul>
-                        <li>Led critical backend integration projects to unify disparate data sources.</li>
-                        <li>Engineered robust APIs and microservices to support high-throughput data processing.</li>
-                        <li>Implemented automated testing and CI/CD pipelines to ensure code quality and rapid delivery.</li>
-                    </ul>
-                </div>
+                <span class="company-name">Simulated Reality</span>
+                <ul>
+                    <li>Developed VR solutions in <strong>Node.js and React</strong> for training and wellness
+                        applications
+                        with 3D object interaction and physics simulations.</li>
+                    <li>Built scalable APIs with queues for asynchronous processing and <strong>pub/sub for real-time
+                            communication</strong> between system components.</li>
+                    <li>Engineered pipelines for processing large 3D video files and game updates compiled in
+                        <strong>Unity and Unreal Engine</strong>.
+                    </li>
+                </ul>
             </div>
 
-            <!-- Simulated Reality -->
             <div class="job">
                 <div class="job-header">
-                    <div>
-                        <span class="company">Simulated Reality (Healthcare Technology)</span>
-                        <span class="location"></span>
-                    </div>
-                    <span class="date">Mar 2019 – Dec 2019</span>
+                    <span class="job-title">Senior Data Engineer</span>
+                    <span class="job-date">Jan 2019 – Dec 2020</span>
                 </div>
-                <div class="role">Senior Full Stack Engineer & VR Developer</div>
-                <div class="job-details">
-                    <ul>
-                        <li>Led development of virtual reality applications for healthcare training and wellness, ensuring HIPAA and FedRAMP compliance.</li>
-                        <li><strong>VR Development:</strong> Built VR training platforms using Node.js and React with 3D physics simulations and real-time interaction systems.</li>
-                        <li><strong>Data Analytics:</strong> Created comprehensive analytics dashboards with Chart.js for training effectiveness measurement and user progress tracking.</li>
-                        <li><strong>Cloud Infrastructure:</strong> Implemented scalable Azure App Service architecture with Red Hat OpenShift containers for enterprise healthcare deployment.</li>
-                        <li><strong>Real-time Systems:</strong> Built asynchronous processing pipelines using Redis and RabbitMQ for handling large 3D video files and Unity/Unreal game updates.</li>
-                    </ul>
-                </div>
+                <span class="company-name">QI Tech (Fintech)</span>
+                <ul>
+                    <li>Processed <strong>500GB+ daily</strong> with PySpark on Dataproc, optimizing gRPC latency and
+                        cloud cost efficiency—infrastructure patterns now applied to AI workloads.</li>
+                    <li>Designed Delta Lake on GCS with ACID transactions for audit compliance, enabling data versioning
+                        critical for ML reproducibility.</li>
+                </ul>
             </div>
 
-            <!-- QI Tech -->
             <div class="job">
                 <div class="job-header">
-                    <div>
-                        <span class="company">QI Tech (Fintech Research)</span>
-                        <span class="location"></span>
-                    </div>
-                    <span class="date">Aug 2018 – Feb 2019</span>
+                    <span class="job-title">Backend Developer & IoT Specialist</span>
+                    <span class="job-date">Nov 2017 – Dec 2018</span>
                 </div>
-                <div class="role">Senior Data Engineer</div>
-                <div class="job-details">
-                    <ul>
-                        <li>Led development of large-scale financial data processing systems and machine learning models for banking-as-a-service platform.</li>
-                        <li><strong>Big Data Engineering:</strong> Architected PySpark pipelines processing 500GB+ daily financial transactions on Google Cloud Dataproc, achieving 40% performance improvement.</li>
-                        <li><strong>Real-time Processing:</strong> Implemented Spark Structured Streaming for live transaction analysis with windowed aggregations and watermarking.</li>
-                        <li><strong>Data Architecture:</strong> Designed Delta Lake implementation on GCS with ACID transactions and time travel capabilities for audit compliance.</li>
-                        <li><strong>Microservices Development:</strong> Built high-performance gRPC microservices processing 100,000+ daily requests with 150ms average latency.</li>
-                    </ul>
-                </div>
+                <span class="company-name">PecSmart (IoT & AgTech)</span>
+                <ul>
+                    <li>Built <strong>IoT + ML pipelines</strong> for livestock monitoring with Raspberry Pi and
+                        real-time behavioral analysis.</li>
+                </ul>
             </div>
 
-            <!-- PecSmart -->
             <div class="job">
                 <div class="job-header">
-                    <div>
-                        <span class="company">PecSmart (IoT & Agricultural Technology)</span>
-                        <span class="location"></span>
-                    </div>
-                    <span class="date">May 2018 – Jul 2018</span>
+                    <span class="job-title">Backend Developer</span>
+                    <span class="job-date">Jan 2017 – Oct 2017</span>
                 </div>
-                <div class="role">Backend Developer & IoT Specialist</div>
-                <div class="job-details">
-                    <ul>
-                        <li>Developed IoT systems for precision livestock monitoring using embedded devices and machine learning.</li>
-                        <li><strong>IoT Development:</strong> Built sensor integration systems on Raspberry Pi for livestock monitoring, processing multi-modal data (audio, visual, environmental).</li>
-                        <li><strong>Data Pipelines:</strong> Created end-to-end processing pipelines for real-time livestock health prediction and behavioral analysis.</li>
-                        <li><strong>Edge Computing:</strong> Implemented distributed solutions using BalenaCLI for remote device management and deployment.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Fontes Promotora -->
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <span class="company">Fontes Promotora</span>
-                        <span class="location"></span>
-                    </div>
-                    <span class="date">Jan 2018 – Apr 2018</span>
-                </div>
-                <div class="role">Backend Developer</div>
-                <div class="job-details">
-                    <ul>
-                        <li>Developed web scraping, automation, and data processing solutions for enterprise clients.</li>
-                        <li><strong>Web Scraping Solutions:</strong> Built robust data extraction systems using Scrapy and Requests for enterprise data collection.</li>
-                        <li><strong>API Development:</strong> Created scalable APIs using FastAPI, Flask, and Django REST Framework for client applications.</li>
-                        <li><strong>Data Processing:</strong> Implemented advanced data processing pipelines with Pandas for business intelligence solutions.</li>
-                        <li><strong>Full-Stack Solutions:</strong> Delivered complete applications using ReactJS frontend with cloud deployment on AWS and Docker.</li>
-                    </ul>
-                </div>
+                <span class="company-name">Fontes Promotora</span>
+                <ul>
+                    <li>Built scalable APIs using <strong>FastAPI, Flask, Django REST</strong> and web scraping at
+                        scale.</li>
+                </ul>
             </div>
         </section>
 
         <section>
             <h2>Entrepreneurial Experience</h2>
+            <hr>
             <div class="job">
                 <div class="job-header">
-                    <div>
-                        <span class="company">MoveUp AI</span>
-                        <span class="location">San Francisco, CA - Remote</span>
-                    </div>
-                    <span class="date">Nov 2022 – Jan 2023</span>
+                    <span class="job-title">Founding Engineer & Technical Co-founder</span>
+                    <span class="job-date">MoveUp AI (San Francisco - Remote)</span>
                 </div>
-                <div class="job-details">
-                    <ul>
-                        <li>Co-founding AI-powered workforce intelligence platform serving 15+ enterprise teams with integrated Slack workflows, knowledge graphs, and team analytics.</li>
-                        <li><strong>MCP Architecture:</strong> Architected TypeScript MCP (Model Context Protocol) servers enabling seamless AI agent communication across enterprise tools and workflows.</li>
-                        <li><strong>AI Agent Development:</strong> Built sophisticated Python agents using Agno, LangChain, and LangGraph for intelligent team insights and automated workflow orchestration.</li>
-                    </ul>
-                </div>
+                <ul>
+                    <li>Architected <strong>Hybrid RAG with Cognee</strong>: unified vector search (dense) + graph
+                        search
+                        (symbolic) for complex query routing and entity extraction across unstructured data.</li>
+                    <li>Built <strong>MCP servers</strong> for multi-tool orchestration across Gmail, Drive, Jira,
+                        GitHub with
+                        <strong>OAuth 2.0 Gateway</strong> and human-in-the-loop for critical agent actions.
+                    </li>
+                    <li>Developed agents with LangChain/LangGraph, <strong>Mem0 long-term memory</strong>, and
+                        model-as-a-judge
+                        evaluation for output quality assurance.</li>
+                </ul>
             </div>
-
             <div class="job">
                 <div class="job-header">
-                    <div>
-                        <span class="company">Trinnix AI Lab</span>
-                        <span class="location"></span>
-                    </div>
-                    <span class="date">Jan 2021 – May 2021</span>
+                    <span class="job-title">AI Engineer & Computer Vision</span>
+                    <span class="job-date">Trinnix AI Lab</span>
                 </div>
-                <div class="role">Chief Technology Officer (CTO)</div>
-                <div class="job-details">
-                    <ul>
-                        <li>Led development of AI solutions focusing on computer vision and LLM integration for agricultural technology and precision farming applications.</li>
-                        <li><strong>Computer Vision Systems:</strong> Developed and deployed agricultural monitoring systems using YoloX and Roboflow, achieving >95% accuracy in plant disease detection and livestock behavior analysis.</li>
-                        <li><strong>Knowledge Graph Development:</strong> Built ontological knowledge graphs using Neo4j for agricultural data analysis and business intelligence.</li>
-                        <li><strong>AI Integration:</strong> Integrated multiple LLMs (GPT-4o, Claude 3.5, Gemini 1.5) with advanced prompt engineering for automated reporting and intelligent alerting.</li>
-                        <li><strong>Full-Stack Development:</strong> Built scalable TypeScript platforms with tRPC and Node.js for geospatial analysis and real-time insights.</li>
-                    </ul>
-                </div>
+                <ul>
+                    <li>Agricultural CV systems with <strong>YoloX/Roboflow</strong> (>95% accuracy) + LLM integration
+                        (GPT-4o, Claude, Gemini) for intelligent alerts.</li>
+                </ul>
             </div>
         </section>
 
         <section>
             <h2>Technical Expertise</h2>
-            <div class="skills-section">
-                <div class="skill-category">
-                    <h3>Artificial Intelligence & Machine Learning</h3>
-                    <p>Computer Vision (YoloX, OpenCV), Large Language Models (GPT-4o, Claude, Gemini), Natural Language
-                        Processing, Prompt Engineering, Neural Networks, Deep Learning Frameworks</p>
+            <hr>
+            <div class="grid">
+                <div class="grid-item">
+                    <strong>AI Platform & LLMs</strong>
+                    <p>LangChain, LangGraph, Vertex AI, RAG Evaluation, Prompt Engineering, Tool Calling,
+                        Model-as-a-judge, Multi-tool Orchestration.</p>
                 </div>
-                <div class="skill-category">
-                    <h3>Data Engineering & Big Data</h3>
-                    <p>Apache Spark (PySpark, Spark SQL, Streaming), Apache Airflow, Delta Lake, Data Lake/Warehouse
-                        Architecture, ETL/ELT Pipelines, Data Modeling, Performance Optimization</p>
+                <div class="grid-item">
+                    <strong>Retrieval & Knowledge</strong>
+                    <p>Hybrid Retrieval (Vector + Graph), Cognee, Semantic Search, Knowledge Graphs, RDF/OWL,
+                        Embeddings, Faithfulness/Relevance metrics.</p>
                 </div>
-                <div class="skill-category">
-                    <h3>Programming & Development</h3>
-                    <p>Python, TypeScript, JavaScript, SQL, Node.js, React, Django, FastAPI, Flask, GraphQL, gRPC,
-                        Microservices Architecture</p>
+                <div class="grid-item">
+                    <strong>Programming & APIs</strong>
+                    <p>Python, TypeScript, Node.js, FastAPI, gRPC, React, SQL, Microservices, REST.</p>
                 </div>
-                <div class="skill-category">
-                    <h3>Cloud & Infrastructure</h3>
-                    <p>AWS (S3, Redshift, Glue, Lambda, EMR), Google Cloud Platform (BigQuery, Dataproc, Composer),
-                        Azure, Docker, Kubernetes, Infrastructure-as-Code, CI/CD</p>
+                <div class="grid-item">
+                    <strong>Cloud & Observability</strong>
+                    <p>GCP (BigQuery, Vertex AI), AWS, Docker, Kubernetes, Datadog/Grafana, SLOs, CI/CD.</p>
                 </div>
             </div>
         </section>
 
         <section>
-            <h2>Education</h2>
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <span class="company">Estácio University</span>
-                    </div>
-                    <span class="date">Bachelor of Science in Systems Analysis and Development</span>
-                </div>
-            </div>
-            <div class="job">
-                <div class="job-header">
-                    <div>
-                        <span class="company">Federal University of Santa Catarina (UFSC)</span>
-                    </div>
-                    <span class="date">Bachelor of Science in Electrical Engineering</span>
+            <h2>Portfolio & Education</h2>
+            <hr>
+            <p style="font-size: 9pt; margin: 0 0 6px 0;">
+                <strong>🔗 <a href="https://pedroreichow.com.br" target="_blank"
+                        style="color: var(--primary);">pedroreichow.com.br</a></strong> — Interactive Knowledge Graph +
+                Hybrid RAG demo with multi-LLM integration.
+            </p>
+            <div class="edu-item">
+                <div class="edu-info"><strong>B.S. Electrical Engineering</strong> | UFSC &nbsp;&nbsp;•&nbsp;&nbsp;
+                    <strong>B.S. Systems Analysis</strong> | Estácio
                 </div>
             </div>
         </section>
     </div>
+
 </body>
 
 </html>

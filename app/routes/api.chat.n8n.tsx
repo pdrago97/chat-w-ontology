@@ -1,4 +1,4 @@
-import { json, type ActionFunction } from "@remix-run/node";
+import { json, type ActionFunction } from "@remix-run/cloudflare";
 
 // Chat API route for N8N webhook integration
 // This route handles chat requests and forwards them to the N8N webhook

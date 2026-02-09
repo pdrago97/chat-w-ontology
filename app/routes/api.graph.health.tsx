@@ -1,4 +1,4 @@
-import { json, type LoaderFunction } from "@remix-run/node";
+import { json, type LoaderFunction } from "@remix-run/cloudflare";
 
 function ok<T>(data: T) {
   return json({ ok: true, ...data }, { headers: { "Cache-Control": "no-store" } });

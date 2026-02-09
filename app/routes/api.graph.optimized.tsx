@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { json, type LoaderFunction } from "@remix-run/node";
+import { json, type LoaderFunction } from "@remix-run/cloudflare";
 
 // Optimized knowledge graph API that creates a concise, story-focused graph
 // Filters out noise and creates meaningful professional connections

@@ -1,5 +1,5 @@
-import { json } from "@remix-run/node";
-import type { ActionFunction } from "@remix-run/node";
+import { json } from "@remix-run/cloudflare";
+import type { ActionFunction } from "@remix-run/cloudflare";
 
 // Graph-Builder Chat endpoint: asks questions and proposes graph deltas
 // Returns JSON: { assistant_message?, follow_up_questions?, proposed_changes? }

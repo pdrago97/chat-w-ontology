@@ -1,4 +1,4 @@
-import { json, type ActionFunction } from "@remix-run/node";
+import { json, type ActionFunction } from "@remix-run/cloudflare";
 
 // Single endpoint to kick off a full doc->vector->graph pipeline via n8n
 // POST body may include: { action: 'ingest'|'refresh'|'rebuild', sources?: any }
