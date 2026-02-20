@@ -1555,7 +1555,7 @@ function createTooltipContent(data: any): string {
     content += `
       <div class="action-section">
         <a
-          href="/assets/Pedro Reichow - Professional Resume.pdf"
+          href="/REICHOW, Pedro 2026.pdf"
           download
           class="download-resume-btn"
         >

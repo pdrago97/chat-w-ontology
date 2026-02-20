@@ -877,8 +877,8 @@ function renderNodeHtml(data: any) {
 // Global function for downloading resume
 (window as any).downloadResume = function () {
   const link = document.createElement('a');
-  link.href = '/Pedro Reichow - Resume.pdf';
-  link.download = 'Pedro Reichow - Resume.pdf';
+  link.href = '/REICHOW, Pedro 2026.pdf';
+  link.download = 'REICHOW, Pedro 2026.pdf';
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

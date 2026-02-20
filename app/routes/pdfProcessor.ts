@@ -15,7 +15,7 @@ export async function initializeVectorStore() {
   try {
     // Use require for server-side path operations
     const path = require('path');
-    const resumePath = path.join(process.cwd(), 'public', 'assets', 'resume.pdf');
+    const resumePath = path.join(process.cwd(), 'public', 'REICHOW, Pedro 2026.pdf');
     console.log('Loading PDF document from:', resumePath);
     const loader = new PDFLoader(resumePath);
     const docs = await loader.load();
