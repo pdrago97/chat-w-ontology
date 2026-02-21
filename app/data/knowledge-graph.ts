@@ -4,140 +4,169 @@ export const knowledgeGraphData = {
     {
       "id": "Pedro Reichow",
       "type": "Person",
-      "title": "Senior AI Engineer • Data Specialist • Technology Entrepreneur",
+      "title": "Cloud AI Solutions Architect • Agent Developer • Technical Entrepreneur",
       "location": "Santa Catarina, Brazil",
       "contact": {
-        "email": "pedro_reichow@hotmail.com",
+        "email": "pedroreichow3@gmail.com",
         "linkedin": "https://www.linkedin.com/in/pedroreichow",
-        "portfolio": "https://talk-to-my-resume.vercel.app/"
+        "portfolio": "https://pedroreichow.com.br/"
       },
-      "summary": "Experienced AI Engineer and Data Specialist with 5+ years building production-ready artificial intelligence solutions and scalable data systems. Expert in computer vision, large language model integration, and high-performance data pipelines processing 500GB+ daily."
+      "summary": "AI & Data Engineering leader with 8+ years of experience across fintech, healthcare, and enterprise SaaS. Currently building production AI agent systems at Santodigital (Google Cloud Partner). Co-founded two AI ventures: MoveUp AI and Trinnix AI Lab."
     },
     {
-      "id": "Capgemini Brasil",
+      "id": "Santodigital",
       "type": "Experience",
-      "title": "Senior Solutions Consultant (Solutions Consultant IV)",
-      "years": "Jan 2025 - Present",
-      "duration": "8+ months",
-      "location": "Brazil",
-      "description": "Lead enterprise-level AI and data engineering solutions for large-scale clients, specializing in knowledge graphs, fraud detection, and generative AI implementations",
+      "title": "Cloud AI Solutions Architect & Agent Developer",
+      "years": "Jan 2024 - Present",
+      "duration": "1.5+ years",
+      "location": "Brazil (Google Cloud Premier Partner)",
+      "description": "Designed and shipped 8+ production AI agent systems using Google ADK, building full-stack interfaces for document intelligence, semantic chunking, and enterprise federation.",
       "responsibilities": [
-        "Architected microservices in Python for serving agentic AI systems with RAG capabilities",
-        "Built sophisticated ontologies using Protégé and RDF/OWL, integrated with Anzo Analytics",
-        "Developed advanced graph navigation interfaces using TypeScript and Cytoscape.js for fraud detection",
-        "Collaborate with 50+ engineers and consultants on enterprise-scale data engineering optimizations"
+        "Shipped 8+ production AI agent systems for enterprise clients using Google ADK",
+        "Built end-to-end document intelligence pipelines and vector indexing on Vertex AI + BigQuery",
+        "Architected dynamic federation integrations connecting AI agents to client ERP and CRM",
+        "Designed production RAG pipelines with offline evaluation suites (RAGAS)"
       ],
       "achievements": [
-        "Led enterprise AI implementations for large-scale clients",
-        "Delivered complex business intelligence and fraud risk analysis solutions",
-        "Managed teams of 50+ engineers and consultants"
+        "Reduced hallucination rates by 35% via agentic reinforcement loops",
+        "Processed 100K+ documents across client deployments"
       ],
-      "technologies": [
-        "Python", "RAG", "Protégé", "RDF/OWL", "Anzo Analytics", "TypeScript", "Cytoscape.js", "Microservices", "Fraud Detection", "Knowledge Graphs"
-      ]
+      "technologies": ["Google ADK", "Vertex AI", "BigQuery", "RAGAS", "React", "FastAPI", "Vector Indexes"]
+    },
+    {
+      "id": "CVS Health",
+      "type": "Experience",
+      "title": "Senior Data & AI Engineer | AI Observability Lead",
+      "years": "Aug 2024 - Dec 2025",
+      "duration": "1+ year",
+      "location": "Remote",
+      "description": "Led AI observability tracking faithfulness and relevancy across HIPAA/FedRAMP-compliant environments for a major healthcare provider.",
+      "responsibilities": [
+        "Defined and implemented SLOs for AI pipeline latency and cost-per-token monitoring",
+        "Built real-time observability dashboards using Datadog and Grafana",
+        "Led a team of 4 engineers developing enterprise agentic applications",
+        "Designed data ingestion pipelines processing clinical datasets (200GB+ daily)"
+      ],
+      "achievements": [
+        "Improved accuracy by 22% through prompt version A/B testing",
+        "Successfully integrated multiple LLMs with predictive multi-step reasoning"
+      ],
+      "technologies": ["Datadog", "Grafana", "Python", "TypeScript", "Apache Spark", "Airflow", "LLMs"]
     },
     {
       "id": "MoveUp AI",
       "type": "Experience",
       "title": "Founding Engineer & Technical Co-founder",
-      "years": "Jan 2025 - Present",
-      "duration": "8+ months",
-      "location": "San Francisco, CA - Remote",
-      "description": "Co-founding AI-powered workforce intelligence platform serving 15+ enterprise teams with integrated Slack workflows, knowledge graphs, and team analytics",
+      "years": "Jan 2025 - Jul 2025",
+      "duration": "7 months",
+      "location": "San Francisco, CA (Remote)",
+      "description": "Co-founding AI-powered workforce intelligence platform serving 15+ enterprise teams with integrated Slack workflows, knowledge graphs, and team analytics.",
       "responsibilities": [
-        "Architected TypeScript MCP (Model Context Protocol) servers enabling seamless AI agent communication",
-        "Built sophisticated Python agents using Agno, LangChain, and LangGraph for intelligent team insights",
-        "Implemented Zep memory systems and Supabase vector databases integrated with commercial LLMs",
-        "Developed comprehensive Slack integrations and N8N automation workflows"
+        "Architected knowledge graph infrastructure with FalkorDB and Neo4j",
+        "Built graph-based multi-agent orchestration system using LangGraph and Agno",
+        "Designed MCP (Model Context Protocol) servers in TypeScript for agent communication",
+        "Built end-to-end autonomous workflows with N8N orchestration"
       ],
       "achievements": [
-        "Serving 15+ enterprise teams with AI-powered workforce intelligence",
-        "Built unified AI agent interface accessing 6+ enterprise tools",
-        "50%+ reduction in information gathering time through natural language queries"
+        "Reduced analyst workload by ~60% through automated reporting",
+        "Architected intelligent contextual memory reasoning across 50K+ documents"
       ],
-      "technologies": [
-        "TypeScript", "MCP Protocol", "Python", "Agno", "LangChain", "LangGraph", "Zep", "Supabase", "OpenAI", "Anthropic", "Slack API", "N8N", "Vector Databases"
-      ]
+      "technologies": ["TypeScript", "MCP Protocol", "Python", "Agno", "LangGraph", "Zep", "Supabase", "Neo4j", "N8N", "Slack API"]
     },
     {
       "id": "Trinnix AI Lab",
       "type": "Experience",
-      "title": "AI Engineer & Computer Vision Specialist",
+      "title": "Co-founder & Lead AI Engineer",
       "years": "Feb 2024 - Nov 2024",
       "duration": "10 months",
       "location": "Brazil",
-      "description": "Led development of AI solutions focusing on computer vision and LLM integration for agricultural technology and precision farming applications",
+      "description": "Led development of AI solutions focusing on computer vision and LLM integration for agricultural technology and precision farming applications.",
       "responsibilities": [
-        "Developed and deployed agricultural monitoring systems using YoloX and Roboflow",
-        "Built ontological knowledge graphs using Neo4j for agricultural data analysis",
-        "Integrated multiple LLMs (GPT-4o, Claude 3.5, Gemini 1.5) with advanced prompt engineering",
+        "Developed and deployed agricultural monitoring systems using YOLOv8 and Roboflow",
+        "Architected ontological knowledge graphs with Neo4j",
+        "Integrated commercial LLMs (GPT-4o, Claude 3.5, Gemini 1.5)",
         "Built scalable TypeScript platforms with tRPC and Node.js for geospatial analysis"
       ],
       "achievements": [
-        "Achieved >95% accuracy in plant disease detection and livestock behavior analysis",
-        "Successfully integrated multiple LLMs for automated reporting and intelligent alerting"
+        "Achieved >95% accuracy in plant disease detection and livestock behavior analysis"
       ],
-      "technologies": [
-        "YoloX", "Roboflow", "Neo4j", "GPT-4o", "Claude 3.5", "Gemini 1.5", "TypeScript", "tRPC", "Node.js", "Computer Vision", "Prompt Engineering"
-      ]
+      "technologies": ["YOLOv8", "Roboflow", "Neo4j", "GPT-4o", "Claude 3.5", "Gemini 1.5", "TypeScript", "tRPC", "Node.js"]
+    },
+    {
+      "id": "Capgemini Brasil",
+      "type": "Experience",
+      "title": "Senior Solutions Consultant & Knowledge Engineer",
+      "years": "Jan 2022 - Dec 2023",
+      "duration": "2 years",
+      "location": "Brazil",
+      "description": "Architected enterprise knowledge graph platform using Anzo Analytics with RDF/OWL ontologies for fraud detection and risk scoring.",
+      "responsibilities": [
+        "Designed domain ontologies with Protégé and built SPARQL query interfaces",
+        "Built Python API middleware with FastAPI wrapping SPARQL endpoints",
+        "Led data modeling initiatives across a 50+ engineer team",
+        "Implemented ETL pipelines with PySpark and Airflow (100GB+ daily)"
+      ],
+      "achievements": [
+        "Handled 2K+ requests/sec in production API",
+        "Processed 10M+ entity relationships across distributed stores"
+      ],
+      "technologies": ["Python", "RDF/OWL/SKOS", "Anzo Analytics", "FastAPI", "Protégé", "SPARQL", "PySpark", "Airflow"]
+    },
+    {
+      "id": "Simulated Reality",
+      "type": "Experience",
+      "title": "Full Stack Engineer | VR, Real-Time & 3D Systems",
+      "years": "Jan 2021 - Dec 2021",
+      "duration": "1 year",
+      "location": "Brazil",
+      "description": "Built scalable backend for VR training and healthcare wellness applications with Node.js and React serving 10K+ concurrent sessions.",
+      "technologies": ["Node.js", "React", "WebSocket", "RabbitMQ", "TensorFlow", "Blockchain"]
+    },
+    {
+      "id": "QI Tech",
+      "type": "Experience",
+      "title": "Senior Data Engineer",
+      "years": "Jan 2019 - Dec 2020",
+      "duration": "2 years",
+      "location": "Fintech",
+      "description": "Processed 500GB+ daily financial transactions using PySpark on GCP Dataproc and architected Delta Lake on GCS.",
+      "technologies": ["PySpark", "GCP Dataproc", "Delta Lake", "Airflow", "BigQuery", "gRPC"]
     }
   ],
   "skills": [
     {
       "category": "Artificial Intelligence & Machine Learning",
       "items": [
-        "Computer Vision (YoloX, OpenCV)",
+        "LangGraph, LangChain, CrewAI, Agno",
+        "Google ADK",
+        "Multi-Agent Orchestration",
+        "MCP Servers",
+        "Computer Vision (YOLOv8, OpenCV)",
         "Large Language Models (GPT-4o, Claude, Gemini)",
-        "Natural Language Processing",
-        "Prompt Engineering",
-        "Neural Networks",
-        "Deep Learning Frameworks",
-        "RAG (Retrieval Augmented Generation)",
-        "Agentic AI Systems"
+        "RAG Pipelines"
       ],
       "proficiency": "Expert"
     },
     {
-      "category": "Data Engineering & Big Data",
+      "category": "Data Engineering & Knowledge Search",
       "items": [
+        "Neo4j, FalkorDB, RDF/OWL/SKOS Ontologies",
+        "Vector Databases (Supabase, Pinecone, Chroma)",
         "Apache Spark (PySpark, Spark SQL, Streaming)",
-        "BigQuery",
-        "Data Lake/Warehouse Architecture",
-        "ETL/ELT Pipelines",
-        "Data Modeling",
-        "Performance Optimization",
-        "Real-time Processing",
-        "Distributed Computing"
+        "Apache Airflow",
+        "Delta Lake",
+        "SPARQL, Protégé"
       ],
       "proficiency": "Expert"
     },
     {
-      "category": "Programming & Development",
+      "category": "Programming & Cloud",
       "items": [
-        "Python",
-        "TypeScript",
-        "JavaScript",
-        "SQL",
-        "GraphQL",
-        "React",
-        "Django",
-        "FastAPI",
-        "Flask",
-        "Microservices Architecture"
-      ],
-      "proficiency": "Expert"
-    },
-    {
-      "category": "Cloud & Infrastructure",
-      "items": [
-        "AWS (S3, Redshift, Glue, Lambda, EMR)",
-        "Google Cloud Platform (BigQuery, Dataproc, Composer)",
-        "Azure (App Service, Blob Storage)",
-        "Docker",
-        "Kubernetes",
-        "Infrastructure-as-Code",
-        "CI/CD",
-        "Red Hat OpenShift"
+        "Python, TypeScript, JavaScript, SQL",
+        "FastAPI, Django, React, Node.js",
+        "GCP (BigQuery, Vertex AI, Dataproc)",
+        "AWS (S3, Redshift, EMR)",
+        "Docker, Kubernetes, Terraform"
       ],
       "proficiency": "Expert"
     }
@@ -147,78 +176,45 @@ export const knowledgeGraphData = {
 // Helper function to generate contextual responses
 export function generateContextualResponse(message: string): string {
   const lowerMessage = message.toLowerCase();
-  
-  // Contact information
+
   if (lowerMessage.includes('contact') || lowerMessage.includes('reach') || lowerMessage.includes('email') || lowerMessage.includes('linkedin')) {
     return `You can contact Pedro Reichow through the following methods:
 
-- **Email**: pedro_reichow@hotmail.com
+- **Email**: pedroreichow3@gmail.com
 - **LinkedIn**: [linkedin.com/in/pedroreichow](https://linkedin.com/in/pedroreichow)
+- **Website**: [pedroreichow.com.br](https://pedroreichow.com.br)
 
-Pedro is a highly experienced Senior AI Engineer and Data Specialist based in Santa Catarina, Brazil. He has over five years of expertise in building production-ready AI solutions and scalable data systems. His skillset includes advanced knowledge in computer vision, large language model integration, and developing high-performance data pipelines.
-
-With a strong academic background, including a Bachelor of Science in Systems Analysis and Development and a Bachelor of Science in Electrical Engineering, Pedro has proven his ability to lead technical teams and deliver innovative solutions across multiple sectors such as agriculture, healthcare, and fintech. He has also co-founded a company focused on AI-powered workforce intelligence.
-
-If you're looking to collaborate with a talented individual who has a passion for technology and a track record of success, reach out to Pedro today!`;
+Pedro is a highly experienced Cloud AI Solutions Architect and Agent Developer based in Santa Catarina, Brazil. With over 8 years of expertise, he specializes in building production AI agent systems, scalable data pipelines, and advanced knowledge graphs.`;
   }
-  
-  // Technical skills
+
   if (lowerMessage.includes('skill') || lowerMessage.includes('technical') || lowerMessage.includes('technology') || lowerMessage.includes('expertise')) {
-    return `Pedro is a highly skilled Senior AI Engineer and Data Specialist with over 5 years of extensive experience in developing and implementing production-ready artificial intelligence solutions and scalable data systems. Here's a breakdown of his core technical skills:
+    return `Pedro holds deep expertise across AI, Data Engineering, and full-stack cloud systems:
 
 ### Areas of Expertise
-1. **Artificial Intelligence & Machine Learning**
-   - Expertise in computer vision and natural language processing.
-   - Skilled in multi-modal AI systems and edge AI computing.
+1. **Agentic AI & LLMs**
+   - Proficient in developing multi-agent systems via LangGraph, Agno, CrewAI, and Google ADK.
+   - Expert in handling RAG pipelines, deploying Model Context Protocol (MCP) servers, and building LLM observability stacks (RAGAS).
+   
+2. **Data Science & Knowledge Graphs**
+   - Managed graphs scaling over 10M+ relationships using Neo4j, FalkorDB, and RDF/OWL on Anzo Analytics.
+   - Deployed high-performance vector databases including Supabase, Pinecone, and Chroma.
 
-2. **Data Science & Engineering**
-   - Advanced data processing with tools such as Pandas, managing high-performance data pipelines processing over 500GB daily.
-   - Strong background in creating scalable, distributed systems and real-time analytics.
+3. **Data Engineering**
+   - Built ETL/ELT pipelines using PySpark and Apache Airflow processing 500GB+ of daily traffic on GCP / AWS.
 
-3. **Software Development & Full-Stack Solutions**
-   - Proficient in frameworks including Django REST for backend development and ReactJS for frontend applications.
-   - Experienced in cloud architecture and deployment strategies, utilizing AWS and Docker.
-
-4. **Emerging Technologies**
-   - Knowledge in IoT integration, VR/AR applications, and infrastructure for quantum computing.
-   - Innovatively employs blockchain technologies to enhance data security.
-
-5. **Development Practices & Methodologies**
-   - Strong advocate of Test-Driven Development (TDD) and Agile methodologies.
-   - Renowned for his performance optimization skills and system architecture design.
-
-6. **Entrepreneurial Experience**
-   - As a founding engineer at MoveUp AI, he co-founded an AI-powered workforce intelligence platform, showcasing his ability to lead and innovate.
-   - Architected advanced server systems and developed intelligent Python agents, demonstrating his hands-on technical capabilities.
-
-### Educational Background
-- Bachelor of Science in Systems Analysis and Development.
-- Bachelor of Science in Electrical Engineering.
-- Technical Diploma in Electrotechnics.
-
-Pedro's comprehensive skill set, combined with his entrepreneurial spirit and proven leadership, makes him an exceptional candidate for any organization looking to innovate and excel in AI and data-driven initiatives. His experience across diverse sectors including agritech, healthcare, and fintech positions him uniquely to create solutions that have a significant impact.`;
+4. **Entrepreneurial & Leadership Roles**
+   - Co-founded MoveUp AI, shipping multi-agent orchestrations for workforce analytics.
+   - Co-founded Trinnix AI Lab leveraging computer vision (YOLOv8) and LLMs for AgTech platforms.`;
   }
-  
-  // General about Pedro
-  return `Pedro Reichow is a seasoned AI Engineer, Data Specialist, and Technology Entrepreneur based in Santa Catarina, Brazil. With over 5 years of experience, he has a proven track record in developing production-ready artificial intelligence solutions and scalable data systems.
 
-### Key Highlights of Pedro's Profile:
+  // General fallback
+  return `Pedro Reichow is a seasoned Cloud AI Solutions Architect, Agent Developer, and Technology Entrepreneur with 8+ years of experience across fintech, healthcare, and enterprise SaaS.
 
-- **Expertise in AI and Data Solutions:** Pedro specializes in computer vision, large language model integration, and building high-performance data pipelines capable of processing over 500GB of data daily. His technical prowess is complemented by a strong foundation in full-stack development and cloud architecture.
+### Key Highlights:
+- **Agentic AI Systems:** Currently building production AI agent systems at Santodigital (Google Cloud Partner), shipping 8+ enterprise deployments featuring document intelligence, RAG pipelines, and enterprise data federation.
+- **Healthcare & Scalability:** Led AI Observability at CVS Health, handling metrics, faithfulness, and relevancy across federated LLM deployments scaling over clinical datasets.
+- **Entrepreneurship:** Previously co-founded MoveUp AI (building MCP-enabled AI agents for workforce intelligence) and Trinnix AI Lab (applying computer vision and knowledge graphs to AgTech).
+- **Enterprise Data:** Earlier extensive experience architecting semantic search and fraud detection systems using Anzo Analytics at Capgemini and serving as a Senior Data Engineer at QI Tech processing 500GB+ daily transactions via PySpark.
 
-- **Entrepreneurial Spirit:** As the Founding Engineer and Technical Co-founder at MoveUp AI—a cutting-edge AI-powered workforce intelligence platform—Pedro has demonstrated his innovative capabilities. He has successfully architected systems that enhance team analytics and integrate seamlessly with enterprise tools, showcasing his ability to bring ideas from conception to a market-ready product.
-
-- **Range of Technologies:** His areas of expertise include multi-modal AI systems, real-time analytics, and emerging technologies such as IoT integration and Blockchain applications.
-
-- **Professional Experience:** Currently serving as a Senior Solutions Consultant at Capgemini Brasil, Pedro has played significant roles in various projects, demonstrating exceptional leadership and mentoring skills. He has also been actively involved in shaping agile development practices and performance optimization strategies across different sectors, including agriculture, healthcare, and fintech.
-
-- **Strong Academic Background:** Pedro holds a Bachelor of Science in Systems Analysis and Development and a Bachelor of Science in Electrical Engineering, equipping him with a robust understanding of both software and hardware aspects of technology.
-
-### Achievements:
-
-- Co-founded an enterprise-grade platform that provides integrated analytics and knowledge management tools to over 15 teams.
-- Designed and developed advanced data processing pipelines to enhance business intelligence solutions.
-- Successfully led various technical teams and initiatives, underscoring his capability to navigate complex project landscapes and deliver impactful results.
-
-Pedro's unique combination of technical expertise, entrepreneurial experience, and leadership skills makes him a valuable asset for any organization looking to innovate and leverage cutting-edge technology in their operations. His passion for artificial intelligence and commitment to excellence positions him as a prime candidate for recruiters and entrepreneurs eager to collaborate on future-focused projects.`;
+Pedro's unique blend of hands-on technical depth—ranging from Spark Streaming at scale to deploying LLM agents with Google ADK, LangGraph, vector databases, and MCP orchestration—makes him a high-impact technical leader for ambitious AI initiatives.`;
 }

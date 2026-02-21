@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 # Load env from root
 load_dotenv(os.path.join(os.path.dirname(__file__), '../.env'))
 
-RESUME_PDF_PATH = os.path.join(os.path.dirname(__file__), 'assets/Pedro Reichow - Resume.pdf')
-RESUME_HTML_PATH = os.path.join(os.path.dirname(__file__), 'assets/resume.html')
+RESUME_PDF_PATH = os.path.join(os.path.dirname(__file__), 'assets/REICHOW, Pedro 2026.pdf')
+RESUME_HTML_PATH = os.path.join(os.path.dirname(__file__), 'assets/resume_v2.html')
 
 async def extract_text_from_pdf(pdf_path):
     reader = PdfReader(pdf_path)

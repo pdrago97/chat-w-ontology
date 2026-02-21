@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTheme } from '../contexts/ThemeContext';
-import pedroImage from '/assets/Pedro.jpg';
+import pedroImage from "../assets/Pedro.jpg";
 
 interface WelcomeModalProps {
   isOpen: boolean;
@@ -292,11 +292,7 @@ const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onClose }) => {
           }}>
             {t('modal.features.title')}
           </h3>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: 12,
-          }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {FEATURES.map((feature, idx) => (
               <div
                 key={idx}

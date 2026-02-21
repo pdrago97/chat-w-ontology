@@ -1,0 +1,8 @@
+.venv/
+.venv312/
+backend/
+docs/
+worker/
+workers/
+.git/
+node_modules/
