@@ -18,9 +18,10 @@ const LANGEXTRACT_CURATED_API = "/api/graph/langextract.curated";
 export const loader: LoaderFunction = async ({ request, context }) => {
   try {
     const origin = new URL(request.url).origin;
-    // Get GRAPH_SOURCE from Cloudflare environment or default to "cognee"
+    // Get GRAPH_SOURCE from Cloudflare environment, process.env, or default to "cognee"
     const env = context?.env as Record<string, string> | undefined;
-    const graphSource = env?.GRAPH_SOURCE || "cognee";
+    const processEnv = (typeof process !== 'undefined' ? process.env : {}) as Record<string, string | undefined>;
+    const graphSource = env?.GRAPH_SOURCE || processEnv.GRAPH_SOURCE || "cognee";
 
     // Use langextract curated graph
     if (graphSource === "lx-curated") {

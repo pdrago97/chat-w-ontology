@@ -187,9 +187,10 @@ export const action: ActionFunction = async ({ request, context }) => {
     return json({ error: "Method not allowed" }, { status: 405 });
   }
 
-  // Get OpenAI API key from Cloudflare environment
+  // Get OpenAI API key from Cloudflare environment or process.env
   const env = context?.env as Record<string, string> | undefined;
-  const openaiApiKey = env?.OPENAI_API_KEY;
+  const processEnv = (typeof process !== 'undefined' ? process.env : {}) as Record<string, string | undefined>;
+  const openaiApiKey = env?.OPENAI_API_KEY || processEnv.OPENAI_API_KEY;
 
   // Parse the request body first so we can use it in fallback
   let message = '';

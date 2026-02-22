@@ -5,8 +5,9 @@ import { knowledgeGraphData } from "../data/knowledge-graph";
 // When Supabase is unavailable, uses OpenAI to "cognify" the static graph
 
 function supabaseHeaders(env?: Record<string, string>) {
-  const url = env?.SUPABASE_URL;
-  const key = env?.SUPABASE_SERVICE_KEY;
+  const processEnv = (typeof process !== 'undefined' ? process.env : {}) as Record<string, string | undefined>;
+  const url = env?.SUPABASE_URL || processEnv.SUPABASE_URL;
+  const key = env?.SUPABASE_SERVICE_KEY || processEnv.SUPABASE_SERVICE_KEY;
   if (!url || !key) return null;
   return { url, headers: { apikey: key, Authorization: `Bearer ${key}` } } as const;
 }
@@ -590,7 +591,7 @@ export const loader: LoaderFunction = async ({ request, context }) => {
           }
         };
       })
-      .filter(edge => {
+      .filter((edge: any) => {
         // Filter out edges where source or target nodes don't exist after deduplication
         const sourceExists = nodes.some(n => n.id === edge.source);
         const targetExists = nodes.some(n => n.id === edge.target);
