@@ -219,72 +219,79 @@ function IndexContent() {
         </svg>
       </button>
 
-      {/* ── Mobile chat drawer ── */}
-      {isMobileChatOpen && (
-        <div className="lg:hidden" style={{ position: 'fixed', inset: 0, zIndex: 10004 }}>
-          {/* Backdrop */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'rgba(0,0,0,0.4)',
-              backdropFilter: 'blur(4px)',
-            }}
-            onClick={() => setIsMobileChatOpen(false)}
-          />
-          {/* Drawer */}
-          <div style={{
+      {/* ── Mobile chat drawer (always mounted to keep chat state) ── */}
+      <div
+        className="lg:hidden"
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 10004,
+          pointerEvents: isMobileChatOpen ? 'auto' : 'none',
+        }}
+      >
+        {/* Backdrop */}
+        <div
+          style={{
             position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: '85vh',
-            maxHeight: '85vh',
-            background: theme === 'dark' ? '#111827' : '#ffffff',
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-            boxShadow: '0 -8px 30px rgba(0,0,0,0.3)',
-            borderTop: `1px solid ${theme === 'dark' ? '#374151' : '#e5e7eb'}`,
+            inset: 0,
+            background: 'rgba(0,0,0,0.4)',
+            backdropFilter: 'blur(4px)',
+            opacity: isMobileChatOpen ? 1 : 0,
+            transition: 'opacity 0.3s ease',
+          }}
+          onClick={() => setIsMobileChatOpen(false)}
+        />
+        {/* Drawer */}
+        <div className={`mobile-chat-drawer ${isMobileChatOpen ? 'open' : 'closed'}`} style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: '85dvh',
+          maxHeight: '85dvh',
+          background: theme === 'dark' ? '#111827' : '#ffffff',
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
+          boxShadow: '0 -8px 30px rgba(0,0,0,0.3)',
+          borderTop: `1px solid ${theme === 'dark' ? '#374151' : '#e5e7eb'}`,
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
+          {/* Handle + close */}
+          <div style={{
             display: 'flex',
-            flexDirection: 'column',
-            animation: 'slideInFromBottom 0.35s cubic-bezier(0.16,1,0.3,1) forwards',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '12px 16px',
+            borderBottom: `1px solid ${theme === 'dark' ? '#1f2937' : '#f3f4f6'}`,
           }}>
-            {/* Handle + close */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '12px 16px',
-              borderBottom: `1px solid ${theme === 'dark' ? '#1f2937' : '#f3f4f6'}`,
-            }}>
-              <div style={{ width: 32, height: 4, borderRadius: 4, background: theme === 'dark' ? '#4b5563' : '#d1d5db' }} />
-              <button
-                onClick={() => setIsMobileChatOpen(false)}
-                style={{
-                  width: 32,
-                  height: 32,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: '50%',
-                  border: 'none',
-                  background: 'transparent',
-                  color: theme === 'dark' ? '#9ca3af' : '#6b7280',
-                  cursor: 'pointer',
-                }}
-                title={t('chat.close')}
-              >
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div style={{ flex: 1, overflow: 'hidden' }}>
-              <ChatBotSidebar graphData={graphData} />
-            </div>
+            <div style={{ width: 32, height: 4, borderRadius: 4, background: theme === 'dark' ? '#4b5563' : '#d1d5db' }} />
+            <button
+              onClick={() => setIsMobileChatOpen(false)}
+              style={{
+                width: 32,
+                height: 32,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '50%',
+                border: 'none',
+                background: 'transparent',
+                color: theme === 'dark' ? '#9ca3af' : '#6b7280',
+                cursor: 'pointer',
+              }}
+              title={t('chat.close')}
+            >
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div style={{ flex: 1, overflow: 'hidden' }}>
+            <ChatBotSidebar graphData={graphData} />
           </div>
         </div>
-      )}
+      </div>
 
       {/* ── Welcome modal ── */}
       <WelcomeModal
