@@ -174,10 +174,20 @@ export const knowledgeGraphData = {
 };
 
 // Helper function to generate contextual responses
-export function generateContextualResponse(message: string): string {
+export function generateContextualResponse(message: string, language: string = 'en'): string {
   const lowerMessage = message.toLowerCase();
+  const isPt = language === 'pt';
 
-  if (lowerMessage.includes('contact') || lowerMessage.includes('reach') || lowerMessage.includes('email') || lowerMessage.includes('linkedin')) {
+  if (lowerMessage.includes('contact') || lowerMessage.includes('reach') || lowerMessage.includes('email') || lowerMessage.includes('linkedin') || lowerMessage.includes('contato') || lowerMessage.includes('email') || lowerMessage.includes('falar')) {
+    if (isPt) {
+      return `Você pode entrar em contato com Pedro através dos seguintes meios:
+
+- **E-mail**: pedroreichow3@gmail.com
+- **LinkedIn**: [linkedin.com/in/pedroreichow](https://linkedin.com/in/pedroreichow)
+- **Site**: [pedroreichow.com.br](https://pedroreichow.com.br)
+
+Pedro é um experiente Arquiteto de Soluções AI Cloud e Desenvolvedor de Agentes baseado em Santa Catarina, Brasil. Ele é especialista na construção de sistemas de agentes de IA em produção, pipelines de dados escaláveis e grafos de conhecimento.`;
+    }
     return `You can contact Pedro Reichow through the following methods:
 
 - **Email**: pedroreichow3@gmail.com
@@ -187,7 +197,26 @@ export function generateContextualResponse(message: string): string {
 Pedro is a highly experienced Cloud AI Solutions Architect and Agent Developer based in Santa Catarina, Brazil. With over 8 years of expertise, he specializes in building production AI agent systems, scalable data pipelines, and advanced knowledge graphs.`;
   }
 
-  if (lowerMessage.includes('skill') || lowerMessage.includes('technical') || lowerMessage.includes('technology') || lowerMessage.includes('expertise')) {
+  if (lowerMessage.includes('skill') || lowerMessage.includes('technical') || lowerMessage.includes('technology') || lowerMessage.includes('expertise') || lowerMessage.includes('habilidade') || lowerMessage.includes('tecnologia') || lowerMessage.includes('ferramenta') || lowerMessage.includes('experiencia')) {
+    if (isPt) {
+      return `Pedro possui profunda expertise em IA, Engenharia de Dados e sistemas de nuvem full-stack:
+
+### Áreas de Especialidade
+1. **IA Agêntica e LLMs**
+   - Proficiente no desenvolvimento de sistemas multi-agentes via LangGraph, Agno, CrewAI e Google ADK.
+   - Especialista em lidar com pipelines de RAG, implantação de servidores MCP (Model Context Protocol) e construção de observabilidade de LLMs (RAGAS).
+   
+2. **Ciência de Dados e Grafos de Conhecimento**
+   - Gerenciou grafos com mais de 10M+ relacionamentos usando Neo4j, FalkorDB e RDF/OWL em Anzo Analytics.
+   - Implantou bancos de dados vetoriais de alto desempenho, incluindo Supabase, Pinecone e Chroma.
+
+3. **Engenharia de Dados**
+   - Construiu pipelines de ETL/ELT usando PySpark e Apache Airflow processando 500GB+ de tráfego diário no GCP / AWS.
+
+4. **Experiência Empreendedora e Liderança**
+   - Co-fundou a MoveUp AI, enviando orquestrações multi-agentes para análise de força de trabalho.
+   - Co-fundou o Trinnix AI Lab, utilizando visão computacional (YOLOv8) e LLMs para AgTech.`;
+    }
     return `Pedro holds deep expertise across AI, Data Engineering, and full-stack cloud systems:
 
 ### Areas of Expertise
@@ -208,6 +237,17 @@ Pedro is a highly experienced Cloud AI Solutions Architect and Agent Developer b
   }
 
   // General fallback
+  if (isPt) {
+    return `Pedro Reichow é um experiente Arquiteto de Soluções AI Cloud, Desenvolvedor de Agentes e Empreendedor de Tecnologia com mais de 8 anos de experiência em fintech, saúde e SaaS empresarial.
+
+### Destaques:
+- **Sistemas de IA Agêntica:** Construindo atualmente sistemas de agente de IA em produção na Santodigital (Google Cloud Partner), com mais de 8 implantações incluindo inteligência de documentos, pipelines RAG e federação de dados corporativos.
+- **Saúde e Escalabilidade:** Liderou equipe de observabilidade de IA na CVS Health para rastrear fidelidade e relevância em distribuições LLM usando Datadog e Grafana em nuvem HIPAA/FedRAMP.
+- **Empreendedorismo:** Co-fundou anteriormente a MoveUp AI (sistemas de agentes de IA baseados em MCP para inteligência de força de trabalho) e Trinnix AI Lab (aplicando visão computacional e grafos de conhecimento em AgTech).
+- **Dados Corporativos:** Ampla experiência liderando arquitetura de busca semântica e fraude em Anzo Analytics (Capgemini) e como Engenheiro de Dados Sênior processando mais de 500 GB diários na QI Tech (PySpark / GCP).
+
+A combinação única de experiência prática que Pedro possui - desde dimensionamento do Spark até implantação de agentes LLM usando Google ADK, LangGraph e bases de dados vetoriais - torna-o um líder técnico de alto impacto para iniciativas ambiciosas de IA.`;
+  }
   return `Pedro Reichow is a seasoned Cloud AI Solutions Architect, Agent Developer, and Technology Entrepreneur with 8+ years of experience across fintech, healthcare, and enterprise SaaS.
 
 ### Key Highlights:

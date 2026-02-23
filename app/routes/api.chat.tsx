@@ -143,7 +143,7 @@ async function callOpenAI(
 ): Promise<string> {
   if (!apiKey) {
     console.warn('OpenAI API key not configured, using static fallback');
-    return generateContextualResponse(message);
+    return generateContextualResponse(message, language);
   }
 
   const systemPrompt = buildSystemPrompt(language, graphContext);
@@ -179,7 +179,7 @@ async function callOpenAI(
   }
 
   const data = await response.json();
-  return data.choices?.[0]?.message?.content || generateContextualResponse(message);
+  return data.choices?.[0]?.message?.content || generateContextualResponse(message, language);
 }
 
 export const action: ActionFunction = async ({ request, context }) => {
@@ -189,8 +189,7 @@ export const action: ActionFunction = async ({ request, context }) => {
 
   // Get OpenAI API key from Cloudflare environment or process.env
   const env = context?.env as Record<string, string> | undefined;
-  const processEnv = (typeof process !== 'undefined' ? process.env : {}) as Record<string, string | undefined>;
-  const openaiApiKey = env?.OPENAI_API_KEY || processEnv.OPENAI_API_KEY;
+  const openaiApiKey = env?.OPENAI_API_KEY || (typeof process !== 'undefined' ? process.env.OPENAI_API_KEY : undefined);
 
   // Parse the request body first so we can use it in fallback
   let message = '';
@@ -225,7 +224,7 @@ export const action: ActionFunction = async ({ request, context }) => {
     console.error('Error in chat endpoint:', error);
 
     // Fallback to static contextual response using the already-parsed message
-    const fallbackResponse = generateContextualResponse(message);
+    const fallbackResponse = generateContextualResponse(message, language);
     return json({
       message: fallbackResponse,
       sender: "assistant" as const,

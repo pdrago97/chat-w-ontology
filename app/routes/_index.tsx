@@ -20,8 +20,7 @@ export const loader: LoaderFunction = async ({ request, context }) => {
     const origin = new URL(request.url).origin;
     // Get GRAPH_SOURCE from Cloudflare environment, process.env, or default to "cognee"
     const env = context?.env as Record<string, string> | undefined;
-    const processEnv = (typeof process !== 'undefined' ? process.env : {}) as Record<string, string | undefined>;
-    const graphSource = env?.GRAPH_SOURCE || processEnv.GRAPH_SOURCE || "cognee";
+    const graphSource = env?.GRAPH_SOURCE || (typeof process !== 'undefined' ? process.env.GRAPH_SOURCE : undefined) || "cognee";
 
     // Use langextract curated graph
     if (graphSource === "lx-curated") {

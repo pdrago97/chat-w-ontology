@@ -1,0 +1,118 @@
+npm warn Unknown project config "auto-install-peers". This will stop working in the next major version of npm.
+
+> build
+> remix vite:build
+
+vite v5.4.11 building for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 15 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 1279 modules transformed.
+Generated an empty chunk: "api.graph.langextract.curated".
+Generated an empty chunk: "api.chat-smart.poll._jobId".
+Generated an empty chunk: "api.graph.langextract.db".
+Generated an empty chunk: "api.graph.fromSupabase".
+Generated an empty chunk: "api.graph.supabase.raw".
+Generated an empty chunk: "api.cognee.regenerate".
+Generated an empty chunk: "api.graph.optimized".
+Generated an empty chunk: "api.cognee.import".
+Generated an empty chunk: "api.graph.graphdb".
+Generated an empty chunk: "api.graph.cognee".
+Generated an empty chunk: "api.graph.fromDb".
+Generated an empty chunk: "api.graph.health".
+Generated an empty chunk: "api.graph.jsonld".
+Generated an empty chunk: "api.chat-smart".
+Generated an empty chunk: "api.test-queue".
+Generated an empty chunk: "pdfProcessor".
+Generated an empty chunk: "api.graph".
+Generated an empty chunk: "api.chat".
+Generated an empty chunk: "graph".
+rendering chunks...
+warnings when minifying css:
+▲ [WARNING] Unexpected "/" [css-syntax-error]
+
+    <stdin>:14:6:
+      14 │   .w-3/4 {
+         ╵       ^
+
+
+▲ [WARNING] Unexpected "/" [css-syntax-error]
+
+    <stdin>:18:6:
+      18 │   .w-1/4 {
+         ╵       ^
+
+
+computing gzip size...
+build/client/.vite/manifest.json                                13.50 kB │ gzip:   1.54 kB
+build/client/assets/Pedro-DR0AGq_d.jpg                         533.11 kB
+build/client/assets/entry-ByUxrXc2.css                           0.87 kB │ gzip:   0.45 kB
+build/client/assets/root-DRPlRq1k.css                           15.27 kB │ gzip:   3.87 kB
+build/client/assets/_index-DzPBmAgP.css                         39.97 kB │ gzip:   6.04 kB
+build/client/assets/api.graph.langextract.curated-l0sNRNKZ.js    0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.chat-smart.poll._jobId-l0sNRNKZ.js       0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.graph.langextract.db-l0sNRNKZ.js         0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.graph.fromSupabase-l0sNRNKZ.js           0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.graph.supabase.raw-l0sNRNKZ.js           0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.cognee.regenerate-l0sNRNKZ.js            0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.graph.optimized-l0sNRNKZ.js              0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.cognee.import-l0sNRNKZ.js                0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.graph.graphdb-l0sNRNKZ.js                0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.graph.cognee-l0sNRNKZ.js                 0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.graph.fromDb-l0sNRNKZ.js                 0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.graph.health-l0sNRNKZ.js                 0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.graph.jsonld-l0sNRNKZ.js                 0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.chat-smart-l0sNRNKZ.js                   0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.test-queue-l0sNRNKZ.js                   0.00 kB │ gzip:   0.02 kB
+build/client/assets/pdfProcessor-l0sNRNKZ.js                     0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.graph-l0sNRNKZ.js                        0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.chat-l0sNRNKZ.js                         0.00 kB │ gzip:   0.02 kB
+build/client/assets/graph-l0sNRNKZ.js                            0.00 kB │ gzip:   0.02 kB
+build/client/assets/api.langextract.extract-CSxRPO1x.js          0.05 kB │ gzip:   0.07 kB
+build/client/assets/api.graph.applyChanges-CSxRPO1x.js           0.05 kB │ gzip:   0.07 kB
+build/client/assets/api.graph_builder.chat-CSxRPO1x.js           0.05 kB │ gzip:   0.07 kB
+build/client/assets/api.graph_builder.n8n-CSxRPO1x.js            0.05 kB │ gzip:   0.07 kB
+build/client/assets/api.pipeline.n8n-CSxRPO1x.js                 0.05 kB │ gzip:   0.07 kB
+build/client/assets/api.chat.n8n-CSxRPO1x.js                     0.05 kB │ gzip:   0.07 kB
+build/client/assets/_layout-CPd8fFAW.js                          0.18 kB │ gzip:   0.16 kB
+build/client/assets/CopyShader-BzTUYzf6.js                       0.44 kB │ gzip:   0.28 kB
+build/client/assets/_commonjsHelpers-BosuxZz1.js                 0.69 kB │ gzip:   0.38 kB
+build/client/assets/RenderPass-DZi6o-BS.js                       1.23 kB │ gzip:   0.51 kB
+build/client/assets/root-BHQwsP33.js                             2.38 kB │ gzip:   1.23 kB
+build/client/assets/entry.client-DdmA8QBr.js                     4.03 kB │ gzip:   1.56 kB
+build/client/assets/admin-CM_fVrwt.js                            4.26 kB │ gzip:   1.67 kB
+build/client/assets/EffectComposer-DpvC3h2l.js                   4.82 kB │ gzip:   1.51 kB
+build/client/assets/ThemeContext-CdVYTxLw.js                     5.85 kB │ gzip:   2.25 kB
+build/client/assets/api.langextract.fromSupabase-Hg8Te4mB.js     7.48 kB │ gzip:   3.27 kB
+build/client/assets/UnrealBloomPass-CkoH9zsK.js                  9.22 kB │ gzip:   2.42 kB
+build/client/assets/welcomeModal-BW9pvHaC.js                     9.32 kB │ gzip:   3.10 kB
+build/client/assets/jsx-runtime-DHRvuNjL.js                     40.42 kB │ gzip:  12.89 kB
+build/client/assets/index-f_diy2NT.js                           64.67 kB │ gzip:  22.17 kB
+build/client/assets/_index-E1lH_shc.js                         164.45 kB │ gzip:  40.41 kB
+build/client/assets/ForceGraph3DView-DfFdSQkg.js               223.47 kB │ gzip:  61.04 kB
+build/client/assets/Pass-3VO7rVnf.js                           325.09 kB │ gzip:  78.31 kB
+build/client/assets/components-BresJFll.js                     339.75 kB │ gzip: 105.03 kB
+build/client/assets/GraphComponent-DdYCD-yq.js                 501.41 kB │ gzip: 155.61 kB
+build/client/assets/3d-force-graph-DlGYGPfg.js                 706.95 kB │ gzip: 200.67 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 58.38s
+vite v5.4.11 building SSR bundle for production...
+transforming...
+✓ 49 modules transformed.
+rendering chunks...
+build/server/.vite/manifest.json                    1.02 kB
+build/server/assets/Pedro-DR0AGq_d.jpg            533.11 kB
+build/server/assets/server-build-CrKg3ZjF.css      55.24 kB
+build/server/index.js                               0.71 kB
+build/server/assets/ForceGraph3DView-D8Aj_Gd4.js   25.30 kB
+build/server/assets/server-build-pWqh7KfQ.js      232.32 kB
+
+✓ 1 asset moved from Remix server build to client assets.
+build/client/assets/server-build-CrKg3ZjF.css
+
+✓ built in 905ms
